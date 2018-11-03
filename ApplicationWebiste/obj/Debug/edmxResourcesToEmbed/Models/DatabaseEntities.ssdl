@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Db_Permission_Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="account">
+    <Key>
+      <PropertyRef Name="Account" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Account" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="25" />
+  </EntityType>
+  <EntityType Name="childOfFunction">
+    <Key>
+      <PropertyRef Name="ChildOfFunction" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ChildOfFunction" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="30" />
+    <Property Name="Order" Type="tinyint" />
+  </EntityType>
+  <EntityType Name="contraint_account_function_childOfFunction">
+    <Key>
+      <PropertyRef Name="Account" />
+      <PropertyRef Name="Function" />
+      <PropertyRef Name="ChildOfFunction" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Account" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="Function" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ChildOfFunction" Type="varchar" MaxLength="25" Nullable="false" />
+  </EntityType>
+  <EntityType Name="contraint_account_group">
+    <Key>
+      <PropertyRef Name="Account" />
+      <PropertyRef Name="Group" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Account" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="Group" Type="varchar" MaxLength="25" Nullable="false" />
+  </EntityType>
+  <EntityType Name="contraint_group_function_childOfFunction">
+    <Key>
+      <PropertyRef Name="Group" />
+      <PropertyRef Name="Function" />
+      <PropertyRef Name="ChildOfFunction" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Group" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="Function" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ChildOfFunction" Type="varchar" MaxLength="25" Nullable="false" />
+  </EntityType>
+  <EntityType Name="function">
+    <Key>
+      <PropertyRef Name="Function" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Function" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Parent" Type="varchar" MaxLength="25" />
+    <Property Name="Url" Type="varchar(max)" />
+    <Property Name="Title" Type="nvarchar" MaxLength="50" />
+    <Property Name="Description" Type="ntext" />
+    <Property Name="History" Type="ntext" />
+    <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="ModifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="group">
+    <Key>
+      <PropertyRef Name="Group" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Group" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="Title" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Description" Type="ntext" />
+    <Property Name="History" Type="ntext" />
+    <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="ModifiedDate" Type="datetime" />
+  </EntityType>
+  <Association Name="FK_contraint_account_group_account">
+    <End Role="account" Type="Self.account" Multiplicity="1" />
+    <End Role="contraint_account_group" Type="Self.contraint_account_group" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="account">
+        <PropertyRef Name="Account" />
+      </Principal>
+      <Dependent Role="contraint_account_group">
+        <PropertyRef Name="Account" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_contraint_account_group_function_childOfFunction_function">
+    <End Role="function" Type="Self.function" Multiplicity="1" />
+    <End Role="contraint_account_function_childOfFunction" Type="Self.contraint_account_function_childOfFunction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="function">
+        <PropertyRef Name="Function" />
+      </Principal>
+      <Dependent Role="contraint_account_function_childOfFunction">
+        <PropertyRef Name="Function" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_contraint_account_group_group">
+    <End Role="group" Type="Self.group" Multiplicity="1" />
+    <End Role="contraint_account_group" Type="Self.contraint_account_group" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="group">
+        <PropertyRef Name="Group" />
+      </Principal>
+      <Dependent Role="contraint_account_group">
+        <PropertyRef Name="Group" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_contraint_function_childOfFunction_function">
+    <End Role="function" Type="Self.function" Multiplicity="1" />
+    <End Role="contraint_group_function_childOfFunction" Type="Self.contraint_group_function_childOfFunction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="function">
+        <PropertyRef Name="Function" />
+      </Principal>
+      <Dependent Role="contraint_group_function_childOfFunction">
+        <PropertyRef Name="Function" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="P_viewMenuPermission" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Account" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="P_viewPagePermission" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Account" Type="varchar" Mode="In" />
+    <Parameter Name="Function" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="permission_of_childOfFunction_number" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int">
+    <Parameter Name="account" Type="varchar" Mode="In" />
+    <Parameter Name="function" Type="varchar" Mode="In" />
+    <Parameter Name="childOfFunction" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="permission_of_function_number" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int">
+    <Parameter Name="account" Type="varchar" Mode="In" />
+    <Parameter Name="function" Type="varchar" Mode="In" />
+  </Function>
+  <EntityContainer Name="Db_Permission_ModelStoreContainer">
+    <EntitySet Name="account" EntityType="Self.account" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="childOfFunction" EntityType="Self.childOfFunction" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="contraint_account_function_childOfFunction" EntityType="Self.contraint_account_function_childOfFunction" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="contraint_account_group" EntityType="Self.contraint_account_group" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="contraint_group_function_childOfFunction" EntityType="Self.contraint_group_function_childOfFunction" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="function" EntityType="Self.function" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="group" EntityType="Self.group" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_contraint_account_group_account" Association="Self.FK_contraint_account_group_account">
+      <End Role="account" EntitySet="account" />
+      <End Role="contraint_account_group" EntitySet="contraint_account_group" />
+    </AssociationSet>
+    <AssociationSet Name="FK_contraint_account_group_function_childOfFunction_function" Association="Self.FK_contraint_account_group_function_childOfFunction_function">
+      <End Role="function" EntitySet="function" />
+      <End Role="contraint_account_function_childOfFunction" EntitySet="contraint_account_function_childOfFunction" />
+    </AssociationSet>
+    <AssociationSet Name="FK_contraint_account_group_group" Association="Self.FK_contraint_account_group_group">
+      <End Role="group" EntitySet="group" />
+      <End Role="contraint_account_group" EntitySet="contraint_account_group" />
+    </AssociationSet>
+    <AssociationSet Name="FK_contraint_function_childOfFunction_function" Association="Self.FK_contraint_function_childOfFunction_function">
+      <End Role="function" EntitySet="function" />
+      <End Role="contraint_group_function_childOfFunction" EntitySet="contraint_group_function_childOfFunction" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

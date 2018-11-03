@@ -1,0 +1,300 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Db_Permission_Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="account">
+    <Key>
+      <PropertyRef Name="Account1" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Account1" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="contraint_account_group" Relationship="Self.FK_contraint_account_group_account" FromRole="account" ToRole="contraint_account_group" />
+    <NavigationProperty Name="contraint_account_function_childOfFunction" Relationship="Self.FK_contraint_account_group_function_childOfFunction_account" FromRole="account" ToRole="contraint_account_function_childOfFunction" />
+  </EntityType>
+  <EntityType Name="childOfFunction">
+    <Key>
+      <PropertyRef Name="ChildOfFunction1" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ChildOfFunction1" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Title" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="contraint_account_function_childOfFunction" Relationship="Self.FK_contraint_account_group_function_childOfFunction_childOfFunction" FromRole="childOfFunction" ToRole="contraint_account_function_childOfFunction" />
+    <NavigationProperty Name="contraint_group_function_childOfFunction" Relationship="Self.FK_contraint_function_childOfFunction_childOfFunction" FromRole="childOfFunction" ToRole="contraint_group_function_childOfFunction" />
+    <Property Name="Order" Type="Byte" />
+  </EntityType>
+  <EntityType Name="contraint_account_function_childOfFunction">
+    <Key>
+      <PropertyRef Name="Account" />
+      <PropertyRef Name="Function" />
+      <PropertyRef Name="ChildOfFunction" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Account" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Function" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ChildOfFunction" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="account1" Relationship="Self.FK_contraint_account_group_function_childOfFunction_account" FromRole="contraint_account_function_childOfFunction" ToRole="account" />
+    <NavigationProperty Name="childOfFunction1" Relationship="Self.FK_contraint_account_group_function_childOfFunction_childOfFunction" FromRole="contraint_account_function_childOfFunction" ToRole="childOfFunction" />
+    <NavigationProperty Name="function1" Relationship="Self.FK_contraint_account_group_function_childOfFunction_function" FromRole="contraint_account_function_childOfFunction" ToRole="function" />
+  </EntityType>
+  <EntityType Name="contraint_account_group">
+    <Key>
+      <PropertyRef Name="Account" />
+      <PropertyRef Name="Group" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Account" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Group" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="account1" Relationship="Self.FK_contraint_account_group_account" FromRole="contraint_account_group" ToRole="account" />
+    <NavigationProperty Name="group1" Relationship="Self.FK_contraint_account_group_group" FromRole="contraint_account_group" ToRole="group" />
+  </EntityType>
+  <EntityType Name="contraint_group_function_childOfFunction">
+    <Key>
+      <PropertyRef Name="Group" />
+      <PropertyRef Name="Function" />
+      <PropertyRef Name="ChildOfFunction" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Group" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Function" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ChildOfFunction" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="childOfFunction1" Relationship="Self.FK_contraint_function_childOfFunction_childOfFunction" FromRole="contraint_group_function_childOfFunction" ToRole="childOfFunction" />
+    <NavigationProperty Name="function1" Relationship="Self.FK_contraint_function_childOfFunction_function" FromRole="contraint_group_function_childOfFunction" ToRole="function" />
+    <NavigationProperty Name="group1" Relationship="Self.FK_contraint_function_childOfFunction_group" FromRole="contraint_group_function_childOfFunction" ToRole="group" />
+  </EntityType>
+  <EntityType Name="function">
+    <Key>
+      <PropertyRef Name="Function1" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Function1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Parent" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="Url" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="History" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="contraint_account_function_childOfFunction" Relationship="Self.FK_contraint_account_group_function_childOfFunction_function" FromRole="function" ToRole="contraint_account_function_childOfFunction" />
+    <NavigationProperty Name="contraint_group_function_childOfFunction" Relationship="Self.FK_contraint_function_childOfFunction_function" FromRole="function" ToRole="contraint_group_function_childOfFunction" />
+  </EntityType>
+  <EntityType Name="group">
+    <Key>
+      <PropertyRef Name="Group1" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Group1" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Title" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="History" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="contraint_account_group" Relationship="Self.FK_contraint_account_group_group" FromRole="group" ToRole="contraint_account_group" />
+    <NavigationProperty Name="contraint_group_function_childOfFunction" Relationship="Self.FK_contraint_function_childOfFunction_group" FromRole="group" ToRole="contraint_group_function_childOfFunction" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK_contraint_account_group_account">
+    <End Role="account" Type="Self.account" Multiplicity="1" />
+    <End Role="contraint_account_group" Type="Self.contraint_account_group" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="account">
+        <PropertyRef Name="Account1" />
+      </Principal>
+      <Dependent Role="contraint_account_group">
+        <PropertyRef Name="Account" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_contraint_account_group_function_childOfFunction_account">
+    <End Role="account" Type="Self.account" Multiplicity="1" />
+    <End Role="contraint_account_function_childOfFunction" Type="Self.contraint_account_function_childOfFunction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="account">
+        <PropertyRef Name="Account1" />
+      </Principal>
+      <Dependent Role="contraint_account_function_childOfFunction">
+        <PropertyRef Name="Account" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_contraint_account_group_function_childOfFunction_childOfFunction">
+    <End Role="childOfFunction" Type="Self.childOfFunction" Multiplicity="1" />
+    <End Role="contraint_account_function_childOfFunction" Type="Self.contraint_account_function_childOfFunction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="childOfFunction">
+        <PropertyRef Name="ChildOfFunction1" />
+      </Principal>
+      <Dependent Role="contraint_account_function_childOfFunction">
+        <PropertyRef Name="ChildOfFunction" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_contraint_function_childOfFunction_childOfFunction">
+    <End Role="childOfFunction" Type="Self.childOfFunction" Multiplicity="1" />
+    <End Role="contraint_group_function_childOfFunction" Type="Self.contraint_group_function_childOfFunction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="childOfFunction">
+        <PropertyRef Name="ChildOfFunction1" />
+      </Principal>
+      <Dependent Role="contraint_group_function_childOfFunction">
+        <PropertyRef Name="ChildOfFunction" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_contraint_account_group_function_childOfFunction_function">
+    <End Role="function" Type="Self.function" Multiplicity="1" />
+    <End Role="contraint_account_function_childOfFunction" Type="Self.contraint_account_function_childOfFunction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="function">
+        <PropertyRef Name="Function1" />
+      </Principal>
+      <Dependent Role="contraint_account_function_childOfFunction">
+        <PropertyRef Name="Function" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_contraint_account_group_group">
+    <End Role="group" Type="Self.group" Multiplicity="1" />
+    <End Role="contraint_account_group" Type="Self.contraint_account_group" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="group">
+        <PropertyRef Name="Group1" />
+      </Principal>
+      <Dependent Role="contraint_account_group">
+        <PropertyRef Name="Group" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_contraint_function_childOfFunction_function">
+    <End Role="function" Type="Self.function" Multiplicity="1" />
+    <End Role="contraint_group_function_childOfFunction" Type="Self.contraint_group_function_childOfFunction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="function">
+        <PropertyRef Name="Function1" />
+      </Principal>
+      <Dependent Role="contraint_group_function_childOfFunction">
+        <PropertyRef Name="Function" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_contraint_function_childOfFunction_group">
+    <End Role="group" Type="Self.group" Multiplicity="1" />
+    <End Role="contraint_group_function_childOfFunction" Type="Self.contraint_group_function_childOfFunction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="group">
+        <PropertyRef Name="Group1" />
+      </Principal>
+      <Dependent Role="contraint_group_function_childOfFunction">
+        <PropertyRef Name="Group" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="dbContext" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="accounts" EntityType="Self.account" />
+    <EntitySet Name="childOfFunctions" EntityType="Self.childOfFunction" />
+    <EntitySet Name="contraint_account_function_childOfFunction" EntityType="Self.contraint_account_function_childOfFunction" />
+    <EntitySet Name="contraint_account_group" EntityType="Self.contraint_account_group" />
+    <EntitySet Name="contraint_group_function_childOfFunction" EntityType="Self.contraint_group_function_childOfFunction" />
+    <EntitySet Name="functions" EntityType="Self.function" />
+    <EntitySet Name="groups" EntityType="Self.group" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <AssociationSet Name="FK_contraint_account_group_account" Association="Self.FK_contraint_account_group_account">
+      <End Role="account" EntitySet="accounts" />
+      <End Role="contraint_account_group" EntitySet="contraint_account_group" />
+    </AssociationSet>
+    <AssociationSet Name="FK_contraint_account_group_function_childOfFunction_account" Association="Self.FK_contraint_account_group_function_childOfFunction_account">
+      <End Role="account" EntitySet="accounts" />
+      <End Role="contraint_account_function_childOfFunction" EntitySet="contraint_account_function_childOfFunction" />
+    </AssociationSet>
+    <AssociationSet Name="FK_contraint_account_group_function_childOfFunction_childOfFunction" Association="Self.FK_contraint_account_group_function_childOfFunction_childOfFunction">
+      <End Role="childOfFunction" EntitySet="childOfFunctions" />
+      <End Role="contraint_account_function_childOfFunction" EntitySet="contraint_account_function_childOfFunction" />
+    </AssociationSet>
+    <AssociationSet Name="FK_contraint_function_childOfFunction_childOfFunction" Association="Self.FK_contraint_function_childOfFunction_childOfFunction">
+      <End Role="childOfFunction" EntitySet="childOfFunctions" />
+      <End Role="contraint_group_function_childOfFunction" EntitySet="contraint_group_function_childOfFunction" />
+    </AssociationSet>
+    <AssociationSet Name="FK_contraint_account_group_function_childOfFunction_function" Association="Self.FK_contraint_account_group_function_childOfFunction_function">
+      <End Role="function" EntitySet="functions" />
+      <End Role="contraint_account_function_childOfFunction" EntitySet="contraint_account_function_childOfFunction" />
+    </AssociationSet>
+    <AssociationSet Name="FK_contraint_account_group_group" Association="Self.FK_contraint_account_group_group">
+      <End Role="group" EntitySet="groups" />
+      <End Role="contraint_account_group" EntitySet="contraint_account_group" />
+    </AssociationSet>
+    <AssociationSet Name="FK_contraint_function_childOfFunction_function" Association="Self.FK_contraint_function_childOfFunction_function">
+      <End Role="function" EntitySet="functions" />
+      <End Role="contraint_group_function_childOfFunction" EntitySet="contraint_group_function_childOfFunction" />
+    </AssociationSet>
+    <AssociationSet Name="FK_contraint_function_childOfFunction_group" Association="Self.FK_contraint_function_childOfFunction_group">
+      <End Role="group" EntitySet="groups" />
+      <End Role="contraint_group_function_childOfFunction" EntitySet="contraint_group_function_childOfFunction" />
+    </AssociationSet>
+    <FunctionImport Name="P_viewMenuPermission" ReturnType="Collection(Db_Permission_Model.P_viewMenuPermission_Result)">
+      <Parameter Name="Account" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="P_viewPagePermission" ReturnType="Collection(String)">
+      <Parameter Name="Account" Mode="In" Type="String" />
+      <Parameter Name="Function" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(Db_Permission_Model.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(Db_Permission_Model.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+  </EntityContainer>
+  <ComplexType Name="P_viewMenuPermission_Result">
+    <Property Type="String" Name="Function" Nullable="false" MaxLength="25" />
+    <Property Type="String" Name="Parent" Nullable="true" MaxLength="25" />
+    <Property Type="String" Name="Title" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Url" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+</Schema>

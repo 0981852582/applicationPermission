@@ -1,0 +1,90 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = null;
+}
+<!--
+    Author: W3layouts
+    Author URL: http://w3layouts.com
+    License: Creative Commons Attribution 3.0 Unported
+    License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <!-- custom-theme -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="Elegant Login Form Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+    <script type="application/x-javascript">
+        addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+               function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <!-- //custom-theme  -->
+    <link rel="stylesheet" href="~/Content/css-html-js-login/css/style.css">
+    <!-- font-awesome icons -->
+    <link href="~/Content/css-html-js-login/css/font-awesome.css" rel="stylesheet">
+    <!-- //font-awesome icons -->
+    <link href="~/Content/css-html-js-login/css?family=Montserrat:400,700" rel="stylesheet">
+    <script src="~/Content/assets/apps/library-angularjs/angular.js"></script>
+    <script src="~/Content/js-controller/js-common-funciton/js-common-function.js" type="text/javascript"></script>
+    <script>
+        var app = angular.module('myapp', []);
+        app.controller('controller', function ($scope, $http) {
+            var http = $http;
+            var trong = $scope;
+            trong.mode = {};
+            trong.eventEnter = function (event) {
+                if (event.keyCode == 13) {
+                    trong.submit();
+                }
+            }
+            trong.submit = function () {
+                trong.messageError = undefined;
+                if (isNotNull(trong.model.account) && isNotNull(trong.model.password)) {
+                    var login = {
+                        account: trong.model.account,
+                        password: trong.model.password
+                    }
+                    http.post('/Login/Login/', login).then(function (rs) {
+                        var object = rs.data;
+                        if (object.Error) {
+                            trong.model.password = undefined;
+                            trong.messageError = 'Đăng nhập không thành công.';
+                        } else {
+                            window.location.href = '/Home/';
+                        }
+                    });
+                } else {
+                    trong.messageError = '';
+                }
+            }
+        });
+    </script>
+</head>
+<body ng-app="myapp" ng-controller="controller">
+    <div class="login-form w3_form">
+        <!--  Title-->
+        <div class="login-title w3_title">
+            <h1>Elegant login Form</h1>
+        </div>
+        <div class="login w3_login">
+            <h2 class="login-header w3_header">Log in</h2>
+            <div class="w3l_grid">
+                <form class="login-container" action="#" method="post">
+                    <input type="text" placeholder="Tài khoản" Name="account" ng-model="model.account" ng-keypress="eventEnter($event)">
+                    <input type="password" placeholder="Mật khẩu" Name="password" ng-model="model.password" ng-keypress="eventEnter($event)">
+                    <button type="button" ng-click="submit()">Đăng nhập</button>
+                    <br />
+                    {{messageError}}
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <div class="footer-w3l">
+        <p class="agile"> &copy; 2017 Elegant Login Form . All Rights Reserved | Design by <a href="http://w3layouts.com">W3layouts</a></p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ApplicationWebsiteStoreContainer" CdmEntityContainer="dbContext">
+    <EntitySetMapping Name="accounts">
+      <EntityTypeMapping TypeName="ApplicationWebsite.account">
+        <MappingFragment StoreEntitySet="account">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Account1" ColumnName="Account" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="childOfFunctions">
+      <EntityTypeMapping TypeName="ApplicationWebsite.childOfFunction">
+        <MappingFragment StoreEntitySet="childOfFunction">
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ChildOfFunction1" ColumnName="ChildOfFunction" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="contraint_account_group">
+      <EntityTypeMapping TypeName="ApplicationWebsite.contraint_account_group">
+        <MappingFragment StoreEntitySet="contraint_account_group">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Account" ColumnName="Account" />
+          <ScalarProperty Name="Group" ColumnName="Group" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="contraint_function_childOfFunction">
+      <EntityTypeMapping TypeName="ApplicationWebsite.contraint_function_childOfFunction">
+        <MappingFragment StoreEntitySet="contraint_function_childOfFunction">
+          <ScalarProperty Name="Group" ColumnName="Group" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Function" ColumnName="Function" />
+          <ScalarProperty Name="ChildOfFunction" ColumnName="ChildOfFunction" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="contraint_group_function">
+      <EntityTypeMapping TypeName="ApplicationWebsite.contraint_group_function">
+        <MappingFragment StoreEntitySet="contraint_group_function">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Group" ColumnName="Group" />
+          <ScalarProperty Name="Function" ColumnName="Function" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="functions">
+      <EntityTypeMapping TypeName="ApplicationWebsite.function">
+        <MappingFragment StoreEntitySet="function">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Function1" ColumnName="Function" />
+          <ScalarProperty Name="Parent" ColumnName="Parent" />
+          <ScalarProperty Name="Url" ColumnName="Url" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="History" ColumnName="History" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="groups">
+      <EntityTypeMapping TypeName="ApplicationWebsite.group">
+        <MappingFragment StoreEntitySet="group">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Group1" ColumnName="Group" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="History" ColumnName="History" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="ApplicationWebsite.sysdiagram">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="contraint_account_group_function_childOfFunction">
+      <EntityTypeMapping TypeName="ApplicationWebsite.contraint_account_group_function_childOfFunction">
+        <MappingFragment StoreEntitySet="contraint_account_group_function_childOfFunction">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Account" ColumnName="Account" />
+          <ScalarProperty Name="Group" ColumnName="Group" />
+          <ScalarProperty Name="Function" ColumnName="Function" />
+          <ScalarProperty Name="ChildOfFunction" ColumnName="ChildOfFunction" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="check_permission_for_account" FunctionName="ApplicationWebsite.Store.check_permission_for_account" />
+    <FunctionImportMapping FunctionImportName="check_permission_of_childOfFunction" FunctionName="ApplicationWebsite.Store.check_permission_of_childOfFunction" />
+    <FunctionImportMapping FunctionImportName="check_permission_of_function" FunctionName="ApplicationWebsite.Store.check_permission_of_function" />
+    <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="ApplicationWebsite.Store.sp_alterdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="ApplicationWebsite.Store.sp_creatediagram" />
+    <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="ApplicationWebsite.Store.sp_dropdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="ApplicationWebsite.Store.sp_helpdiagramdefinition">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ApplicationWebsite.sp_helpdiagramdefinition_Result">
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="ApplicationWebsite.Store.sp_helpdiagrams">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ApplicationWebsite.sp_helpdiagrams_Result">
+          <ScalarProperty Name="Database" ColumnName="Database" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Owner" ColumnName="Owner" />
+          <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="ApplicationWebsite.Store.sp_renamediagram" />
+    <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="ApplicationWebsite.Store.sp_upgraddiagrams" />
+    <FunctionImportMapping FunctionImportName="P_viewMenuPermission" FunctionName="ApplicationWebsite.Store.P_viewMenuPermission">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ApplicationWebsite.P_viewMenuPermission_Result">
+          <ScalarProperty Name="Function" ColumnName="Function" />
+          <ScalarProperty Name="Parent" ColumnName="Parent" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Url" ColumnName="Url" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>
