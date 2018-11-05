@@ -1,78 +1,5 @@
 ﻿var controller = "ManagerFunction";
 var folderJs = "/Content/js-controller/manager_function/";
-app.directive('ngTable', function ($filter, $timeout) {
-    return {
-        require: 'ngModel',
-        link: function ($scope, $element, $attrs, ngModel) {
-            $scope.$watch($attrs['ngModel'], function (newvalue, oldvalue) {
-                if (newvalue != undefined) {
-                    if (isTypeOfArray(newvalue)) {
-                        var string = '<table class="table table-striped table-bordered table-hover table-checkable order-column dataTable no-footer" id="sample_1" role="grid" aria-describedby="sample_1_info">';
-                        // get header
-                        string += '<thead><tr>';
-                        for (var j = 0; j < newvalue.length; j++) {
-                            var styleClass = '';
-                            var hiden = false;
-                            var orderBy = false;
-                            var style = '';
-                            var id = '';
-                            if (newvalue[j]['hiden']) {
-                                hiden = true;
-                            }
-                            if (newvalue[j]['orderBy']) {
-                                orderBy = true;
-                            }
-                            if (isTypeOfArray(newvalue[j]['hiden'])) {
-                                hiden = true;
-                            }
-                            if (isTypeOfArray(newvalue[j]['class'])) {
-                                for (var iClass = 0; iClass < newvalue[j]['class'].length; iClass++) {
-                                    styleClass += newvalue[j]['class'][iClass] + ' ';
-                                }
-                            }
-                            if (isTypeOfArray(newvalue[j]['style'])) {
-                                for (var iStyle = 0; iStyle < newvalue[j]['style'].length; iStyle++) {
-                                    if (isTypeOfArray(newvalue[j]['style'][iStyle])) {
-                                        style += newvalue[j]['style'][iStyle][0] + ':' + newvalue[j]['style'][iStyle][1] + ';';
-                                    }
-                                }
-                            }
-                            if (isNotNull(newvalue[j]['id'])) {
-                                id = newvalue[j]['id'];
-                            }
-                            if (isNotNull(newvalue[j]['header']) && !newvalue[j]['hiden']) {
-                                string += '<td tabindex="0" id="' + id + '" class="' + styleClass + ' ' + (orderBy ? 'sorting' : '') + '" style="' + style + '">' + newvalue[j]['header'] + '</td>';
-                            }
-                        }
-                        string += '</tr></thead>';
-                        // get content
-                        var dataContent = [];
-                        var getSource = newvalue.filter(function (x) { return x.source != undefined });
-                        if (getSource.length > 0) {
-                            dataContent = getSource[0].source;
-                        }
-                        for (var i = 0; i < dataContent.length; i++) {
-                            string += '<tr>';
-                            for (var j = 0; j < newvalue.length; j++) {
-                                if (dataContent[i][newvalue[j]['column']] != undefined && !newvalue[j]['hiden']) {
-                                    string += '<td>' + dataContent[i][newvalue[j]['column']] + '</td>';
-                                }
-                            }
-                            string += '</tr>';
-                        }
-
-                        string += '</table>';
-                        $element.append(string);
-                        TableDatatablesManaged.init();
-                    }
-                }
-            }, true);
-            $('#example').DataTable();
-            $('#example').DataTable();
-        }
-
-    }
-});
 app.controller('managerFunction', function ($scope, $rootScope, $http, $timeout, $interval, $uibModal) {
     //
     var trong = $scope;
@@ -87,6 +14,7 @@ app.controller('managerFunction', function ($scope, $rootScope, $http, $timeout,
         numberPage: trong.settingOfPadding.numberPage,
         values: [],
         valueSearch: '',
+        location: trong.settingOfPadding.location,
         orderBy: trong.settingOfPadding.orderBy,
         orderType: trong.settingOfPadding.orderType,
         eventOrderBy: function (fieldOrder) {
@@ -105,7 +33,7 @@ app.controller('managerFunction', function ($scope, $rootScope, $http, $timeout,
                 this.currentPage = 1;
                 trong.isCheckAll = false;
             }
-            
+
             var parameter = {
                 skip: (this.currentPage - 1) * this.numberPage,
                 top: this.numberPage,
@@ -122,10 +50,11 @@ app.controller('managerFunction', function ($scope, $rootScope, $http, $timeout,
                     $timeout(function () {
                         this.values = [];
                         $this.values = rs.data.data;
-                        $this.totalItem = rs.data.totalItem;     
+                        $this.totalItem = rs.data.totalItem;
+                        $this.location = rs.data.location;
                         trong.offBlockUI('#dataTable');
                     }, 500);
-                    
+
                 }
             });
         }
@@ -172,4 +101,102 @@ app.controller('managerFunction', function ($scope, $rootScope, $http, $timeout,
             });
         });
     }
+
+    $scope.menuOptions = [
+        //api : html
+        //api : text
+        // NEW OBJECT BASED IMPLEMENTATION:
+        {
+            text: function ($itemScope) {
+                return '<i class="fa fa-eye"></i> Xem thông tin'
+            },
+            click: function ($itemScope) {
+                trong.dialogView($itemScope.item.Id);
+            },
+            displayed: function ($itemScope) {
+                return true;
+            },
+            enabled: function ($itemScope) {
+                return true;
+            },
+        },
+        {
+            text: '<i class="fa fa-edit"></i> Cập nhật thông tin',
+            click: function ($itemScope) {
+                trong.dialogEdit($itemScope.item.Id);
+            },
+            displayed: function ($itemScope) {
+                return true;
+            },
+            enabled: function ($itemScope) {
+                return true;
+            },
+        },
+        {
+            text: '<i class="fa fa-trash-o"></i> Xóa thông tin',
+            click: function ($itemScope) {
+
+            },
+            displayed: function ($itemScope) {
+                return true;
+            },
+            enabled: function ($itemScope) {
+                return true;
+            },
+        }
+    ];
+    // phần này để đổi sang các controller khác
+        // gọi controller view
+    trong.dialogView = function (id) {
+        /*begin modal*/
+        var modalInstance = $uibModal.open({
+            templateUrl: folderJs + 'view.html',
+            controller: 'view',
+            backdrop: 'static',
+            size: '60',
+            resolve: {
+                parameter: function () {
+                    return id;
+                }
+            }
+        });
+    };
+    trong.dialogEdit = function (id) {
+        /*begin modal*/
+        var modalInstance = $uibModal.open({
+            templateUrl: folderJs + 'edit.html',
+            controller: 'edit',
+            backdrop: 'static',
+            size: '60',
+            resolve: {
+                parameter: function () {
+                    return id;
+                }
+            }
+        });
+    };
+});
+
+// đây là controller view
+app.controller('view', function ($scope, $http, $uibModalInstance, $rootScope, parameter, toaster) {
+    $scope.title = "Xem thông tin chức năng.";
+    // function close dialog
+    $scope.ok = function () {
+        $uibModalInstance.close();
+    };
+    // function close dialog
+    $scope.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+    };
+});
+app.controller('edit', function ($scope, $http, $uibModalInstance, $rootScope, parameter, toaster) {
+    $scope.title = "Cập nhật thông tin chức năng.";
+    // function close dialog
+    $scope.ok = function () {
+        $uibModalInstance.close();
+    };
+    // function close dialog
+    $scope.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+    };
 });

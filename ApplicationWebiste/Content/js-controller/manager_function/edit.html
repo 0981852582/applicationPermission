@@ -1,0 +1,52 @@
+﻿<div class="modal-header ng-scope">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">×</button>
+    <h3 class="modal-title ng-binding" id="modal-title">{{title}}</h3>
+</div>
+<div class="modal-body ng-scope" id="modal-body">
+
+    <div class="portlet-body form">
+        <form name="openform" class="form-horizontal  form-bordered" method="post">
+            <div class="form-body">
+                <div class="form-group">
+                    <label class="control-label col-md-2">Tên vùng kinh tế</label>
+                    <div class="col-md-10">
+                        <input type="text" datetime-picker-only-date="f" ng-model="model.dateOfBirth" class="datetime-picker form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2">Thứ tự</label>
+                    <div class="col-md-4">
+                        <div class="textview">0</div>
+                    </div>
+                    <label class="control-label col-md-2">Trạng thái</label>
+                    <div class="col-md-4">
+                        <div class="textview">Sử dụng</div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="modal-footer ng-scope">
+    <div class="col-md-9" style="text-align: left; padding-left:0px; padding-right:0px">
+        <ul class="list-inline pull-left">
+            <li title="Người tạo" class="fontsmall ng-binding">
+                <i class="fa fa-user"></i>Ngươi tạo: dungdq
+            </li>
+            <li title="Ngày tạo" class="fontsmall ng-binding">
+                <i class="fa fa-calendar"></i>Ngày tạo: 20/11/2017 02:30
+            </li>
+            <li title="Người sửa" class="fontsmall ng-binding">
+                <i class="fa fa-user"></i>Người sửa: tiecqt@gmail.com
+            </li>
+            <li title="Ngày sửa" class="fontsmall ng-binding">
+                <i class="fa fa-calendar"></i>Ngày sửa: 06/04/2018 10:30
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-3 pull-right" style="padding-left:0px; padding-right:0px">
+        <a data-dismiss="modal" class="btn btn-default" href="javascript:;" ng-click="cancel()">
+            <i class="fa fa-times"></i> Đóng
+        </a>
+    </div>
+</div>

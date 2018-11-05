@@ -7,5 +7,6 @@
         public const string manager_city = "manager_city";
         public const string manager_permissionOfGroup = "manager_permissionOfGroup";
         public const string manager_permissionOfAccount = "manager_permissionOfAccount";
+        public const string manager_function = "manager_function";
     }
 }

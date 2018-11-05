@@ -13,6 +13,7 @@ namespace ApplicationWebiste.Controllers.Manager_Permission
     {
         dbContext _dbContext = new dbContext();
         // GET: ManagerFunction
+        [DataAccess(Function = FunctionNameOfSql.manager_function, childOfFunction = ChildOfFunctionNameOfSql.view)]
         public ActionResult Index()
         {
             return View();
@@ -26,7 +27,9 @@ namespace ApplicationWebiste.Controllers.Manager_Permission
             public string search { get; set; }
 
         }
+        
         [HttpPost]
+        [DataAccess(Function = FunctionNameOfSql.manager_function, childOfFunction = ChildOfFunctionNameOfSql.view)]
         public object DataTable(C_parameter_Datatable parameter)
         {
             var count = _dbContext.functions.Count(x => parameter.search == null ? 1 == 1 : x.Title.Contains(parameter.search));
@@ -43,7 +46,7 @@ namespace ApplicationWebiste.Controllers.Manager_Permission
             Take(parameter.top).
 
             ToList();
-            return Json(new { data = data, totalItem = count }, JsonRequestBehavior.AllowGet);
+            return Json(new { data = data, totalItem = count, location = Message_Count_Item_On_Table.createMessage(parameter.skip + 1, parameter.top, count) }, JsonRequestBehavior.AllowGet);
         }
     }
 }

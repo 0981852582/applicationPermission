@@ -53,7 +53,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="align-center gradeX" ng-class="$index % 2 == 0 ? 'odd':'even' " role="row" ng-repeat="item in dataTable.values">
+                        <tr context-menu="menuOptions" context-menu-empty-text="'SOME TEXT FOR EMPTY'" class="align-center gradeX" ng-class="$index % 2 == 0 ? 'odd':'even' " role="row" ng-repeat="item in dataTable.values">
                             <td class="align-center">
                                 <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
                                     <input type="checkbox" ng-model="item.isChecked" class="group-checkable" data-set="#sample_4 .checkboxes">
@@ -67,12 +67,12 @@
                             <td class="align-right">
                                 <div class="row">
                                     <div class="col-md-3">
-                                        <a class="btn btn-circle btn-icon-only btn-default button-icon-small" title="Xem" href="javascript:;">
+                                        <a ng-click="dialogView(item.Id)" class="btn btn-circle btn-icon-only btn-default button-icon-small" title="Xem" href="javascript:;">
                                             <i class="fa fa-eye"></i>
                                         </a>
                                     </div>
                                     <div class="col-md-3">
-                                        <a class="btn btn-circle btn-icon-only btn-default button-icon-small" title="Cập nhật" href="javascript:;">
+                                        <a ng-click="dialogEdit(item.Id)" class="btn btn-circle btn-icon-only btn-default button-icon-small" title="Cập nhật" href="javascript:;">
                                             <i class="fa fa-edit"></i>
                                         </a>
                                     </div>
@@ -93,7 +93,10 @@
                     </tbody>
                 </table>
                 <div class="row">
-                    <div class="col-md-12 align-right">
+                    <div class="col-md-4 align-left css-location-table">
+                        {{dataTable.location}}
+                    </div>
+                    <div class="col-md-8 align-right">
                         <uib-pagination ng-model="dataTable.currentPage"
                                         ng-change="dataTable.query()"
                                         items-per-page="dataTable.numberPage"
