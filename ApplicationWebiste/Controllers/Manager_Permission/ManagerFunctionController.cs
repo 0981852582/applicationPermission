@@ -1,5 +1,8 @@
 ﻿using ApplicationWebiste.Models;
 using ApplicationWebiste.Models.Custom_Model;
+using DocumentFormat.OpenXml;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Spreadsheet;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,11 +30,10 @@ namespace ApplicationWebiste.Controllers.Manager_Permission
             public string search { get; set; }
 
         }
-        
         [HttpPost]
         [DataAccess(Function = FunctionNameOfSql.manager_function, childOfFunction = ChildOfFunctionNameOfSql.view)]
         public object DataTable(C_parameter_Datatable parameter)
-        {
+        {            
             var count = _dbContext.functions.Count(x => parameter.search == null ? 1 == 1 : x.Title.Contains(parameter.search));
             var data = _dbContext.functions.Select(x => new
             {
@@ -48,5 +50,6 @@ namespace ApplicationWebiste.Controllers.Manager_Permission
             ToList();
             return Json(new { data = data, totalItem = count, location = Message_Count_Item_On_Table.createMessage(parameter.skip + 1, parameter.top, count) }, JsonRequestBehavior.AllowGet);
         }
+        
     }
 }

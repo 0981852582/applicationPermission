@@ -147,4 +147,15 @@ D:\DEV\ApplicationWebsite\applicationPermission\ApplicationWebiste\ApplicationWe
 D:\DEV\ApplicationWebsite\applicationPermission\ApplicationWebiste\ApplicationWebiste\obj\Debug\ApplicationWebiste.csproj.CopyComplete
 D:\DEV\ApplicationWebsite\applicationPermission\ApplicationWebiste\ApplicationWebiste\obj\Debug\ApplicationWebiste.dll
 D:\DEV\ApplicationWebsite\applicationPermission\ApplicationWebiste\ApplicationWebiste\obj\Debug\ApplicationWebiste.pdb
+D:\DEV\ApplicationWebsite\applicationPermission\ApplicationWebiste\ApplicationWebiste\bin\ClosedXML.dll
+D:\DEV\ApplicationWebsite\applicationPermission\ApplicationWebiste\ApplicationWebiste\bin\DocumentFormat.OpenXml.dll
+D:\DEV\ApplicationWebsite\applicationPermission\ApplicationWebiste\ApplicationWebiste\bin\ExcelNumberFormat.dll
+D:\DEV\ApplicationWebsite\applicationPermission\ApplicationWebiste\ApplicationWebiste\bin\FastMember.Signed.dll
+D:\DEV\ApplicationWebsite\applicationPermission\ApplicationWebiste\ApplicationWebiste\bin\System.IO.Packaging.dll
+D:\DEV\ApplicationWebsite\applicationPermission\ApplicationWebiste\ApplicationWebiste\bin\ClosedXML.pdb
+D:\DEV\ApplicationWebsite\applicationPermission\ApplicationWebiste\ApplicationWebiste\bin\ClosedXML.xml
+D:\DEV\ApplicationWebsite\applicationPermission\ApplicationWebiste\ApplicationWebiste\bin\DocumentFormat.OpenXml.xml
+D:\DEV\ApplicationWebsite\applicationPermission\ApplicationWebiste\ApplicationWebiste\bin\ExcelNumberFormat.xml
+D:\DEV\ApplicationWebsite\applicationPermission\ApplicationWebiste\ApplicationWebiste\bin\EPPlus.dll
+D:\DEV\ApplicationWebsite\applicationPermission\ApplicationWebiste\ApplicationWebiste\bin\EPPlus.xml
 D:\DEV\ApplicationWebsite\applicationPermission\ApplicationWebiste\ApplicationWebiste\obj\Debug\ApplicationWebiste.csprojAssemblyReference.cache
