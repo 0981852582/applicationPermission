@@ -11,7 +11,7 @@
         }
       };
 
-    })
+    })  
     .constant('ContextMenuEvents', {
       // Triggers when all the context menus have been closed
       ContextMenuAllClosed: 'context-menu-all-closed',
