@@ -1,4 +1,5 @@
-﻿var controller = "ManagerFunction";
+﻿// biến controller này là trên controller call server lấy data
+var controller = "ManagerFunction";
 var folderJs = "/Content/js-controller/manager_function/";
 app.controller('managerFunction', function ($scope, $rootScope, $http, $timeout, $interval, $uibModal) {
     //
@@ -190,7 +191,27 @@ app.controller('view', function ($scope, $http, $uibModalInstance, $rootScope, p
     };
 });
 app.controller('edit', function ($scope, $http, $uibModalInstance, $rootScope, parameter, toaster) {
+    var trong = $scope;
     $scope.title = "Cập nhật thông tin chức năng.";
+    trong.listSelected = [
+        {
+            id: undefined,
+            title : 'vui lòng chọn...'
+        },
+        {
+            id: 1,
+            title: 'item 1'
+        },
+        {
+            id: 2,
+            title: 'item 2'
+        },
+        {
+            id: 3,
+            title: 'item 3'
+        }
+    ];
+    trong.title = undefined;
     // function close dialog
     $scope.ok = function () {
         $uibModalInstance.close();

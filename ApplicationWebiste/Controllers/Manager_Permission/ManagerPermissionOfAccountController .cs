@@ -265,7 +265,7 @@ namespace ApplicationWebiste.Controllers
                 };
             };
             // return result datatype json
-            return Json(listAlterOrder, JsonRequestBehavior.AllowGet);
+            return Json(new { data = listAlterOrder }, JsonRequestBehavior.AllowGet);
         }
         public class C_parameterAccountToFilter
         {

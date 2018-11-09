@@ -212,6 +212,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\controller-directory\CityController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Login\LoginController.cs" />
     <Compile Include="Controllers\Manager_Permission\ManagerFunctionController.cs" />
@@ -258,10 +259,23 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>database.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\DataTable\DataTable.cs" />
+    <Compile Include="Models\Directory_City.cs">
+      <DependentUpon>database.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\function.cs">
       <DependentUpon>database.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\group.cs">
+      <DependentUpon>database.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\P_viewMenuPermission_Result.cs">
+      <DependentUpon>database.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>database.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_helpdiagrams_Result.cs">
       <DependentUpon>database.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sysdiagram.cs">
@@ -5656,6 +5670,11 @@
     <Content Include="Content\image-custom\group-512.png" />
     <Content Include="Content\js-controller\js-common-funciton\contextMenu.js" />
     <Content Include="Content\js-controller\js-common-funciton\js-common-function.js" />
+    <Content Include="Content\js-controller\directory-city\add.html" />
+    <Content Include="Content\js-controller\directory-city\controller.js" />
+    <Content Include="Content\js-controller\directory-city\edit.html" />
+    <Content Include="Content\js-controller\directory-city\index.html" />
+    <Content Include="Content\js-controller\directory-city\view.html" />
     <Content Include="Content\js-controller\manager_function\add.html" />
     <Content Include="Content\js-controller\manager_function\edit.html" />
     <Content Include="Content\js-controller\manager_permissionOfAccount\controller.js" />
@@ -5668,6 +5687,8 @@
     <Content Include="Content\js-controller\manager_permissionOfGroup\dialog-view-account.html" />
     <Content Include="Content\js-controller\manager_permissionOfGroup\index.html" />
     <Content Include="Content\plugin-datetimePicker\jquery.datetimepicker.css" />
+    <Content Include="Content\plugin-selectPicker\select.css" />
+    <Content Include="Content\plugin-selectPicker\select.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -6075,6 +6096,7 @@
     <Content Include="Views\ManagerPermissionOfAccount\Index.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\ManagerFunction\Index.cshtml" />
+    <Content Include="Views\City\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

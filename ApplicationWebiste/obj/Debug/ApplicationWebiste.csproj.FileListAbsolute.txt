@@ -159,3 +159,16 @@ D:\DEV\ApplicationWebsite\applicationPermission\ApplicationWebiste\ApplicationWe
 D:\DEV\ApplicationWebsite\applicationPermission\ApplicationWebiste\ApplicationWebiste\bin\EPPlus.dll
 D:\DEV\ApplicationWebsite\applicationPermission\ApplicationWebiste\ApplicationWebiste\bin\EPPlus.xml
 D:\DEV\ApplicationWebsite\applicationPermission\ApplicationWebiste\ApplicationWebiste\obj\Debug\ApplicationWebiste.csprojAssemblyReference.cache
+D:\DEV\ApplicationWebsite\applicationPermission\ApplicationWebiste\ApplicationWebiste\bin\Carbon.Data.Protection.dll
+D:\DEV\ApplicationWebsite\applicationPermission\ApplicationWebiste\ApplicationWebiste\bin\Carbon.Json.dll
+D:\DEV\ApplicationWebsite\applicationPermission\ApplicationWebiste\ApplicationWebiste\bin\Carbon.Packaging.dll
+D:\DEV\ApplicationWebsite\applicationPermission\ApplicationWebiste\ApplicationWebiste\bin\Carbon.Storage.dll
+D:\DEV\ApplicationWebsite\applicationPermission\ApplicationWebiste\ApplicationWebiste\bin\Carbon.VersionControl.dll
+D:\DEV\ApplicationWebsite\applicationPermission\ApplicationWebiste\ApplicationWebiste\bin\Carbon.Versioning.dll
+D:\DEV\ApplicationWebsite\applicationPermission\ApplicationWebiste\ApplicationWebiste\bin\GitHub.dll
+D:\DEV\ApplicationWebsite\applicationPermission\ApplicationWebiste\ApplicationWebiste\bin\System.Runtime.CompilerServices.Unsafe.dll
+D:\DEV\ApplicationWebsite\applicationPermission\ApplicationWebiste\ApplicationWebiste\bin\System.Text.Encodings.Web.dll
+D:\DEV\ApplicationWebsite\applicationPermission\ApplicationWebiste\ApplicationWebiste\bin\System.Threading.Tasks.Extensions.dll
+D:\DEV\ApplicationWebsite\applicationPermission\ApplicationWebiste\ApplicationWebiste\bin\System.Runtime.CompilerServices.Unsafe.xml
+D:\DEV\ApplicationWebsite\applicationPermission\ApplicationWebiste\ApplicationWebiste\bin\System.Text.Encodings.Web.xml
+D:\DEV\ApplicationWebsite\applicationPermission\ApplicationWebiste\ApplicationWebiste\bin\System.Threading.Tasks.Extensions.xml

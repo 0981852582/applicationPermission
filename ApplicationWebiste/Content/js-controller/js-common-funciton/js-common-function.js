@@ -13,6 +13,8 @@ var isNull = function (value) {
         if (value.length === 0) {
             return true;
         }
+    } else if (isTypeOfUndefined(value)) {
+        return true;
     }
     return false;
 }
@@ -58,6 +60,18 @@ var isNotTypeOfObject = function (value) {
     }
     return false;
 }
+var isTypeOfUndefined = function (value) {
+    if (typeof (value) === 'undefined') {
+        return true;
+    }
+    return false;
+}
+var isNotTypeOfUndefined = function (value) {
+    if (typeof (value) !== 'undefined') {
+        return true;
+    }
+    return false;
+}
 var isTypeOfArray = function (value) {
     if (typeof (value) === 'object') {
         try {
@@ -94,4 +108,13 @@ var isTypeOfNumberFloat = function (value) {
 var isNotTypeOfNumberFloat = function (value) {
     var regex = /^-?\d*\.?\d*$/
     return !regex.test(value);
+}
+var getB64Str = function (buffer) {
+    var binary = '';
+    var bytes = new Uint8Array(buffer);
+    var len = bytes.byteLength;
+    for (var i = 0; i < len; i++) {
+        binary += String.fromCharCode(bytes[i]);
+    }
+    return window.btoa(binary);
 }

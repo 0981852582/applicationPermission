@@ -67,3 +67,33 @@ app.directive('datetimePickerOnlyDate', ['$filter', function () {
         }
     };
 }]);
+app.directive("fileread", [function () {
+    return {
+        scope: {
+            fileread: "="
+        },
+        link: function (scope, element, attributes) {
+            element.bind("change", function (changeEvent) {
+                var reader = new FileReader();
+                var fileName = changeEvent.target.files[0].name;
+                var filetype = changeEvent.target.files[0].type;
+                
+                reader.onload = function (loadEvent) {
+                    scope.$apply(function () {
+                        var cont = loadEvent.target.result
+                        var base64String = getB64Str(cont);
+                        if (isNull(scope.fileread)) {
+                            scope.fileread = [];
+                        }
+                        scope.fileread.push({
+                            contentType: filetype,
+                            contentAsBase64String: base64String,
+                            fileName: fileName
+                        })
+                    });
+                }
+                reader.readAsArrayBuffer(changeEvent.target.files[0]);
+            });
+        }
+    }
+}]);

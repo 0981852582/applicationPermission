@@ -1,5 +1,6 @@
 ﻿using ApplicationWebiste.Models;
 using ApplicationWebiste.Models.Custom_Model;
+using ApplicationWebiste.Models.DataTable;
 using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
@@ -21,18 +22,10 @@ namespace ApplicationWebiste.Controllers.Manager_Permission
         {
             return View();
         }
-        public class C_parameter_Datatable
-        {
-            public int skip { get; set; }
-            public int top { get; set; }
-            public string orderBy { get; set; } = "Title";
-            public bool orderType { get; set; } = true;
-            public string search { get; set; }
-
-        }
+        
         [HttpPost]
         [DataAccess(Function = FunctionNameOfSql.manager_function, childOfFunction = ChildOfFunctionNameOfSql.view)]
-        public object DataTable(C_parameter_Datatable parameter)
+        public object DataTable(DataTable parameter)
         {            
             var count = _dbContext.functions.Count(x => parameter.search == null ? 1 == 1 : x.Title.Contains(parameter.search));
             var data = _dbContext.functions.Select(x => new

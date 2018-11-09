@@ -29,13 +29,13 @@ namespace ApplicationWebiste.Controllers.Login
                 if (data != null)
                 {
                     Session["informationOfAccount"] = data;
-                    msg.Title = "Dang nhap thanh cong";
+                    msg.Title = "Đăng nhập thành công";
                 }
                 else
                 {
                     msg.Error = true;
-                    msg.Title = "Login khong thanh cong";
-                    msg.Data = "khog ton tai khoan";
+                    msg.Title = "Đăng nhập không thành công";
+                    msg.Data = "Không tòn tại tài khoản";
                 }
 
             }
@@ -43,7 +43,7 @@ namespace ApplicationWebiste.Controllers.Login
             {
                 msg.Error = true;
                 msg.Data = ex;
-                msg.Title = "Login khong thanh cong";
+                msg.Title = "Đăng nhập không thành công";
             }
             return Json(msg, JsonRequestBehavior.AllowGet);
    
