@@ -77,7 +77,7 @@ app.directive("fileread", [function () {
                 var reader = new FileReader();
                 var fileName = changeEvent.target.files[0].name;
                 var filetype = changeEvent.target.files[0].type;
-                
+
                 reader.onload = function (loadEvent) {
                     scope.$apply(function () {
                         var cont = loadEvent.target.result
@@ -97,3 +97,34 @@ app.directive("fileread", [function () {
         }
     }
 }]);
+app.directive('displayHistory', function () {
+    return {
+        restrict: 'A',
+        template:
+            '<ul class="list-inline pull-left">' +
+            ' <li title="Người tạo" class="fontsmall ng-binding"  style="font-size :10px !important;">' +
+            ' <i class="fa fa-user"></i>Người tạo: {{H_createdBy}}' +
+            '  </li>' +
+            '<li title="Ngày tạo" class="fontsmall ng-binding"  style="font-size :10px !important;">' +
+            '<i class="fa fa-calendar"></i>Ngày tạo: {{H_createdDate}}' +
+            '   </li>' +
+            ' <li title="Người sửa" class="fontsmall ng-binding"  style="font-size :10px !important;">' +
+            ' <i class="fa fa-user"></i>Người sửa: {{H_modifiedBy}}' +
+            '  </li>' +
+            '  <li title="Ngày sửa" class="fontsmall ng-binding"  style="font-size :10px !important;">' +
+            '<i class="fa fa-calendar"></i>Ngày sửa: {{H_modifiedDate}}' +
+            '</li>' +
+            '</ul>',
+        link: function (scope, elem, attrs) {
+            scope.$watch(attrs.displayHistory, function (newvalue, oldvalue) {
+                if (newvalue != undefined) {
+                    scope.H_createdBy = newvalue.CreatedBy;
+                    scope.H_createdDate = newvalue.CreatedDateOfString;
+                    scope.H_modifiedDate = newvalue.ModifiedDateOfString;
+                    scope.H_modifiedBy = newvalue.ModifiedBy;
+                }
+            }, true);
+        }
+    }
+}
+)

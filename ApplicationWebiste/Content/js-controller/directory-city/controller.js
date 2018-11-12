@@ -35,9 +35,7 @@ app.controller('directoryCity', function ($scope, $rootScope, $http, $timeout, $
         query: function (isChangeCondition) {
             if (isChangeCondition) {
                 this.currentPage = 1;
-                trong.isCheckAll = false;
             }
-
             var parameter = {
                 skip: (this.currentPage - 1) * this.numberPage,
                 top: this.numberPage,
@@ -56,6 +54,7 @@ app.controller('directoryCity', function ($scope, $rootScope, $http, $timeout, $
                         $this.values = rs.data.data;
                         $this.totalItem = rs.data.totalItem;
                         $this.location = rs.data.location;
+                        trong.isCheckAll = false;
                         trong.offBlockUI('#dataTable');
                     }, 500);
 
@@ -64,9 +63,18 @@ app.controller('directoryCity', function ($scope, $rootScope, $http, $timeout, $
         }
     };
     $rootScope.dataTable.query();
-    trong.download = function () {
-        http.get("/" + controller + "/Download/").then(function (rs) {
-            window.location.href = "/City/Download";
+    trong.download = function (id) {
+        trong.onBlockUI('#dataTable', trong.variableMessageBlockUI);
+        http({
+            method: "GET",
+            url: "/" + controller + "/Download/" + id,
+        }).then(function (rs) {
+            if (isNotNull(rs.data)) {
+                window.location.href = "/City/Download/" + id;
+            } else {
+                trong.showMessageError("file không tồn tại");
+            }
+            trong.offBlockUI('#dataTable');
         });
     }
     console.log($scope.global_permission);
@@ -119,7 +127,7 @@ app.controller('directoryCity', function ($scope, $rootScope, $http, $timeout, $
                 trong.dialogView($itemScope.item.Id);
             },
             displayed: function ($itemScope) {
-                return true;
+                return trong.global_permission.view;
             },
             enabled: function ($itemScope) {
                 return true;
@@ -131,7 +139,7 @@ app.controller('directoryCity', function ($scope, $rootScope, $http, $timeout, $
                 trong.dialogEdit($itemScope.item.Id);
             },
             displayed: function ($itemScope) {
-                return true;
+                return trong.global_permission.edit;
             },
             enabled: function ($itemScope) {
                 return true;
@@ -143,7 +151,7 @@ app.controller('directoryCity', function ($scope, $rootScope, $http, $timeout, $
 
             },
             displayed: function ($itemScope) {
-                return true;
+                return trong.global_permission.delete;
             },
             enabled: function ($itemScope) {
                 return true;
@@ -195,15 +203,93 @@ app.controller('directoryCity', function ($scope, $rootScope, $http, $timeout, $
             }
         });
     };
+    trong.delete = function (id) {
+        trong.onBlockUI("#dataTable", trong.variableMessageBlockUI);
+        http({
+            method: "POST",
+            url: "/" + controller + "/Delete/",
+            dataType: 'json',
+            data: {
+                id: id,
+            },
+            headers: { "Content-Type": "application/json" }
+        }).then(function (rs) {
+            var result = rs.data;
+            if (isNull(result)) {
+                trong.showMessageError("Không có quyền thực hiện chức năng");
+            }else if (result.Error) {
+                trong.showMessageError(result.Title);
+            } else {
+                trong.showMessageSuccess(result.Title);
+            }
+            $rootScope.reload();
+        });
+    }
+    trong.deleteArray = function () {
+        var message
+        if (isNotTypeOfArray(trong.dataTable.values)) {
+            trong.showMessageError('Không có bản ghi nào được chọn');
+            return;
+        }
+        var deleteArray = trong.dataTable.values.filter(function (value) { return value.isChecked == true });
+        if (deleteArray.length == 0) {
+            trong.showMessageError('Không có bản ghi nào được chọn');
+            return;
+        }
+        var idArray = [];
+        for (var i = 0; i < deleteArray.length; i++) {
+            idArray.push(deleteArray[i].Id);
+        }
+        trong.onBlockUI("#dataTable", trong.variableMessageBlockUI);
+        http({
+            method: "POST",
+            url: "/" + controller + "/DeleteArray/",
+            dataType: 'json',
+            data: {
+                idArray: idArray,
+            },
+            headers: { "Content-Type": "application/json" }
+        }).then(function (rs) {
+            var result = rs.data;
+            if (isNull(result)) {
+                trong.showMessageError("Không có quyền thực hiện chức năng");
+            }else if (result.Error) {
+                trong.showMessageError(result.Title);
+            } else {
+                trong.showMessageSuccess(result.Title);
+            }
+            $rootScope.reload();
+        });
+    }
 });
 
 // đây là controller view
-app.controller('view', function ($scope, $http, $uibModalInstance, $rootScope, parameter, toaster) {
-    $scope.title = "Xem thông tin chức năng.";
+app.controller('view', function ($scope, $http, $uibModalInstance, $rootScope, parameter, toaster, $interval, $timeout) {
+    var trong = $scope;
+    var timeout = $timeout;
+    var interval = $interval;
+    var http = $http;
+    trong.title = "Xem thông tin (Tỉnh / Thành phố).";
     // function close dialog
-    $scope.ok = function () {
+    trong.ok = function () {
         $uibModalInstance.close();
     };
+    trong.init = function () {
+        trong.onBlockUI("#modal-body", trong.variableMessageBlockUI);
+        http({
+            method: "POST",
+            url: "/" + controller + "/GetItem/",
+            dataType: 'json',
+            data: {
+                id: parameter,
+            },
+            headers: { "Content-Type": "application/json" }
+        }).then(function (rs) {
+            trong.model = rs.data;
+            trong.offBlockUI("#modal-body");
+        });
+    }
+    trong.init();
     // function close dialog
     $scope.cancel = function () {
         $uibModalInstance.dismiss('cancel');
@@ -242,13 +328,15 @@ app.controller('add', function ($scope, $http, $uibModalInstance, $rootScope, $t
             headers: { "Content-Type": "application/json" }
         }).then(function (rs) {
             var result = rs.data;
-            if (result.Error) {
+            if (isNull(result)) {
+                trong.showMessageError("Không có quyền thực hiện chức năng");
+            } else if (result.Error) {
                 trong.showMessageError(result.Title);
             } else {
                 trong.showMessageSuccess(result.Title);
+                $rootScope.reload();
+                $scope.cancel();
             }
-            $rootScope.reload();
-            $scope.cancel();
         });
     }
 });
@@ -259,7 +347,7 @@ app.controller('edit', function ($scope, $http, $uibModalInstance, $rootScope, p
     var interval = $interval;
     var http = $http;
     trong.model = {};
-    $scope.title = "Cập nhật thông tin chức năng.";
+    $scope.title = "Cập nhật thông tin (Tỉnh / Thành phố).";
     trong.listSelected = [
         {
             id: undefined,
@@ -307,16 +395,17 @@ app.controller('edit', function ($scope, $http, $uibModalInstance, $rootScope, p
             headers: { "Content-Type": "application/json" }
         }).then(function (rs) {
             var result = rs.data;
-            if (result.Error) {
+            if (isNull(result)) {
+                trong.showMessageError("Không có quyền thực hiện chức năng");
+            }else if (result.Error) {
                 trong.showMessageError(result.Title);
             } else {
                 trong.showMessageSuccess(result.Title);
+                $rootScope.reload();
+                $scope.cancel();
             }
-            $rootScope.reload();
-            $scope.cancel();
         });
     }
-    trong.title = undefined;
     // function close dialog
     $scope.ok = function () {
         $uibModalInstance.close();

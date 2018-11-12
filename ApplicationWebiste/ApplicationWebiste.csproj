@@ -240,6 +240,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Custom-Model\Action-Permission-Before\DataAccess.cs" />
+    <Compile Include="Models\Custom-Model\Entity-Database\Directory_City_Extend.cs" />
     <Compile Include="Models\Custom-Model\Entity-Message\Message-Count-Item-On-Table.cs" />
     <Compile Include="Models\Custom-Model\Entity-Message\Message.cs" />
     <Compile Include="Models\Custom-Model\Get-Data-From-Database\GetFunctionOfPagePermission.cs" />

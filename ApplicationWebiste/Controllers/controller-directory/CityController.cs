@@ -23,6 +23,8 @@ namespace ApplicationWebiste.Controllers.Manager_Permission
         public const string City_Message_UpdateSuccess = "Cập nhật (Tỉnh / Thành phố) thành công";
         public const string City_Message_UpdateError = "Cập nhật (Tỉnh / Thành phố) không thành công";
         public const string City_Message_DeleteSuccess = "Xóa (Tỉnh / Thành phố) thành công";
+        public const string City_Message_NotExistItem = "(Tỉnh / Thành phố) không tồn tại";
+        public const string City_Message_ExistsedCity = "Mã (Tỉnh / Thành phố) đã tồn tại";
         public const string City_Message_DeleteError = "Xóa (Tỉnh / Thành phố) không thành công";
         public const string City_Message_DeleteListSuccess = "Xóa danh sách (Tỉnh / Thành phố) thành công";
         public const string City_Message_DeleteListError = "Xóa danh sách (Tỉnh / Thành phố) không thành công";
@@ -59,14 +61,20 @@ namespace ApplicationWebiste.Controllers.Manager_Permission
         [DataAccess(Function = FunctionNameOfSql.manager_city, childOfFunction = ChildOfFunctionNameOfSql.view)]
         public object GetItem(int id)
         {
-            var result = _dbContext.Directory_City.Select(x=>new {
-                x.ID,
-                x.Title,
-                x.Description,
-                x.FileName,
-                x.Status,
-                x.City
-            }).SingleOrDefault(x=>x.ID == id);
+            var result = _dbContext.Directory_City.Select(x => new Directory_City_Extend
+            {
+                ID = x.ID,
+                Title = x.Title,
+                Description = x.Description,
+                FileName = x.FileName,
+                Status = x.Status,
+                City = x.City,
+                ModifiedDate = x.ModifiedDate,
+                CreatedDate = x.CreatedDate,
+                ModifiedBy = x.ModifiedBy,
+                CreatedBy = x.CreatedBy,
+                StatusTitle = (x.Status == 1 ? "Sử dụng" : x.Status == 2 ? "Không sử dụng" : "")
+            }).SingleOrDefault(x => x.ID == id);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
         public class FileModel
@@ -85,34 +93,45 @@ namespace ApplicationWebiste.Controllers.Manager_Permission
             Message msg = new Message { Error = false };
             try
             {
-                if (files == null)
+                if (getNotExistsCityWhenInsert(item.City))
                 {
-                    files = new List<FileModel>();
+                    if (files == null)
+                    {
+                        item.FileName = null;
+                        files = new List<FileModel>();
+                    }
+                    foreach (var file in files)
+                    {
+                        var filecontent = file.contentAsBase64String;
+                        var filetype = file.contentType;
+                        var filename = file.fileName;
+
+                        var bytes = Convert.FromBase64String(filecontent);
+                        item.Attach = bytes;
+                        item.FileName = file.fileName;
+                    }
+                    item.CreatedBy = ((account)Session["informationOfAccount"]).Account1;
+                    item.CreatedDate = DateTime.Now;
+                    item.ModifiedBy = ((account)Session["informationOfAccount"]).Account1;
+                    item.ModifiedDate = DateTime.Now;
+                    _dbContext.Directory_City.Add(item);
+                    _dbContext.SaveChanges();
+
+                    msg.Title = City_Message_InsertSuccess;
                 }
-                foreach (var file in files)
+                else
                 {
-                    var filecontent = file.contentAsBase64String;
-                    var filetype = file.contentType;
-                    var filename = file.fileName;
-
-                    var bytes = Convert.FromBase64String(filecontent);
-                    item.Attach = bytes;
-                    item.FileName = file.fileName;
-
-
+                    msg.Title = City_Message_ExistsedCity;
+                    msg.Error = true;
                 }
-                _dbContext.Directory_City.Add(item);
-                _dbContext.SaveChanges();
-
-                msg.Title = City_Message_InsertSuccess;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 msg.Title = City_Message_InsertErrror;
                 msg.Error = true;
-                msg.Data = ex;
+                msg.Data = ex.ToString();
             }
-            return Json(msg , JsonRequestBehavior.AllowGet);
+            return Json(msg, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
         [DataAccess(Function = FunctionNameOfSql.manager_city, childOfFunction = ChildOfFunctionNameOfSql.edit)]
@@ -121,47 +140,181 @@ namespace ApplicationWebiste.Controllers.Manager_Permission
             Message msg = new Message { Error = false };
             try
             {
-                if(files == null)
+                if (getNotExistsCityWhenUpdate(item.ID, item.City))
                 {
-                    files = new List<FileModel>();
-                }   
-                foreach (var file in files)
-                {
-                    var filecontent = file.contentAsBase64String;
-                    var filetype = file.contentType;
-                    var filename = file.fileName;
+                    if (files == null)
+                    {
+                        files = new List<FileModel>();
+                    }
+                    foreach (var file in files)
+                    {
+                        var filecontent = file.contentAsBase64String;
+                        var filetype = file.contentType;
+                        var filename = file.fileName;
 
-                    var bytes = Convert.FromBase64String(filecontent);
-                    item.Attach = bytes;
-                    item.FileName = file.fileName;
+                        var bytes = Convert.FromBase64String(filecontent);
+                        item.Attach = bytes;
+                        item.FileName = file.fileName;
+                    }
+                    _dbContext.Directory_City.Add(item);
+                    _dbContext.Entry(item).State = EntityState.Modified;
+                    _dbContext.Entry(item).Property(x => x.ID).IsModified = false;
+                    _dbContext.Entry(item).Property(x => x.History).IsModified = false;
+                    _dbContext.Entry(item).Property(x => x.FileName).IsModified = false;
+                    _dbContext.Entry(item).Property(x => x.Attach).IsModified = false;
+                    _dbContext.Entry(item).Property(x => x.CreatedBy).IsModified = false;
+                    _dbContext.Entry(item).Property(x => x.CreatedDate).IsModified = false;
+                    item.ModifiedBy = ((account)Session["informationOfAccount"]).Account1;
+                    item.ModifiedDate = DateTime.Now;
+                    _dbContext.SaveChanges();
+
+                    msg.Title = City_Message_UpdateSuccess;
                 }
-                _dbContext.Directory_City.Add(item);
-                _dbContext.Entry(item).State = EntityState.Modified;
-                _dbContext.Entry(item).Property(x => x.ID).IsModified = false;
-                _dbContext.Entry(item).Property(x => x.History).IsModified = false;
-                _dbContext.Entry(item).Property(x => x.FileName).IsModified = false;
-                _dbContext.Entry(item).Property(x => x.Attach).IsModified = false;
-                _dbContext.Entry(item).Property(x => x.CreatedBy).IsModified = false;
-                _dbContext.Entry(item).Property(x => x.CreatedDate).IsModified = false;
-                _dbContext.SaveChanges();
-
-                msg.Title = City_Message_UpdateSuccess;
+                else
+                {
+                    msg.Title = City_Message_ExistsedCity;
+                    msg.Error = true;
+                }
             }
             catch (Exception ex)
             {
                 msg.Title = City_Message_UpdateError;
                 msg.Error = true;
-                msg.Data = ex;
+                msg.Data = ex.ToString();
+            }
+            return Json(msg, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        [DataAccess(Function = FunctionNameOfSql.manager_city, childOfFunction = ChildOfFunctionNameOfSql.delete)]
+        public object Delete(int id)
+        {
+            Message msg = new Message { Error = false };
+            try
+            {
+
+                Directory_City item = _dbContext.Directory_City.SingleOrDefault(x => x.ID == id);
+                if (item != null)
+                {
+                    _dbContext.Directory_City.Remove(item);
+                    _dbContext.SaveChanges();
+                    msg.Title = City_Message_DeleteSuccess;
+                }
+                else
+                {
+                    msg.Title = City_Message_NotExistItem;
+                    msg.Error = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                msg.Title = City_Message_DeleteSuccess;
+                msg.Error = true;
+                msg.Data = ex.ToString();
+            }
+            return Json(msg, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        [DataAccess(Function = FunctionNameOfSql.manager_city, childOfFunction = ChildOfFunctionNameOfSql.delete)]
+        public object DeleteArray(List<int> idArray)
+        {
+            Message msg = new Message { Error = false };
+            try
+            {
+
+                List<Directory_City> arrayDelete = new List<Directory_City>();
+                foreach (var item in idArray)
+                {
+                    arrayDelete.Add(_dbContext.Directory_City.SingleOrDefault(x => x.ID == item));
+                }
+
+                _dbContext.Directory_City.RemoveRange(arrayDelete);
+                _dbContext.SaveChanges();
+                msg.Title = City_Message_DeleteListSuccess;
+            }
+            catch (Exception ex)
+            {
+                msg.Title = City_Message_DeleteListError;
+                msg.Error = true;
+                msg.Data = ex.ToString();
             }
             return Json(msg, JsonRequestBehavior.AllowGet);
         }
         [HttpGet]
         [DataAccess(Function = FunctionNameOfSql.manager_city, childOfFunction = ChildOfFunctionNameOfSql.export)]
-        public FileResult Download()
+        public FileResult Download(int id)
         {
-            var infoOfFile  = _dbContext.Directory_City.Select(x=>new { x.Attach,x.FileName }).FirstOrDefault();
-            byte[] contents = infoOfFile.Attach;
-            return File(infoOfFile.Attach, "application/pdf", infoOfFile.FileName);
-}
+            var infoOfFile = _dbContext.Directory_City.Select(x => new { x.ID, x.Attach, x.FileName }).FirstOrDefault(x => x.ID == id);
+            if (infoOfFile.FileName != null && infoOfFile.Attach != null)
+            {
+                byte[] contents = infoOfFile.Attach;
+                return File(infoOfFile.Attach, "application/xlsx", infoOfFile.FileName);
+            }
+            return null;
+        }
+        /// <summary>
+        /// kiểm tra xem đã tồn tại mã tỉnh thành phố bằng column city
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [DataAccess(Function = FunctionNameOfSql.manager_city, childOfFunction = ChildOfFunctionNameOfSql.view)]
+        public bool getExistsCityWhenInsert(string id)
+        {
+            var result = _dbContext.Directory_City.Count(x => x.City == id.Trim());
+            if (result > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+        /// <summary>
+        /// kiểm tra xem đã tồn tại mã tỉnh thành phố bằng column city
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="city"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [DataAccess(Function = FunctionNameOfSql.manager_city, childOfFunction = ChildOfFunctionNameOfSql.view)]
+        public bool getExistsCityWhenUpdate(int id, string city)
+        {
+            var result = _dbContext.Directory_City.Count(x => x.City == city.Trim() && x.ID != id);
+            if (result > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+        /// <summary>
+        /// kiểm tra xem đã tồn tại mã tỉnh thành phố bằng column city
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [DataAccess(Function = FunctionNameOfSql.manager_city, childOfFunction = ChildOfFunctionNameOfSql.view)]
+        public bool getNotExistsCityWhenInsert(string id)
+        {
+            var result = _dbContext.Directory_City.Count(x => x.City == id.Trim());
+            if (result > 0)
+            {
+                return false;
+            }
+            return true;
+        }
+        /// <summary>
+        /// kiểm tra xem đã tồn tại mã tỉnh thành phố bằng column city
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [DataAccess(Function = FunctionNameOfSql.manager_city, childOfFunction = ChildOfFunctionNameOfSql.view)]
+        public bool getNotExistsCityWhenUpdate(int id, string city)
+        {
+            var result = _dbContext.Directory_City.Count(x => x.City == city.Trim() && x.ID != id);
+            if (result > 0)
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }

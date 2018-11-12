@@ -207,6 +207,9 @@ License: You must have a valid license purchased only from themeforest(the above
             $rootScope.showMessageError = function (content, timeShow) {
                 toaster.pop("error", "", content, isNull(timeShow) ? 1000 : timeShow, null);
             }
+            $rootScope.showMessageWarning = function (content, timeShow) {
+                toaster.pop("Warning", "", content, isNull(timeShow) ? 1000 : timeShow, null);
+            }
             // hàm bật blockUI lên giao diện khi loading
             $rootScope.onBlockUI = function (element, message) {
                 $timeout(function () {

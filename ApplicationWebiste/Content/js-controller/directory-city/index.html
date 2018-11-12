@@ -21,13 +21,13 @@
             <div class="portlet-title">
                 <div class="caption">
                     <i class=" icon-layers font-green"></i>
-                    <span class="caption-subject font-green sbold uppercase">Quản lý chức năng</span>
+                    <span class="caption-subject font-green sbold uppercase">Quản lý danh mục (Tỉnh / Thành phố)</span>
                 </div>
                 <div class="actions">
                     <a class="btn btn-circle btn-icon-only btn-default" ng-click="dialogAdd()"  ng-if="global_permission.add" title="Thêm mới" href="javascript:;">
                         <i class="fa fa-plus"></i>
                     </a>
-                    <a class="btn btn-circle btn-icon-only btn-default" title="Xóa" href="javascript:;">
+                    <a ng-if="global_permission.delete"   ng-click="deleteArray()" class="btn btn-circle btn-icon-only btn-default" title="Xóa" href="javascript:;">
                         <i class="icon-trash"></i>
                     </a>
                 </div>
@@ -77,12 +77,12 @@
                                         </a>
                                     </div>
                                     <div class="col-md-3">
-                                        <a  ng-if="global_permission.delete" class="btn btn-circle btn-icon-only btn-default button-icon-small" title="Xóa" href="javascript:;">
+                                        <a ng-click="delete(item.Id)" ng-if="global_permission.delete" class="btn btn-circle btn-icon-only btn-default button-icon-small" title="Xóa" href="javascript:;">
                                             <i class="fa fa-trash-o"></i>
                                         </a>
                                     </div>
                                     <div class="col-md-3">
-                                        <a ng-click="download()"  ng-if="global_permission.export" class="btn btn-circle btn-icon-only btn-default button-icon-small" title="Xóa" href="javascript:;">
+                                        <a ng-click="download(item.Id)"  ng-if="global_permission.export" class="btn btn-circle btn-icon-only btn-default button-icon-small" title="Xóa" href="javascript:;">
                                             <i class="fa fa-download"></i>
                                         </a>
                                     </div>

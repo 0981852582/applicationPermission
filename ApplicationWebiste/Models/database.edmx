@@ -56,7 +56,6 @@
         <EntityType Name="Directory_City">
           <Key>
             <PropertyRef Name="City" />
-            <PropertyRef Name="Title" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="City" Type="varchar" MaxLength="8" Nullable="false" />
@@ -501,7 +500,6 @@
         <EntityType Name="Directory_City">
           <Key>
             <PropertyRef Name="City" />
-            <PropertyRef Name="Title" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="City" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />

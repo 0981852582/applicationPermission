@@ -51,7 +51,6 @@
   <EntityType Name="Directory_City">
     <Key>
       <PropertyRef Name="City" />
-      <PropertyRef Name="Title" />
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="City" Type="varchar" MaxLength="8" Nullable="false" />

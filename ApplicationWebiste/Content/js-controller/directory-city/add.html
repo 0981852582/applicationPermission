@@ -25,7 +25,7 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-2">Đính kèm</label>
-                        <div class="col-md-1">
+                        <div class="col-md-2">
                             <input type="file" id="file-7" class="inputfile inputfile-6 display-hide" fileread="model.Attach" />
                             <label for="file-7">
                                 <strong>
@@ -34,7 +34,7 @@
                                 </strong>
                             </label>
                         </div>
-                        <div class="col-md-9">
+                        <div class="col-md-8">
                             <font ng-repeat="item in model.Attach" class="display-box-radius-warning" title="File này chưa được lưu xuống">
                                 <a href="javascript:;" class="color-black">{{item.fileName}}</a>
                                 <i class="fa fa-close cursor color-black" ng-click="model.Attach.splice($index,1)" title="Xóa file này"></i>
@@ -59,20 +59,6 @@
     </div>
     <div class="modal-footer ng-scope">
         <div class="col-md-9" style="text-align: left; padding-left:0px; padding-right:0px">
-            <ul class="list-inline pull-left">
-                <li title="Người tạo" class="fontsmall ng-binding">
-                    <i class="fa fa-user"></i>Ngươi tạo: dungdq
-                </li>
-                <li title="Ngày tạo" class="fontsmall ng-binding">
-                    <i class="fa fa-calendar"></i>Ngày tạo: 20/11/2017 02:30
-                </li>
-                <li title="Người sửa" class="fontsmall ng-binding">
-                    <i class="fa fa-user"></i>Người sửa: tiecqt@gmail.com
-                </li>
-                <li title="Ngày sửa" class="fontsmall ng-binding">
-                    <i class="fa fa-calendar"></i>Ngày sửa: 06/04/2018 10:30
-                </li>
-            </ul>
         </div>
         <div class="col-md-3 pull-right" style="padding-left:0px; padding-right:0px">
             <a class="btn btn-primary" href="javascript:;" ng-click="submit()">
