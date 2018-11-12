@@ -56,6 +56,9 @@ License: You must have a valid license purchased only from themeforest(the above
     <link href="~/Content/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/assets/global/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/plugin-datetimePicker/jquery.datetimepicker.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/css-input-file/normalize.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/css-input-file/demo.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/css-input-file/component.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style type="text/css">
         ::-webkit-scrollbar {
@@ -94,6 +97,50 @@ License: You must have a valid license purchased only from themeforest(the above
         .css-location-table {
             font-size: 12px;
         }
+
+        .display-hide {
+            display: none !important;
+        }
+
+        .display-block {
+            display: block !important;
+        }
+
+        .display-box-radius-success {
+            border-radius: 2px;
+            margin-right: 2px;
+            background-color: #d0f0fe;
+            color: #f1f1f1;
+            margin-top: 2px;
+            display: inline-block;
+            padding: 1px 5px 1px 5px;
+        }
+
+        .display-box-radius-warning {
+            border-radius: 2px;
+            margin-right: 2px;
+            background-color: #fcecb8;
+            color: #f1f1f1;
+            margin-top: 2px;
+            display: inline-block;
+            padding: 1px 5px 1px 5px;
+        }
+
+        .cursor {
+            cursor: pointer !important;
+        }
+
+        .color-white {
+            color: #ffffff !important;
+        }
+
+        .color-black {
+            color: #000000 !important;
+        }
+
+        .underline-text {
+            text-decoration: underline;
+        }
     </style>
     <!-- END THEME LAYOUT STYLES -->
     <link rel="shortcut icon" href="favicon.ico" />
@@ -128,6 +175,7 @@ License: You must have a valid license purchased only from themeforest(the above
     <script src="~/Content/assets/global/plugins/bootstrap-table/bootstrap-table.min.js" type="text/javascript"></script>
     <script src="~/Content/plugin-datetimePicker/php-date-formatter.min.js" type="text/javascript"></script>
     <script src="~/Content/plugin-datetimePicker/jquery.datetimepicker.js" type="text/javascript"></script>
+    <script src="~/Content/css-input-file/custom-file-input.js" type="text/javascript"></script>
     <!-- END THEME LAYOUT SCRIPTS -->
     <!-- BEGIN LIBRARY ANGULARJS  -->
     <script src="~/Content/js-controller/js-common-funciton/js-common-function.js" type="text/javascript"></script>
@@ -144,8 +192,8 @@ License: You must have a valid license purchased only from themeforest(the above
         app.controller('viewMenuPermission', function ($scope, $rootScope, $timeout, $interval, $http, toaster) {
             // khai báo những biết sử dụng chung trong tất cả function
             $rootScope.variableMessageBlockUI = 'Đang tải dữ liệu ...';
-            // khai báo biến chứa mảng danh sách sử dụng 
-            $rootScope.listStatus = [            
+            // khai báo biến chứa mảng danh sách sử dụng
+            $rootScope.listStatus = [
                 { Id: 1, Title: 'Sử dụng' },
                 { Id: 2, Title: 'Không sử dụng' }
             ];
@@ -161,13 +209,17 @@ License: You must have a valid license purchased only from themeforest(the above
             }
             // hàm bật blockUI lên giao diện khi loading
             $rootScope.onBlockUI = function (element, message) {
-                App.blockUI({
-                    target: element, boxed: !0, message: message
-                });
+                $timeout(function () {
+                    App.blockUI({
+                        target: element, boxed: !0, message: message
+                    });
+                }, 1);
             }
             // hàm tất blockUI trên giao diện khi loading
             $rootScope.offBlockUI = function (element) {
-                App.unblockUI(element);
+                $timeout(function () {
+                    App.unblockUI(element);
+                }, 1);
             }
             try {
                 // lấy giá trị của ô input hidden có chứa các quyền của page này.

@@ -22,7 +22,7 @@ namespace ApplicationWebiste.Models.Custom_Model
                 return string.Format(TitleEmpty);
             }
             // trường hợp là page cuối cùng top có khả năng lớn hơn total nên chỉ lấy đến total
-            if(top > total)
+            if(top + skip > total)
             {
                 return string.Format(Title,skip,total,total);
             }

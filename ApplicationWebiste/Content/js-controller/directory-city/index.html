@@ -24,7 +24,7 @@
                     <span class="caption-subject font-green sbold uppercase">Quản lý chức năng</span>
                 </div>
                 <div class="actions">
-                    <a class="btn btn-circle btn-icon-only btn-default" ng-click="dialogAdd()" title="Thêm mới" href="javascript:;">
+                    <a class="btn btn-circle btn-icon-only btn-default" ng-click="dialogAdd()"  ng-if="global_permission.add" title="Thêm mới" href="javascript:;">
                         <i class="fa fa-plus"></i>
                     </a>
                     <a class="btn btn-circle btn-icon-only btn-default" title="Xóa" href="javascript:;">
@@ -67,20 +67,25 @@
                             <td class="align-right">
                                 <div class="row">
                                     <div class="col-md-3">
-                                        <a ng-click="dialogView(item.Id)" class="btn btn-circle btn-icon-only btn-default button-icon-small" title="Xem" href="javascript:;">
+                                        <a  ng-if="global_permission.view" ng-click="dialogView(item.Id)" class="btn btn-circle btn-icon-only btn-default button-icon-small" title="Xem" href="javascript:;">
                                             <i class="fa fa-eye"></i>
                                         </a>
                                     </div>
                                     <div class="col-md-3">
-                                        <a ng-click="dialogEdit(item.Id)" class="btn btn-circle btn-icon-only btn-default button-icon-small" title="Cập nhật" href="javascript:;">
+                                        <a  ng-if="global_permission.edit" ng-click="dialogEdit(item.Id)" class="btn btn-circle btn-icon-only btn-default button-icon-small" title="Cập nhật" href="javascript:;">
                                             <i class="fa fa-edit"></i>
                                         </a>
                                     </div>
                                     <div class="col-md-3">
-                                        <a class="btn btn-circle btn-icon-only btn-default button-icon-small" title="Xóa" href="javascript:;">
+                                        <a  ng-if="global_permission.delete" class="btn btn-circle btn-icon-only btn-default button-icon-small" title="Xóa" href="javascript:;">
                                             <i class="fa fa-trash-o"></i>
                                         </a>
-                                    </div>                                    
+                                    </div>
+                                    <div class="col-md-3">
+                                        <a ng-click="download()"  ng-if="global_permission.export" class="btn btn-circle btn-icon-only btn-default button-icon-small" title="Xóa" href="javascript:;">
+                                            <i class="fa fa-download"></i>
+                                        </a>
+                                    </div>
                                 </div>
 
                             </td>

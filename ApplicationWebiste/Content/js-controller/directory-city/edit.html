@@ -1,57 +1,89 @@
-﻿<div class="modal-header ng-scope">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">×</button>
-    <h3 class="modal-title ng-binding" id="modal-title">{{title}}</h3>
-</div>
-<div class="modal-body ng-scope" id="modal-body">
-
-    <div class="portlet-body form">
-        <form name="openform" class="form-horizontal  form-bordered" method="post">
-            <div class="form-body">
-                <div class="form-group">
-                    <label class="control-label col-md-2">Tên vùng kinh tế</label>
-                    <div class="col-md-10">
-                        <input type="text" datetime-picker-full="f" ng-model="model.dateOfBirth" class="datetime-picker form-control" />
+﻿<div id="modal-body">
+    <div class="modal-header ng-scope">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">×</button>
+        <h3 class="modal-title ng-binding" id="modal-title">{{title}}</h3>
+    </div>
+    <div class="modal-body ng-scope">
+        <div class="portlet-body form">
+            <form name="openform" class="form-horizontal  form-bordered" method="post">
+                <div class="form-body">
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Mã Tỉnh</label>
+                        <div class="col-md-2">
+                            <input type="text" ng-model="model.City" placeholder="Mã (Tỉnh / Thành phố)" maxlength="8" class="form-control" />
+                        </div>
+                        <label class="control-label col-md-2">Tên Tỉnh</label>
+                        <div class="col-md-6">
+                            <input type="text" ng-model="model.Title" placeholder="Tên (Tỉnh / Thành phố)" maxlength="25" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Mô tả</label>
+                        <div class="col-md-10">
+                            <textarea type="text" ng-model="model.Description" placeholder="Mô tả (Tỉnh / Thành phố)" class="form-control" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Đính kèm</label>
+                        <div class="col-md-1">
+                            <input type="file" id="file-7" class="inputfile inputfile-6 display-hide" fileread="model.Attach" />
+                            <label for="file-7">
+                                <strong>
+                                    Đính kèm
+                                    <i class="fa fa-cloud-upload"></i>
+                                </strong>
+                            </label>
+                        </div>
+                        <div class="col-md-9">
+                            <font class="display-box-radius-success" title="File này đã được lưu xuống">
+                                <a href="javascript:;" class="color-black">{{model.FileName}}</a>
+                                <i ng-if="model.FileName != undefired" class="fa fa-close cursor color-black" ng-click="model.Attach.splice($index,1)" title="Xóa file này"></i>
+                            </font>
+                            <font ng-repeat="item in model.Attach" class="display-box-radius-warning" title="File này chưa được lưu xuống">
+                                <a href="javascript:;" class="color-black">{{item.fileName}}</a>
+                                <i class="fa fa-close cursor color-black" ng-click="model.Attach.splice($index,1)" title="Xóa file này"></i>
+                            </font>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Trạng thái</label>
+                        <div class="col-md-10">
+                            <ui-select ng-model="model.Status">
+                                <ui-select-match placeholder="Chọn trạng thái...">{{$select.selected.Title}}</ui-select-match>
+                                <ui-select-choices repeat="x.Id as x in listStatus | filter:$select.search">
+                                    {{x.Title}}
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="control-label col-md-2">Thứ tự</label>
-                    <div class="col-md-4">
-                        <ui-select ng-model="title" name="MaNCC" class="" style="width: 100%;">
-                            <ui-select-match placeholder="Chọn nhà cung cấp...">{{$select.selected.title}}</ui-select-match>
-                            <ui-select-choices repeat="x.id as x in listSelected | filter:$select.search">
-                                {{x.title}}
-                            </ui-select-choices>
-                        </ui-select>
-                    </div>
-                    <label class="control-label col-md-2">Trạng thái</label>
-                    <div class="col-md-4">
-                        <div class="textview">Sử dụng</div>
-                    </div>
-                </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
-</div>
-<div class="modal-footer ng-scope">
-    <div class="col-md-9" style="text-align: left; padding-left:0px; padding-right:0px">
-        <ul class="list-inline pull-left">
-            <li title="Người tạo" class="fontsmall ng-binding">
-                <i class="fa fa-user"></i>Ngươi tạo: dungdq
-            </li>
-            <li title="Ngày tạo" class="fontsmall ng-binding">
-                <i class="fa fa-calendar"></i>Ngày tạo: 20/11/2017 02:30
-            </li>
-            <li title="Người sửa" class="fontsmall ng-binding">
-                <i class="fa fa-user"></i>Người sửa: tiecqt@gmail.com
-            </li>
-            <li title="Ngày sửa" class="fontsmall ng-binding">
-                <i class="fa fa-calendar"></i>Ngày sửa: 06/04/2018 10:30
-            </li>
-        </ul>
-    </div>
-    <div class="col-md-3 pull-right" style="padding-left:0px; padding-right:0px">
-        <a data-dismiss="modal" class="btn btn-default" href="javascript:;" ng-click="cancel()">
-            <i class="fa fa-times"></i> Đóng
-        </a>
+    <div class="modal-footer ng-scope">
+        <div class="col-md-9" style="text-align: left; padding-left:0px; padding-right:0px">
+            <ul class="list-inline pull-left">
+                <li title="Người tạo" class="fontsmall ng-binding">
+                    <i class="fa fa-user"></i>Ngươi tạo: dungdq
+                </li>
+                <li title="Ngày tạo" class="fontsmall ng-binding">
+                    <i class="fa fa-calendar"></i>Ngày tạo: 20/11/2017 02:30
+                </li>
+                <li title="Người sửa" class="fontsmall ng-binding">
+                    <i class="fa fa-user"></i>Người sửa: tiecqt@gmail.com
+                </li>
+                <li title="Ngày sửa" class="fontsmall ng-binding">
+                    <i class="fa fa-calendar"></i>Ngày sửa: 06/04/2018 10:30
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-3 pull-right" style="padding-left:0px; padding-right:0px">
+            <a class="btn btn-primary" href="javascript:;" ng-click="submit()">
+                <i class="fa fa-calendar-plus-o"></i> Cập nhật
+            </a>
+            <a data-dismiss="modal" class="btn btn-danger" href="javascript:;" ng-click="cancel()">
+                <i class="fa fa-times"></i> Đóng
+            </a>
+        </div>
     </div>
 </div>

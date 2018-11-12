@@ -5667,6 +5667,10 @@
     <Content Include="Content\css-html-js-login\css\style.css" />
     <Content Include="Content\css-html-js-login\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\css-html-js-login\images\bg2.jpeg" />
+    <Content Include="Content\css-input-file\component.css" />
+    <Content Include="Content\css-input-file\custom-file-input.js" />
+    <Content Include="Content\css-input-file\demo.css" />
+    <Content Include="Content\css-input-file\normalize.css" />
     <Content Include="Content\image-custom\group-512.png" />
     <Content Include="Content\js-controller\js-common-funciton\contextMenu.js" />
     <Content Include="Content\js-controller\js-common-funciton\js-common-function.js" />

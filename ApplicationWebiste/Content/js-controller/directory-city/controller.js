@@ -64,7 +64,11 @@ app.controller('directoryCity', function ($scope, $rootScope, $http, $timeout, $
         }
     };
     $rootScope.dataTable.query();
-
+    trong.download = function () {
+        http.get("/" + controller + "/Download/").then(function (rs) {
+            window.location.href = "/City/Download";
+        });
+    }
     console.log($scope.global_permission);
     trong.checkAll = function () {
         for (var i = 0; i < trong.dataTable.values.length; i++) {
@@ -249,8 +253,12 @@ app.controller('add', function ($scope, $http, $uibModalInstance, $rootScope, $t
     }
 });
 // đây là controller edit
-app.controller('edit', function ($scope, $http, $uibModalInstance, $rootScope, parameter, toaster) {
+app.controller('edit', function ($scope, $http, $uibModalInstance, $rootScope, parameter, toaster, $timeout, $interval) {
     var trong = $scope;
+    var timeout = $timeout;
+    var interval = $interval;
+    var http = $http;
+    trong.model = {};
     $scope.title = "Cập nhật thông tin chức năng.";
     trong.listSelected = [
         {
@@ -270,6 +278,44 @@ app.controller('edit', function ($scope, $http, $uibModalInstance, $rootScope, p
             title: 'item 3'
         }
     ];
+    trong.init = function () {
+        trong.onBlockUI("#modal-body", trong.variableMessageBlockUI);
+        http({
+            method: "POST",
+            url: "/" + controller + "/GetItem/",
+            dataType: 'json',
+            data: {
+                id: parameter,
+            },
+            headers: { "Content-Type": "application/json" }
+        }).then(function (rs) {
+            trong.model = rs.data;
+            trong.offBlockUI("#modal-body");
+        });
+    }
+    trong.init();
+    trong.submit = function () {
+        var arrayFile = $scope.model.Attach;
+        var post = $http({
+            method: "POST",
+            url: "/" + controller + "/Update/",
+            dataType: 'json',
+            data: {
+                files: arrayFile,
+                item: $scope.model
+            },
+            headers: { "Content-Type": "application/json" }
+        }).then(function (rs) {
+            var result = rs.data;
+            if (result.Error) {
+                trong.showMessageError(result.Title);
+            } else {
+                trong.showMessageSuccess(result.Title);
+            }
+            $rootScope.reload();
+            $scope.cancel();
+        });
+    }
     trong.title = undefined;
     // function close dialog
     $scope.ok = function () {
