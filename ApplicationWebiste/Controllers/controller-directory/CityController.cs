@@ -146,22 +146,36 @@ namespace ApplicationWebiste.Controllers.Manager_Permission
                     {
                         files = new List<FileModel>();
                     }
-                    foreach (var file in files)
-                    {
-                        var filecontent = file.contentAsBase64String;
-                        var filetype = file.contentType;
-                        var filename = file.fileName;
-
-                        var bytes = Convert.FromBase64String(filecontent);
-                        item.Attach = bytes;
-                        item.FileName = file.fileName;
-                    }
                     _dbContext.Directory_City.Add(item);
+
                     _dbContext.Entry(item).State = EntityState.Modified;
+                    if (files.Count > 0)
+                    {
+                        // trường hợp chưa có file và thêm mới file
+                        foreach (var file in files)
+                        {
+                            var filecontent = file.contentAsBase64String;
+                            var filetype = file.contentType;
+                            var filename = file.fileName;
+                            var bytes = Convert.FromBase64String(filecontent);
+                            item.Attach = bytes;
+                            item.FileName = file.fileName;
+                        }
+                    }
+                    else if (item.FileName == null && files.Count == 0)
+                    {
+                        // trường hợp xóa file đã tồn tại và không thêm file mới vào
+                        item.FileName = null;
+                        item.Attach = null;
+                    }
+                    else if (item.FileName != null && files.Count == 0)
+                    {
+                        // trường hợp không thay đổi gì cả
+                        _dbContext.Entry(item).Property(x => x.Attach).IsModified = false;
+                        _dbContext.Entry(item).Property(x => x.FileName).IsModified = false;
+                    }
                     _dbContext.Entry(item).Property(x => x.ID).IsModified = false;
                     _dbContext.Entry(item).Property(x => x.History).IsModified = false;
-                    _dbContext.Entry(item).Property(x => x.FileName).IsModified = false;
-                    _dbContext.Entry(item).Property(x => x.Attach).IsModified = false;
                     _dbContext.Entry(item).Property(x => x.CreatedBy).IsModified = false;
                     _dbContext.Entry(item).Property(x => x.CreatedDate).IsModified = false;
                     item.ModifiedBy = ((account)Session["informationOfAccount"]).Account1;

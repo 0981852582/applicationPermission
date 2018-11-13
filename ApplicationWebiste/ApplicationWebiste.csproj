@@ -5674,6 +5674,7 @@
     <Content Include="Content\css-input-file\normalize.css" />
     <Content Include="Content\image-custom\group-512.png" />
     <Content Include="Content\js-controller\js-common-funciton\contextMenu.js" />
+    <Content Include="Content\js-controller\js-common-funciton\custom-validate-form.js" />
     <Content Include="Content\js-controller\js-common-funciton\js-common-function.js" />
     <Content Include="Content\js-controller\directory-city\add.html" />
     <Content Include="Content\js-controller\directory-city\controller.js" />

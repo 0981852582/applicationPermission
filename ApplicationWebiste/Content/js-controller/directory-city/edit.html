@@ -16,7 +16,7 @@
                         </div>
                         <label class="control-label col-md-2">Tên Tỉnh</label>
                         <div class="col-md-6">
-                            <input type="text" ng-model="model.Title" placeholder="Tên (Tỉnh / Thành phố)" maxlength="25" class="form-control" />
+                            <input type="text" name="Title" ng-model="model.Title" placeholder="Tên (Tỉnh / Thành phố)" maxlength="25" class="form-control" />
                         </div>
                     </div>
                     <div class="form-group">
@@ -28,7 +28,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-2">Đính kèm</label>
                         <div class="col-md-2">
-                            <input type="file" id="file-7" class="inputfile inputfile-6 display-hide" fileread="model.Attach" />
+                            <input type="file" id="file-7" class="inputfile inputfile-6 display-hide" filereadsinger="model.Attach" />
                             <label for="file-7">
                                 <strong>
                                     Đính kèm
@@ -37,9 +37,9 @@
                             </label>
                         </div>
                         <div class="col-md-8">
-                            <font  ng-if="model.FileName != undefired" class="display-box-radius-success" title="File này đã được lưu xuống">
+                            <font  ng-if="model.FileName != undefined" class="display-box-radius-success" title="File này đã được lưu xuống">
                                 <a href="javascript:;" class="color-black">{{model.FileName}}</a>
-                                <i class="fa fa-close cursor color-black" ng-click="model.Attach.splice($index,1)" title="Xóa file này"></i>
+                                <i class="fa fa-close cursor color-black" ng-click="model.FileName = undefined" title="Xóa file này"></i>
                             </font>
                             <font ng-repeat="item in model.Attach" class="display-box-radius-warning" title="File này chưa được lưu xuống">
                                 <a href="javascript:;" class="color-black">{{item.fileName}}</a>

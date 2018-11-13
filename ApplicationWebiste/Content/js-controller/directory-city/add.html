@@ -10,11 +10,11 @@
                     <div class="form-group">
                         <label class="control-label col-md-2">Mã Tỉnh</label>
                         <div class="col-md-2">
-                            <input type="text" ng-model="model.City" placeholder="Mã (Tỉnh / Thành phố)" maxlength="8" class="form-control" />
+                            <input type="text" name="City" ng-model="model.City" placeholder="Mã (Tỉnh / Thành phố)" maxlength="8" class="form-control" />
                         </div>
                         <label class="control-label col-md-2">Tên Tỉnh</label>
                         <div class="col-md-6">
-                            <input type="text" ng-model="model.Title" placeholder="Tên (Tỉnh / Thành phố)" maxlength="25" class="form-control" />
+                            <input type="text" name="Title" ng-model="model.Title" placeholder="Tên (Tỉnh / Thành phố)" maxlength="25" class="form-control" />
                         </div>
                     </div>
                     <div class="form-group">
@@ -26,7 +26,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-2">Đính kèm</label>
                         <div class="col-md-2">
-                            <input type="file" id="file-7" class="inputfile inputfile-6 display-hide" fileread="model.Attach" />
+                            <input type="file" id="file-7" class="inputfile inputfile-6 display-hide" filereadsinger="model.Attach" />
                             <label for="file-7">
                                 <strong>
                                     Đính kèm

@@ -187,6 +187,8 @@ License: You must have a valid license purchased only from themeforest(the above
 
     <!-- END   LIBRARY ANGULARJS -->
     <script>
+        var idOfDialog = "#modal-body";
+        var idOfDataTable = "#dataTable";
         var grobal_permission = undefined;
         var app = angular.module('app-module', ['ui.bootstrap', 'toaster', 'ui.bootstrap.contextMenu', 'ui.select']);
         app.controller('viewMenuPermission', function ($scope, $rootScope, $timeout, $interval, $http, toaster) {
@@ -743,6 +745,7 @@ License: You must have a valid license purchased only from themeforest(the above
 </html>
 @*custom directive of angularjs*@
 <script src="~/Content/js-controller/js-common-funciton/cusom-common-directive.js"></script>
+<script src="~/Content/js-controller/js-common-funciton/custom-validate-form.js"></script>
 <script>
     $(document).ready(function () {
         $('.sorting').click(function () {
