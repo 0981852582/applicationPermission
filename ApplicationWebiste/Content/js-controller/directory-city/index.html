@@ -24,10 +24,13 @@
                     <span class="caption-subject font-green sbold uppercase">Quản lý danh mục (Tỉnh / Thành phố)</span>
                 </div>
                 <div class="actions">
-                    <a class="btn btn-circle btn-icon-only btn-default" ng-click="dialogAdd()"  ng-if="global_permission.add" title="Thêm mới" href="javascript:;">
+                    <a class="btn btn-circle btn-icon-only btn-default" ng-click="dialogAdd()" ng-if="global_permission.add" title="Thêm mới" href="javascript:;">
                         <i class="fa fa-plus"></i>
                     </a>
-                    <a ng-if="global_permission.delete"   ng-click="deleteArray()" class="btn btn-circle btn-icon-only btn-default" title="Xóa" href="javascript:;">
+                    <a class="btn btn-circle btn-icon-only btn-default" ng-click="dialogAddByImport()" ng-if="global_permission.add" title="Thêm mới bằng file import dữ liệu" href="javascript:;">
+                        <i class="fa fa-calendar-plus-o"></i>
+                    </a>
+                    <a ng-if="global_permission.delete" ng-click="deleteArray()" class="btn btn-circle btn-icon-only btn-default" title="Xóa" href="javascript:;">
                         <i class="icon-trash"></i>
                     </a>
                 </div>
@@ -62,7 +65,7 @@
                             </td>
                             <td class="align-center"> {{((dataTable.currentPage - 1) * dataTable.numberPage) + $index + 1}} </td> 
                             <td class="align-left">
-                                {{item.Title}}
+                                <a href="javascript:;">{{item.Title}}</a>
                             </td>
                             <td class="align-right">
                                 <div class="row">

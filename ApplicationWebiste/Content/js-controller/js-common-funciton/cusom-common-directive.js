@@ -127,6 +127,37 @@ app.directive("filereadmulti", [function () {
         }
     }
 }]);
+// đọc file thực hiện import
+app.directive("filereadqueryimport", [function () {
+    return {
+        scope: {
+            filereadqueryimport: "="
+        },
+        link: function (scope, element, attributes) {
+            element.bind("change", function (changeEvent) {
+                var reader = new FileReader();
+                var fileName = changeEvent.target.files[0].name;
+                var filetype = changeEvent.target.files[0].type;
+                var input = changeEvent.target;
+                var reader = new FileReader();
+                reader.onload = function () {
+                    var fileData = reader.result;
+                    var wb = XLSX.read(fileData, { type: 'binary' });
+
+                    wb.SheetNames.forEach(function (sheetName) {
+                        var rowObj = XLSX.utils.sheet_to_row_object_array(wb.Sheets[sheetName]);
+                        scope.$apply(function () {
+                            scope.filereadqueryimport = rowObj;
+                        });
+                        var jsonObj = JSON.stringify(rowObj);
+                        console.log(jsonObj);
+                    })
+                };
+                reader.readAsBinaryString(input.files[0]);
+            });
+        }
+    }
+}]);
 app.directive('displayHistory', function () {
     return {
         restrict: 'A',

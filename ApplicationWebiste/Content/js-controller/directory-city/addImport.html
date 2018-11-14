@@ -1,0 +1,43 @@
+﻿<div id="modal-body">
+    <div class="modal-header ng-scope">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">×</button>
+        <h3 class="modal-title ng-binding" id="modal-title">{{title}}</h3>
+    </div>
+    <div class="modal-body ng-scope">
+        <div class="portlet-body form">
+            <form name="openform" class="form-horizontal  form-bordered" method="post">
+                <div class="form-body">
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Đính kèm</label>
+                        <div class="col-md-10">
+                            <input type="file" id="file-7" class="inputfile inputfile-6 display-hide" filereadqueryimport="model.listNew" />
+                            <label for="file-7">
+                                <strong>
+                                    Đính kèm
+                                    <i class="fa fa-cloud-upload"></i>
+                                </strong>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            {{model.listNew}}
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="modal-footer ng-scope">
+        <div class="col-md-9" style="text-align: left; padding-left:0px; padding-right:0px">
+        </div>
+        <div class="col-md-3 pull-right" style="padding-left:0px; padding-right:0px">
+            <a class="btn btn-primary" href="javascript:;" ng-click="submit()">
+                <i class="fa fa-calendar-plus-o"></i> Thêm mới
+            </a>
+            <a data-dismiss="modal" class="btn btn-danger" href="javascript:;" ng-click="cancel()">
+                <i class="fa fa-times"></i> Đóng
+            </a>
+        </div>
+    </div>
+</div>
