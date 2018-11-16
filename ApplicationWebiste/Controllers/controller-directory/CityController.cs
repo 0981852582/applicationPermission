@@ -20,6 +20,8 @@ namespace ApplicationWebiste.Controllers.Manager_Permission
         dbContext _dbContext = new dbContext();
         public const string City_Message_InsertSuccess = "Thêm mới (Tỉnh / Thành phố) thành công";
         public const string City_Message_InsertErrror = "Thêm mới (Tỉnh / Thành phố) không thành công";
+        public const string City_Message_InsertImportSuccess = "Thêm mới (Tỉnh / Thành phố) bằng file thành công";
+        public const string City_Message_InsertImportErrror = "Thêm mới (Tỉnh / Thành phố) bằng file không thành công";
         public const string City_Message_UpdateSuccess = "Cập nhật (Tỉnh / Thành phố) thành công";
         public const string City_Message_UpdateError = "Cập nhật (Tỉnh / Thành phố) không thành công";
         public const string City_Message_DeleteSuccess = "Xóa (Tỉnh / Thành phố) thành công";
@@ -46,6 +48,7 @@ namespace ApplicationWebiste.Controllers.Manager_Permission
             var data = _dbContext.Directory_City.Select(x => new
             {
                 Id = x.ID,
+                City = x.City,
                 Title = x.Title,
                 Description = x.Description,
                 x.History
@@ -131,6 +134,39 @@ namespace ApplicationWebiste.Controllers.Manager_Permission
                 msg.Error = true;
                 msg.Data = ex.ToString();
             }
+            return Json(msg, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        [DataAccess(Function = FunctionNameOfSql.manager_city, childOfFunction = ChildOfFunctionNameOfSql.import)]
+        public object InsertImport(List<Directory_City> file)
+        {
+            Message msg = new Message { Error = false };
+            using (DbContextTransaction dbTran = _dbContext.Database.BeginTransaction())
+            {
+                try
+                {
+                    List<Directory_City> parameter = JsonConvert.DeserializeObject<List<Directory_City>>(Request.Form["file"]);
+                    foreach(var item in parameter)
+                    {
+                        item.CreatedBy = ((account)Session["informationOfAccount"]).Account1;
+                        item.CreatedDate = DateTime.Now;
+                        item.ModifiedBy = ((account)Session["informationOfAccount"]).Account1;
+                        item.ModifiedDate = DateTime.Now;
+                    }
+                    _dbContext.Directory_City.AddRange(parameter);
+                    _dbContext.SaveChanges();
+                    dbTran.Commit();
+                    msg.Title = City_Message_InsertImportSuccess;
+                }
+                catch (Exception ex)
+                {
+                    msg.Title = City_Message_InsertImportErrror;
+                    msg.Error = true;
+                    msg.Data = ex.ToString();
+                    dbTran.Rollback();
+                }
+            }
+
             return Json(msg, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]

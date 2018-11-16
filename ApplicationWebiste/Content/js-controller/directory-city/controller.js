@@ -347,7 +347,7 @@ app.controller('add', function ($scope, $http, $uibModalInstance, $rootScope, $t
             Place: "col-md-6"
         }
     ];
-    $scope.title = "Thên mới thông tin (Tỉnh / Thành phố).";
+    $scope.title = "Thêm mới thông tin (Tỉnh / Thành phố).";
     $scope.model = {
         Status: 1
 
@@ -398,43 +398,83 @@ app.controller('addImport', function ($scope, $http, $uibModalInstance, $rootSco
     var timeout = $timeout;
     var interval = $interval;
     var http = $http;
+    $rootScope.validationOptions = [
+        {
+            Title: 'City',
+            rule: {
+                Required: true,
+                Maxlength: 8,
+                Special: true
+            },
+            message: {
+                Required: "Mã (Tỉnh / Thành phố) không được để trống.",
+                Maxlength: "Mã (Tỉnh / Thành phố) không được lớn hơn 8 ký tự.",
+                Special: 'Mã (Tỉnh / Thành phố) không được có ký tự đặc biệt.'
+            },
+            Place: "col-md-2"
+        },
+        {
+            Title: 'Title',
+            rule: {
+                Required: true,
+                Maxlength: 25
+            },
+            message: {
+                Required: "Tên (Tỉnh / Thành phố ) không được để trống.",
+                Maxlength: "Tên (Tỉnh / Thành phố ) không được lớn hơn 25 ký tự."
+            },
+            Place: "col-md-6"
+        }
+    ];
     // khai báo biến validate trên form edit mode
-    $scope.title = "Thên mới thông tin (Tỉnh / Thành phố) bằng File.";
+    $scope.title = "Thêm mới thông tin (Tỉnh / Thành phố) bằng File.";
     // function close dialog
     $scope.cancel = function () {
         $uibModalInstance.dismiss('cancel');
     };
-    $scope.submit = function () {
-        $rootScope.validateForm($scope.model, function (rs) {
-            if (rs) {
-                var arrayFile = $scope.model.Attach;
-                trong.onBlockUI(idOfDialog, trong.variableMessageBlockUI);
-                var post = $http({
-                    method: "POST",
-                    url: "/" + controller + "/Insert/",
-                    dataType: 'json',
-                    data: {
-                        files: arrayFile,
-                        item: $scope.model
-                    },
-                    headers: { "Content-Type": "application/json" }
-                }).then(function (rs) {
-                    var result = rs.data;
-                    if (isNull(result)) {
-                        trong.showMessageError("Không có quyền thực hiện chức năng");
-                    } else if (result.Error) {
-                        trong.showMessageError(result.Title);
-                    } else {
-                        trong.showMessageSuccess(result.Title);
-                        $rootScope.reload();
-                        $scope.cancel();
+    $scope.validateForm = function () {
+        var flag = true;
+        for (var i = 0; i < trong.model.listNew.length; i++) {
+            $rootScope.validateForm(trong.model.listNew[i], function (rs) {
+                if (!rs) {
+                    trong.model.listNew[i].statusError = true;
+                    if (flag) {
+                        angular.element('[id="' + trong.model.listNew[i].idDOM + '"]').focus();
                     }
-                    trong.offBlockUI(idOfDialog);
-                });
-            }
-        }, true);
+                    flag = false;
+                } else {
+                    trong.model.listNew[i].statusError = undefined;
+                }
+            },true);
+        }
+        return flag;
     }
-    
+    $scope.submit = function () {
+        var validate = $scope.validateForm();
+        if (!validate) {
+            return;
+        }
+        var fd = new FormData();
+        fd.append('file', JSON.stringify(trong.model.listNew));
+        trong.onBlockUI(idOfDialog, trong.variableMessageBlockUI);
+        $http.post("/" + controller + "/InsertImport/", fd, {
+            transformRequest: angular.identity,
+            headers: { 'Content-Type': undefined }
+        }).then(function (rs) {
+            var result = rs.data;
+            if (isNull(result)) {
+                trong.showMessageError("Không có quyền thực hiện chức năng");
+            } else if (result.Error) {
+                trong.showMessageError(result.Title);
+            } else {
+                trong.showMessageSuccess(result.Title);
+                $rootScope.reload();
+                $scope.cancel();
+            }
+            trong.offBlockUI(idOfDialog);
+        });
+    }
+
 });
 // đây là controller edit
 app.controller('edit', function ($scope, $http, $uibModalInstance, $rootScope, parameter, toaster, $timeout, $interval) {
