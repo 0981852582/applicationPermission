@@ -153,6 +153,7 @@ namespace ApplicationWebiste.Controllers.Manager_Permission
                         item.ModifiedBy = ((account)Session["informationOfAccount"]).Account1;
                         item.ModifiedDate = DateTime.Now;
                     }
+                    
                     _dbContext.Directory_City.AddRange(parameter);
                     _dbContext.SaveChanges();
                     dbTran.Commit();
@@ -365,6 +366,40 @@ namespace ApplicationWebiste.Controllers.Manager_Permission
                 return false;
             }
             return true;
+        }
+        /// <summary>
+        /// check exists city code in table City
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns>true false</returns>
+        [HttpPost]
+        public int CountItemByCity(string parameter)
+        {
+            if (parameter != null)
+            {
+                return _dbContext.Directory_City.Count(x => x.City == parameter.Trim());
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        /// <summary>
+        /// check exists title code in table City
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns>true false</returns>
+        [HttpPost]
+        public int CountItemByTitle(string parameter)
+        {
+            if (parameter != null)
+            {
+                return _dbContext.Directory_City.Count(x => x.Title == parameter.Trim());
+            }
+            else
+            {
+                return 0;
+            }
         }
     }
 }

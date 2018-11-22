@@ -40,7 +40,7 @@
             </div>
         </div>
         <div class="col-md-4">
-            <div class="portlet box blue">
+            <div class="portlet box blue" id="loadingAccount">
                 <div class="portlet-title">
                     <div class="caption">
                         <!--<i class="fa fa-gift"></i>-->
@@ -53,13 +53,13 @@
                     </div>
                 </div>
                 <div class="portlet-body" id="abcd" style="position: relative; overflow: auto; width: auto; height: 500px;">
-                    <input style="margin-bottom:5px;" type="text" name="name" value="" placeholder="Tìm kiếm tài khoản..." ng-model="inputSearchAccount" ng-change="F_getAccountToFilter(inputSearchAccount,Tree_groupValue)" class="form-control input-sm" />
+                    <input style="margin-bottom:5px;" type="text" name="name" value="" placeholder="Tìm kiếm tài khoản..." ng-model="inputSearchAccount" ng-model-options="{ debounce: timeDelaySearch}" ng-change="F_getAccountToFilter(inputSearchAccount,Tree_groupValue)" class="form-control input-sm" />
                     <div id="tree-container-account"></div>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
-            <div class="portlet box blue">
+            <div class="portlet box blue"  id="loadingFunction">
                 <div class="portlet-title">
                     <div class="caption">
                         <!--<i class="fa fa-gift"></i>-->
@@ -74,6 +74,9 @@
                 </div>
                 <div class="portlet-body" style="position: relative; overflow: auto; width: auto; height: 500px;">
                     <div id="tree-container-function"></div>
+                    <div ng-if="emptyFunction" class="align-center">
+                        <b> Tài khoản này đã full quyền.</b>
+                    </div>
                 </div>
             </div>
         </div>

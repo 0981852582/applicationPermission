@@ -163,7 +163,7 @@ namespace ApplicationWebiste.Controllers
                 parent_id = "isNull",
                 isRootTree = false,
                 Order = x.Order
-            }).OrderBy(x=>x.Order).ToList();
+            }).OrderBy(x => x.Order).ToList();
             foreach (var item in data)
             {
                 if (item.children == null)
@@ -265,7 +265,7 @@ namespace ApplicationWebiste.Controllers
                 };
             };
             // return result datatype json
-            return Json(new { data = listAlterOrder }, JsonRequestBehavior.AllowGet);
+            return Json(listAlterOrder, JsonRequestBehavior.AllowGet);
         }
         public class C_parameterAccountToFilter
         {

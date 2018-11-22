@@ -92,6 +92,11 @@ app.controller('manager_permissionOfAccount', function ($scope, $rootScope, $htt
                 return;
             }
             $(trong.Tree_idTreeViewOfFunction).jstree(true).settings.core.data = rs.data;
+            if (rs.data.length == 0) {
+                trong.emptyFunction = true;
+            } else {
+                trong.emptyFunction = false;
+            }
             $(trong.Tree_idTreeViewOfFunction).jstree(true).refresh(true, true);
             // query when return data
             return callback(true);
@@ -113,6 +118,7 @@ app.controller('manager_permissionOfAccount', function ($scope, $rootScope, $htt
         });
     }
     trong.F_getAccountToFilter = function (value, group) {
+        trong.onBlockUI("#loadingAccount", trong.variableMessageBlockUI);
         trong.listResultSearchAccount = [];
         $(trong.Tree_idTreeViewOfFunction).jstree(true).settings.core.data = [];
         $(trong.Tree_idTreeViewOfFunction).jstree(true).refresh(true, true);
@@ -124,6 +130,7 @@ app.controller('manager_permissionOfAccount', function ($scope, $rootScope, $htt
             }
             $(trong.Tree_idTreeViewOfAccount).jstree(true).settings.core.data = rs.data;
             $(trong.Tree_idTreeViewOfAccount).jstree(true).refresh(true, true);
+            trong.offBlockUI("#loadingAccount");
         });
     }
     trong.F_getAccountToGroup(null, null);

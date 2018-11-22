@@ -21,7 +21,8 @@ app.controller('directoryCity', function ($scope, $rootScope, $http, $timeout, $
         valueSearch: '',
         location: trong.settingOfPadding.location,
         orderBy: trong.settingOfPadding.orderBy,
-        orderType: trong.settingOfPadding.orderType,
+        //orderType: trong.settingOfPadding.orderType,
+        orderType: true,
         eventOrderBy: function (fieldOrder) {
             if (fieldOrder != undefined) {
                 if (fieldOrder == this.orderBy) {
@@ -433,20 +434,45 @@ app.controller('addImport', function ($scope, $http, $uibModalInstance, $rootSco
         $uibModalInstance.dismiss('cancel');
     };
     $scope.validateForm = function () {
+        trong.onBlockUI(idOfDialog, trong.variableMessageBlockUI);
         var flag = true;
         for (var i = 0; i < trong.model.listNew.length; i++) {
             $rootScope.validateForm(trong.model.listNew[i], function (rs) {
                 if (!rs) {
+                    trong.model.listNew[i].messageError = trong.messageErrorValidateForm;
                     trong.model.listNew[i].statusError = true;
                     if (flag) {
                         angular.element('[id="' + trong.model.listNew[i].idDOM + '"]').focus();
                     }
                     flag = false;
                 } else {
-                    trong.model.listNew[i].statusError = undefined;
+                    var existsCity = 0;
+                    jQuery.ajax({
+                        url: "/" + controller + '/CountItemByCity',
+                        method: 'POST',
+                        data: {
+                            parameter: trong.model.listNew[i].City
+                        },
+                        dataType: "json",
+                        async: false
+                    }).done(function (data) {
+                        existsCity = data;
+                    });
+                    if (existsCity > 0) {
+                        trong.model.listNew[i].messageError = 'Mã tỉnh là [' + trong.model.listNew[i].City + '] đã tồn tại trong cơ sở dữ liệu';
+                        trong.model.listNew[i].statusError = true;
+                        if (flag) {
+                            angular.element('[id="' + trong.model.listNew[i].idDOM + '"]').focus();
+                        }
+                        flag = false;
+                    } else {
+                        trong.model.listNew[i].messageError = undefined;
+                        trong.model.listNew[i].statusError = undefined;
+                    }
                 }
-            },true);
+            }, true);
         }
+        trong.offBlockUI(idOfDialog);
         return flag;
     }
     $scope.submit = function () {

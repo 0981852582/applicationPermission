@@ -202,6 +202,10 @@ License: You must have a valid license purchased only from themeforest(the above
                 { Id: 1, Title: 'Sử dụng' },
                 { Id: 2, Title: 'Không sử dụng' }
             ];
+            // khai báo biến quy định thời gian chạy sau khi nhập tìm kiếm
+            $rootScope.timeDelaySearch = 500;
+            // khai báo biến chứa message khi import dữ liệu mà validate form không valid
+            $rootScope.messageErrorValidateForm = 'Dữ liệu khi validate của dòng này không hợp lệ';
             // thực hiện lấy ra url của page hiện tại để biết đang ở page nào hover vào menu bên trái.
             $rootScope.urlPageCurrent = window.location.pathname;
             // hàm dùng chung thông ra message là 'success'

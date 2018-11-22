@@ -21,7 +21,7 @@
                     </div>
                     <div class="form-group">
                         <div class="col-md-12">
-                            <div style="width:99%;">
+                            <div style="width:99.5%;">
                                 <table class="table" style="margin-bottom:0px; width:99%;">
                                     <tr style="background-color:#428bca;color:white;">
                                         <td style="width:15%;min-width:15%;max-width:15%;">
@@ -58,8 +58,8 @@
                                                     {{item.Status == '1' ? 'Sử dụng' : item.Status == '2' ? 'Không sử dụng' : ''}}
                                                 </td>
                                                 <td style="width:7%;min-width:7%;max-width:7%;">
-                                                    <a ng-if="global_permission.edit" id="{{item.idDOM}}" ng-click="dialogEdit(item.Id)" class="btn btn-circle btn-icon-only btn-default button-icon-small" title="Cập nhật" href="javascript:;">
-                                                        <i class="fa fa-edit"></i>
+                                                    <a id="{{item.idDOM}}" title="{{item.messageError}}" class="btn btn-circle btn-icon-only btn-default button-icon-small" href="javascript:;">
+                                                        <i class="fa fa-commenting"></i>
                                                     </a>
                                                 </td>
                                             </tr>
