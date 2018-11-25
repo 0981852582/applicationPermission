@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'D:\DEV\ApplicationWebsite\applicationPermission\ApplicationWebiste\ApplicationWebiste\Models\database.edmx'. 
+﻿// T4 code generation is enabled for model 'D:\DEV\Application_Website\applicationPermission\ApplicationWebiste\Models\DataBase.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

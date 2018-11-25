@@ -112,7 +112,7 @@ namespace ApplicationWebiste.Controllers
                     _dbContext.SaveChanges();
                     dbTran.Commit();
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     dbTran.Rollback();
                 }

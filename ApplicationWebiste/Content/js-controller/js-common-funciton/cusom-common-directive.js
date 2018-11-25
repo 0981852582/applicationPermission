@@ -151,7 +151,6 @@ app.directive("filereadqueryimport", [function () {
                                 rowObj[i].idDOM = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);;
                             }
                             scope.filereadqueryimport = rowObj;
-                            console.log(jsonObj);
                         });
                         var jsonObj = JSON.stringify(rowObj);
 

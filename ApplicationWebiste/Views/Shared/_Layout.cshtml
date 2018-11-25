@@ -144,6 +144,8 @@ License: You must have a valid license purchased only from themeforest(the above
     </style>
     <!-- END THEME LAYOUT STYLES -->
     <link rel="shortcut icon" href="favicon.ico" />
+    <script src="~/Content/js-controller/js-common-funciton/variable-common.js" type="text/javascript"></script>
+    <script src="~/Content/js-controller/js-common-funciton/js-common-call-server.js" type="text/javascript"></script>
     <script src="~/Content/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
     <script src="~/Content/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="~/Content/assets/global/plugins/js.cookie.min.js" type="text/javascript"></script>
@@ -175,6 +177,7 @@ License: You must have a valid license purchased only from themeforest(the above
     <script src="~/Content/assets/global/plugins/bootstrap-table/bootstrap-table.min.js" type="text/javascript"></script>
     <script src="~/Content/plugin-datetimePicker/php-date-formatter.min.js" type="text/javascript"></script>
     <script src="~/Content/plugin-datetimePicker/jquery.datetimepicker.js" type="text/javascript"></script>
+    <script src="~/Content/assets/global/plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
     <script src="~/Content/css-input-file/custom-file-input.js" type="text/javascript"></script>
     <script src="~/Content/js-read-file-excel/xlsx.js"></script>
     <script src="~/Content/js-read-file-excel/jszip.js"></script>
@@ -193,29 +196,28 @@ License: You must have a valid license purchased only from themeforest(the above
         var idOfDialog = "#modal-body";
         var idOfDataTable = "#dataTable";
         var grobal_permission = undefined;
+        var http;
+        var timeout;
+        var interval;
+        var toasterCustom;
         var app = angular.module('app-module', ['ui.bootstrap', 'toaster', 'ui.bootstrap.contextMenu', 'ui.select']);
         app.controller('viewMenuPermission', function ($scope, $rootScope, $timeout, $interval, $http, toaster) {
             // khai báo những biết sử dụng chung trong tất cả function
-            $rootScope.variableMessageBlockUI = 'Đang tải dữ liệu ...';
-            // khai báo biến chứa mảng danh sách sử dụng
+            //      khai báo biến chứa mảng danh sách sử dụng
             $rootScope.listStatus = [
                 { Id: 1, Title: 'Sử dụng' },
                 { Id: 2, Title: 'Không sử dụng' }
             ];
-            // khai báo biến quy định thời gian chạy sau khi nhập tìm kiếm
+            //      khai báo biến quy định thời gian chạy sau khi nhập tìm kiếm
             $rootScope.timeDelaySearch = 500;
-            // khai báo biến chứa message khi import dữ liệu mà validate form không valid
-            $rootScope.messageErrorValidateForm = 'Dữ liệu khi validate của dòng này không hợp lệ';
             // thực hiện lấy ra url của page hiện tại để biết đang ở page nào hover vào menu bên trái.
             $rootScope.urlPageCurrent = window.location.pathname;
-            // hàm dùng chung thông ra message là 'success'
+            //      hàm dùng chung thông ra message là 'success'
             $rootScope.showMessageSuccess = function (content, timeShow) {
                 toaster.pop("success", "", content, isNull(timeShow) ? 1000 : timeShow, null);
             }
-            // hàm dùng chung thông ra message là 'error'
-            $rootScope.showMessageError = function (content, timeShow) {
-                toaster.pop("error", "", content, isNull(timeShow) ? 1000 : timeShow, null);
-            }
+            //      hàm dùng chung thông ra message là 'error'
+            $rootScope.showMessageError = showMessageError;
             $rootScope.showMessageWarning = function (content, timeShow) {
                 toaster.pop("Warning", "", content, isNull(timeShow) ? 1000 : timeShow, null);
             }
@@ -250,9 +252,10 @@ License: You must have a valid license purchased only from themeforest(the above
             }
             // khai báo biến gán cho các object hoặc service của angularjs
             var trong = $scope;
-            var timeout = $timeout;
-            var interval = $interval;
-            var http = $http;
+            timeout = $timeout;
+            interval = $interval;
+            http = $http;
+            toasterCustom = toaster;
             // object thực hiện lựu lại giá trị dùng chung cho page phân trang
             $rootScope.settingOfPadding = {
                 // mặc định khi khởi tạo thì currentPage = 1 khi người dùng click page khác thì sử lý khác

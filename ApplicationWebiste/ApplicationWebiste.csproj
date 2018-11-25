@@ -15,7 +15,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ApplicationWebiste</RootNamespace>
     <AssemblyName>ApplicationWebiste</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
@@ -119,9 +119,9 @@
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
@@ -218,19 +218,19 @@
     <Compile Include="Controllers\Manager_Permission\ManagerFunctionController.cs" />
     <Compile Include="Controllers\Manager_Permission\ManagerPermissionOfAccountController .cs" />
     <Compile Include="Models\account.cs">
-      <DependentUpon>database.tt</DependentUpon>
+      <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\childOfFunction.cs">
-      <DependentUpon>database.tt</DependentUpon>
+      <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\contraint_account_function_childOfFunction.cs">
-      <DependentUpon>database.tt</DependentUpon>
+      <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\contraint_account_group.cs">
-      <DependentUpon>database.tt</DependentUpon>
+      <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\contraint_group_function_childOfFunction.cs">
-      <DependentUpon>database.tt</DependentUpon>
+      <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Custom-Model\Action-Exists-Login\ExistsLogin.cs" />
     <Compile Include="Models\Custom-Model\Entity-Data-Using-From-Database\ChildOfFunctionNameOfSql.cs" />
@@ -245,42 +245,33 @@
     <Compile Include="Models\Custom-Model\Entity-Message\Message.cs" />
     <Compile Include="Models\Custom-Model\Get-Data-From-Database\GetFunctionOfPagePermission.cs" />
     <Compile Include="Models\Custom-OrderByLinq\custom-OrderByLinq.cs" />
-    <Compile Include="Models\database.Context.cs">
+    <Compile Include="Models\DataBase.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>database.Context.tt</DependentUpon>
+      <DependentUpon>DataBase.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\database.cs">
+    <Compile Include="Models\DataBase.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>database.tt</DependentUpon>
+      <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\database.Designer.cs">
+    <Compile Include="Models\DataBase.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>database.edmx</DependentUpon>
+      <DependentUpon>DataBase.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\DataTable\DataTable.cs" />
     <Compile Include="Models\Directory_City.cs">
-      <DependentUpon>database.tt</DependentUpon>
+      <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\function.cs">
-      <DependentUpon>database.tt</DependentUpon>
+      <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\group.cs">
-      <DependentUpon>database.tt</DependentUpon>
+      <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\P_viewMenuPermission_Result.cs">
-      <DependentUpon>database.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>database.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\sp_helpdiagrams_Result.cs">
-      <DependentUpon>database.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\sysdiagram.cs">
-      <DependentUpon>database.tt</DependentUpon>
+      <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -5673,15 +5664,23 @@
     <Content Include="Content\css-input-file\demo.css" />
     <Content Include="Content\css-input-file\normalize.css" />
     <Content Include="Content\image-custom\group-512.png" />
+    <Content Include="Content\js-controller\directory-district\add.html" />
+    <Content Include="Content\js-controller\directory-district\addImport.html" />
+    <Content Include="Content\js-controller\directory-district\controller.js" />
+    <Content Include="Content\js-controller\directory-district\edit.html" />
+    <Content Include="Content\js-controller\directory-district\index.html" />
+    <Content Include="Content\js-controller\directory-district\view.html" />
     <Content Include="Content\js-controller\directory-city\addImport.html" />
     <Content Include="Content\js-controller\js-common-funciton\contextMenu.js" />
     <Content Include="Content\js-controller\js-common-funciton\custom-validate-form.js" />
+    <Content Include="Content\js-controller\js-common-funciton\js-common-call-server.js" />
     <Content Include="Content\js-controller\js-common-funciton\js-common-function.js" />
     <Content Include="Content\js-controller\directory-city\add.html" />
     <Content Include="Content\js-controller\directory-city\controller.js" />
     <Content Include="Content\js-controller\directory-city\edit.html" />
     <Content Include="Content\js-controller\directory-city\index.html" />
     <Content Include="Content\js-controller\directory-city\view.html" />
+    <Content Include="Content\js-controller\js-common-funciton\variable-common.js" />
     <Content Include="Content\js-controller\manager_function\add.html" />
     <Content Include="Content\js-controller\manager_function\edit.html" />
     <Content Include="Content\js-controller\manager_permissionOfAccount\controller.js" />
@@ -5702,15 +5701,15 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Models\database.Context.tt">
+    <Content Include="Models\DataBase.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>database.edmx</DependentUpon>
-      <LastGenOutput>database.Context.cs</LastGenOutput>
+      <DependentUpon>DataBase.edmx</DependentUpon>
+      <LastGenOutput>DataBase.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\database.tt">
+    <Content Include="Models\DataBase.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>database.edmx</DependentUpon>
-      <LastGenOutput>database.cs</LastGenOutput>
+      <DependentUpon>DataBase.edmx</DependentUpon>
+      <LastGenOutput>DataBase.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -6063,18 +6062,18 @@
     <Content Include="Content\assets\pages\media\blog\Thumbs.db" />
     <Content Include="Content\assets\pages\media\pages\Thumbs.db" />
     <Content Include="Content\assets\apps\library-angularjs\angular.min.js.map" />
-    <EntityDeploy Include="Models\database.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>database.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\database.edmx.diagram">
-      <DependentUpon>database.edmx</DependentUpon>
-    </Content>
     <Content Include="Content\css-html-js-login\fonts\fontawesome-webfont.eot" />
     <Content Include="Content\css-html-js-login\fonts\fontawesome-webfont.ttf" />
     <Content Include="Content\css-html-js-login\fonts\fontawesome-webfont.woff" />
     <Content Include="Content\css-html-js-login\fonts\fontawesome-webfont.woff2" />
     <Content Include="Content\css-html-js-login\fonts\FontAwesome.otf" />
+    <EntityDeploy Include="Models\DataBase.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>DataBase.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\DataBase.edmx.diagram">
+      <DependentUpon>DataBase.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

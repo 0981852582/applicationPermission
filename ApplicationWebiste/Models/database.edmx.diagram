@@ -4,21 +4,20 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="50e0f2a9ec0b4bbc92dc57b4a19f0d94" Name="Diagram1">
+      <Diagram DiagramId="89c8f1b75068460e8de98644aa7c4f42" Name="Diagram1">
         <EntityTypeShape EntityType="Db_Permission_Model.account" Width="1.5" PointX="5.75" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="Db_Permission_Model.childOfFunction" Width="1.5" PointX="0.75" PointY="7.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Db_Permission_Model.contraint_account_function_childOfFunction" Width="1.5" PointX="3.375" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Db_Permission_Model.contraint_account_function_childOfFunction" Width="1.5" PointX="3" PointY="2.375" IsExpanded="true" />
         <EntityTypeShape EntityType="Db_Permission_Model.contraint_account_group" Width="1.5" PointX="8" PointY="0.875" IsExpanded="true" />
         <EntityTypeShape EntityType="Db_Permission_Model.contraint_group_function_childOfFunction" Width="1.5" PointX="3" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Db_Permission_Model.Directory_City" Width="1.5" PointX="7.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Db_Permission_Model.function" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Db_Permission_Model.group" Width="1.5" PointX="5.75" PointY="5.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Db_Permission_Model.sysdiagram" Width="1.5" PointX="7.75" PointY="3.75" IsExpanded="true" />
         <AssociationConnector Association="Db_Permission_Model.FK_contraint_account_group_account" ManuallyRouted="false" />
         <AssociationConnector Association="Db_Permission_Model.FK_contraint_account_function_childOfFunction_childOfFunction" ManuallyRouted="false" />
         <AssociationConnector Association="Db_Permission_Model.FK_contraint_account_group_function_childOfFunction_function" ManuallyRouted="false" />
         <AssociationConnector Association="Db_Permission_Model.FK_contraint_account_group_group" ManuallyRouted="false" />
         <AssociationConnector Association="Db_Permission_Model.FK_contraint_function_childOfFunction_function" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="Db_Permission_Model.Directory_City" Width="1.5" PointX="3.375" PointY="9.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

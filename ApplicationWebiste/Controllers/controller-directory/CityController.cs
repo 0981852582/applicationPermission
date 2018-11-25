@@ -146,14 +146,14 @@ namespace ApplicationWebiste.Controllers.Manager_Permission
                 try
                 {
                     List<Directory_City> parameter = JsonConvert.DeserializeObject<List<Directory_City>>(Request.Form["file"]);
-                    foreach(var item in parameter)
+                    foreach (var item in parameter)
                     {
                         item.CreatedBy = ((account)Session["informationOfAccount"]).Account1;
                         item.CreatedDate = DateTime.Now;
                         item.ModifiedBy = ((account)Session["informationOfAccount"]).Account1;
                         item.ModifiedDate = DateTime.Now;
                     }
-                    
+
                     _dbContext.Directory_City.AddRange(parameter);
                     _dbContext.SaveChanges();
                     dbTran.Commit();
@@ -400,6 +400,32 @@ namespace ApplicationWebiste.Controllers.Manager_Permission
             {
                 return 0;
             }
+        }
+        /// <summary>
+        /// get lookup of city
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns>true false</returns>
+        [HttpPost]
+        public object GetLookupItem()
+        {
+            Message msg = new Message { Error = false };
+            try
+            {
+                var result = _dbContext.Directory_City.Select(x => new
+                {
+                    LookupId = x.City,
+                    LookupTitle = x.Title
+                }).ToList();
+                msg.Data = Json(result);
+            }
+            catch (Exception ex)
+            {
+                msg.Error = true;
+                msg.Data = ex.ToString();
+            }
+
+            return Json(msg, JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -1,23 +1,51 @@
-﻿// biến controller này là trên controller call server lấy data
-var controller = "ManagerFunction";
-var folderJs = "/Content/js-controller/manager_function/";
-app.controller('managerFunction', function ($scope, $rootScope, $http, $timeout, $interval, $uibModal) {
+﻿app.controller('managerFunction', function ($scope, $rootScope, $http, $timeout, $interval, $uibModal) {
     //
     var trong = $scope;
     var timeout = $timeout;
     var interval = $interval;
     var http = $http;
     var data = [];
+    // gọi hàm khởi tạo chứa những thông số validate ...
+    //    Bắt buộc gọi nếu muốn thực hiện những hành động như validateForm ...
+    initValidateForm($rootScope);
+    // Khai báo Datatable cho page này
     trong.dataTable = {
+        // Page hiện tại của dataTable
         currentPage: trong.settingOfPadding.currentPage,
+        // Tính toán xem pagging cần bao nhiêu page vì vậy cần khai báo số lượng item trên 1 page
         maxSize: trong.settingOfPadding.maxSize,
+        // Đếm số bản ghi hiện có trong Datatable lấy trong database theo điều kiện chỉ định
+        //      hiện tại mặc định là 0 khi với init Datatable
         totalItem: 0,
+        // Giới hạn số lượng page hiển thị trong 1 thời điểm
+        //      ví dụ đang ở page 1 thì chỉ hiển thị [1 2 3 4 5] nếu đang ở page 5 thì hiển thị [3 4 5 6 7]
         numberPage: trong.settingOfPadding.numberPage,
+        // Chứa dữ liệu của Datatable
         values: [],
+        // Chứa thông tin tìm kiếm của Datatable
         valueSearch: '',
+        // hiện thị thông tin Datatable bên dưới Datatable trên view
         location: trong.settingOfPadding.location,
+        // Chứa giá trị trên Field cần xắp xếp hiện tại
+        //      Mặc định khi khởi tạo thì lấy giá trị của biến khai báo chung
         orderBy: trong.settingOfPadding.orderBy,
+        // Chứa trạng thái Order by là ASC hay là DESC
+        //      nếu = true -> ASC
+        //      nếu = false -> DESC
         orderType: trong.settingOfPadding.orderType,
+        // Hàm thực hiện reload lại Dữ liệu trong Datatable 
+        //      làm mới xóa tất cả thông tin tìm kiếm cũng như phân trang trước đó và trở về mặc định
+        reload: function () {
+            this.currentPage = trong.settingOfPadding.currentPage;
+            this.maxSize = trong.settingOfPadding.maxSize;
+            this.totalItem = 0;
+            this.numberPage = trong.settingOfPadding.numberPage;
+            this.values = [];
+            this.valueSearch = '';
+            this.location = trong.settingOfPadding.location;
+            this.query();
+        },
+        // Sự kiện thay đổi xắp xếp của Datatable
         eventOrderBy: function (fieldOrder) {
             if (fieldOrder != undefined) {
                 if (fieldOrder == this.orderBy) {
@@ -29,6 +57,7 @@ app.controller('managerFunction', function ($scope, $rootScope, $http, $timeout,
                 this.query();
             }
         },
+        //  Hàm thực hiện call server để lấy dữ liệu theo những thông số hiện tại của Datatable
         query: function (isChangeCondition) {
             if (isChangeCondition) {
                 this.currentPage = 1;
@@ -44,41 +73,26 @@ app.controller('managerFunction', function ($scope, $rootScope, $http, $timeout,
             };
             var $this = this;
             trong.onBlockUI('#dataTable', trong.variableMessageBlockUI);
-            http.post("/" + controller + "/DataTable/", parameter).then(function (rs) {
+            http.post("/" + controller_Server_ManagerFunction + "/DataTable/", parameter).then(function (rs) {
                 if (isNull(rs.data)) {
-                    trong.showMessageError('Tài khoản không có quyền thực hiện chức năng này');
+                    trong.showMessageError(message_Comfirm_Not_Permission);
                 } else {
-                    $timeout(function () {
-                        this.values = [];
-                        $this.values = rs.data.data;
-                        $this.totalItem = rs.data.totalItem;
-                        $this.location = rs.data.location;
-                        trong.offBlockUI('#dataTable');
-                    }, 500);
-
+                    this.values = [];
+                    $this.values = rs.data.data;
+                    $this.totalItem = rs.data.totalItem;
+                    $this.location = rs.data.location;
+                    trong.offBlockUI('#dataTable');
                 }
             });
         }
     };
-    trong.$watch('dataTable', function (newvalue, oldvalue) {
-        var m = newvalue;
-    }, true);
     trong.dataTable.query();
-
-    console.log($scope.global_permission);
     trong.checkAll = function () {
         for (var i = 0; i < trong.dataTable.values.length; i++) {
             var item = trong.dataTable.values[i];
             item.isChecked = trong.isCheckAll;
         }
     }
-    http.post("/" + controller + "/DataTable/").then(function (rs) {
-        if (isNull(rs.data)) {
-            trong.showMessageError('Tài khoản không có quyền thực hiện chức năng này');
-        } else {
-            trong.dataTable.values = rs.data;
-        }
-    });
     // submit
     trong.submit = function () {
         if (isNull(trong.Tree_listTreeSelected)) {
@@ -89,12 +103,12 @@ app.controller('managerFunction', function ($scope, $rootScope, $http, $timeout,
                 Group: trong.Tree_groupValue
             });
         }
-        http.post("/" + controller + "/updatePermisstion/", trong.Tree_listTreeSelected).then(function (rs) {
-            if (isNull(rs.data)) {
-                trong.showMessageError('Tài khoản không có quyền thực hiện chức năng này');
+        http.post("/" + controller_Server_ManagerFunction + "/updatePermisstion/", trong.Tree_listTreeSelected).then(function (rs) {
+            var result = rs.data;
+            if (result) {
+                trong.showMessageError(message_Comfirm_Not_Permission);
             } else {
-                trong.showMessageSuccess('Cập nhật chức năng thành công');
-
+                trong.showMessageSuccess(result.Title);
             }
             // refresh tree function of group
             trong.F_getFunctionToGroup(trong.Tree_groupValue, function () {
@@ -147,11 +161,11 @@ app.controller('managerFunction', function ($scope, $rootScope, $http, $timeout,
         }
     ];
     // phần này để đổi sang các controller khác
-        // gọi controller view
+    // gọi controller view
     trong.dialogView = function (id) {
         /*begin modal*/
         var modalInstance = $uibModal.open({
-            templateUrl: folderJs + 'view.html',
+            templateUrl: folderJs_ManagerFunction + 'view.html',
             controller: 'view',
             backdrop: 'static',
             size: '60',
@@ -165,7 +179,7 @@ app.controller('managerFunction', function ($scope, $rootScope, $http, $timeout,
     trong.dialogEdit = function (id) {
         /*begin modal*/
         var modalInstance = $uibModal.open({
-            templateUrl: folderJs + 'edit.html',
+            templateUrl: folderJs_ManagerFunction + 'edit.html',
             controller: 'edit',
             backdrop: 'static',
             size: '60',
@@ -193,24 +207,6 @@ app.controller('view', function ($scope, $http, $uibModalInstance, $rootScope, p
 app.controller('edit', function ($scope, $http, $uibModalInstance, $rootScope, parameter, toaster) {
     var trong = $scope;
     $scope.title = "Cập nhật thông tin chức năng.";
-    trong.listSelected = [
-        {
-            id: undefined,
-            title : 'vui lòng chọn...'
-        },
-        {
-            id: 1,
-            title: 'item 1'
-        },
-        {
-            id: 2,
-            title: 'item 2'
-        },
-        {
-            id: 3,
-            title: 'item 3'
-        }
-    ];
     trong.title = undefined;
     // function close dialog
     $scope.ok = function () {
