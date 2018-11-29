@@ -30,7 +30,6 @@ const messageComfirm_City_Deletes = 'Bạn có thực sự muốn xóa những (
 const messageComfirm_City_Delete = 'Bạn có thực sự muốn xóa (Tỉnh / Thành phố) này ?';
 //      variable chứa message thông báo comfirm chưa chọn tỉnh thành phố cần xóa
 const messageComfirm_City_NotExists = 'Vui lòng chọn (Tỉnh / Thành phố) trước khi thực hiện chức năng này';
-const messageComfirm_City_NotExists = 'Vui lòng chọn (Tỉnh / Thành phố) trước khi thực hiện chức năng này';
 //      variable chứa message thông báo comfirm đã tồn tại trong cơ sở dữ liệu
 const messageComfirm_City_ImportExists = 'Mã (Tỉnh / Thành phố) là [{0}] đã tồn tại trong cơ sở dữ liệu';
 

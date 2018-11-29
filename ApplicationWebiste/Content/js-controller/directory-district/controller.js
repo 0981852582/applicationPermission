@@ -1,6 +1,7 @@
-﻿app.controller('directoryCity', function ($scope, $rootScope, $uibModal) {
+﻿app.controller('directoryDistrict', function ($scope, $rootScope, $uibModal) {
     // thực hiện khai báo các variable cho controller
     var trong = $scope;
+    trong.title = 'Quản lý danh mục (Quận / Huyện)';
     // gọi hàm khởi tạo chứa những thông số validate ...
     //    Bắt buộc gọi nếu muốn thực hiện những hành động như validateForm ...
     initValidateForm($rootScope);
@@ -11,16 +12,16 @@
     // khai báo biến validate form
     $rootScope.validationOptions = [
         {
-            Title: 'City',
+            Title: 'District',
             rule: {
                 Required: true,
                 Maxlength: 8,
                 Special: true
             },
             message: {
-                Required: "Mã (Tỉnh / Thành phố) không được để trống.",
-                Maxlength: "Mã (Tỉnh / Thành phố) không được lớn hơn 8 ký tự.",
-                Special: 'Mã (Tỉnh / Thành phố) không được có ký tự đặc biệt.'
+                Required: "Mã (Quận / Huyện) không được để trống.",
+                Maxlength: "Mã (Quận / Huyện) không được lớn hơn 8 ký tự.",
+                Special: 'Mã (Quận / Huyện) không được có ký tự đặc biệt.'
             },
             Place: "col-md-2"
         },
@@ -31,8 +32,8 @@
                 Maxlength: 25
             },
             message: {
-                Required: "Tên (Tỉnh / Thành phố ) không được để trống.",
-                Maxlength: "Tên (Tỉnh / Thành phố ) không được lớn hơn 25 ký tự."
+                Required: "Tên (Quận / Huyện) không được để trống.",
+                Maxlength: "Tên (Quận / Huyện) không được lớn hơn 25 ký tự."
             },
             Place: "col-md-6"
         }
@@ -285,7 +286,7 @@
 // đây là controller view
 app.controller('view', function ($scope, $uibModalInstance, parameter) {
     var trong = $scope;
-    trong.title = "Xem thông tin (Tỉnh / Thành phố).";
+    trong.title = "Xem thông tin (Quận / Huyện).";
     // function close dialog
     trong.ok = function () {
         $uibModalInstance.close();
@@ -311,7 +312,7 @@ app.controller('add', function ($scope, $uibModalInstance, $rootScope) {
     //
     var trong = $scope;
     // khai báo biến validate trên form edit mode
-    $scope.title = "Thêm mới thông tin (Tỉnh / Thành phố).";
+    $scope.title = "Thêm mới thông tin (Quận / Huyện).";
     $scope.model = {
         Status: 1
     };
@@ -358,7 +359,7 @@ app.controller('addImport', function ($scope, $uibModalInstance, $rootScope) {
     //
     var trong = $scope;
     // khai báo biến validate trên form edit mode
-    $scope.title = "Thêm mới thông tin (Tỉnh / Thành phố) bằng File.";
+    $scope.title = "Thêm mới thông tin (Quận / Huyện) bằng File.";
     // function close dialog
     $scope.cancel = function () {
         $uibModalInstance.dismiss('cancel');
@@ -421,7 +422,7 @@ app.controller('addImport', function ($scope, $uibModalInstance, $rootScope) {
 app.controller('edit', function ($scope, $uibModalInstance, $rootScope, parameter) {
     var trong = $scope;
     trong.model = {};
-    $scope.title = "Cập nhật thông tin (Tỉnh / Thành phố).";
+    $scope.title = "Cập nhật thông tin (Quận / Huyện).";
 
     trong.init = function () {
         trong.onBlockUI(idOfDialog, message_Comfirm_Loading_Data);

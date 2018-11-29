@@ -1,27 +1,10 @@
-﻿<style type="text/css">
-    .styleForTreeViewClick {
-        background: #eeece7;
-    }
-
-    #tree-container-group .jstree-clicked {
-        background-color: #beebff;
-    }
-
-    .custom-cursor-pointer {
-        cursor: pointer;
-    }
-
-    .modal-xlg {
-        width: 90%;
-    }
-</style>
-<div ng-controller="directoryCity">
+﻿<div ng-controller="directoryCity">
     <div class="row">
         <div class="portlet light portlet-fit portlet-datatable bordered">
             <div class="portlet-title">
                 <div class="caption">
                     <i class=" icon-layers font-green"></i>
-                    <span class="caption-subject font-green sbold uppercase">Quản lý danh mục (Tỉnh / Thành phố)</span>
+                    <span class="caption-subject font-green sbold uppercase">{{title}}</span>
                 </div>
                 <div class="actions">
                     <a class="btn btn-circle btn-icon-only btn-default" ng-click="dialogAdd()" ng-if="global_permission.add" title="Thêm mới" href="javascript:;">

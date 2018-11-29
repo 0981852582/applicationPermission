@@ -200,8 +200,10 @@ License: You must have a valid license purchased only from themeforest(the above
         var timeout;
         var interval;
         var toasterCustom;
+        var uibModal;
         var app = angular.module('app-module', ['ui.bootstrap', 'toaster', 'ui.bootstrap.contextMenu', 'ui.select']);
-        app.controller('viewMenuPermission', function ($scope, $rootScope, $timeout, $interval, $http, toaster) {
+        app.controller('viewMenuPermission', function ($scope, $rootScope, $timeout, $interval, $http, toaster, $uibModal) {
+
             // khai báo những biết sử dụng chung trong tất cả function
             //      khai báo biến chứa mảng danh sách sử dụng
             $rootScope.listStatus = [
@@ -255,6 +257,7 @@ License: You must have a valid license purchased only from themeforest(the above
             timeout = $timeout;
             interval = $interval;
             http = $http;
+            uibModal = $uibModal;
             toasterCustom = toaster;
             // object thực hiện lựu lại giá trị dùng chung cho page phân trang
             $rootScope.settingOfPadding = {
@@ -278,6 +281,12 @@ License: You must have a valid license purchased only from themeforest(the above
             http.post('/Home/viewMenuPermission/').then(function (rs) {
                 $rootScope.L_permission = rs.data;
             });
+
+            // những hàm dùng chung cho tất cả các controller
+            // function close dialog
+            $rootScope.cancelCommon = function ($uibModalInstance) {
+                $uibModalInstance.dismiss('cancel');
+            };
         });
     </script>
 </head>

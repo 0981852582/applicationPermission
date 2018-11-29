@@ -44,7 +44,7 @@ namespace ApplicationWebiste.Controllers.Manager_Permission
         [DataAccess(Function = FunctionNameOfSql.manager_city, childOfFunction = ChildOfFunctionNameOfSql.view)]
         public object DataTable(DataTable parameter)
         {
-            var count = _dbContext.Directory_City.Count(x => parameter.search == null ? 1 == 1 : x.Title.Contains(parameter.search));
+            var count = _dbContext.Directory_City.Count(x => parameter.search == null ? 1 == 1 : x.Title.Contains(parameter.search) || parameter.search == null ? 1 == 1 : x.City.Contains(parameter.search));
             var data = _dbContext.Directory_City.Select(x => new
             {
                 Id = x.ID,
@@ -53,7 +53,7 @@ namespace ApplicationWebiste.Controllers.Manager_Permission
                 Description = x.Description,
                 x.History
             }).
-            Where(x => parameter.search == null ? 1 == 1 : x.Title.Contains(parameter.search)).OrderBy(parameter.orderBy, parameter.orderType).
+            Where(x => parameter.search == null ? 1 == 1 : x.Title.Contains(parameter.search) || parameter.search == null ? 1 == 1 : x.City.Contains(parameter.search)).OrderBy(parameter.orderBy, parameter.orderType).
             Skip(parameter.skip).
             Take(parameter.top).
 

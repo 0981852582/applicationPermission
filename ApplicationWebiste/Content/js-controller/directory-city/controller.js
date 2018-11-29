@@ -1,6 +1,7 @@
 ﻿app.controller('directoryCity', function ($scope, $rootScope, $uibModal) {
     // thực hiện khai báo các variable cho controller
     var trong = $scope;
+    trong.title = 'Quản lý danh mục (Tỉnh / Thành phố)';
     // gọi hàm khởi tạo chứa những thông số validate ...
     //    Bắt buộc gọi nếu muốn thực hiện những hành động như validateForm ...
     initValidateForm($rootScope);
@@ -134,7 +135,7 @@
     }
     // Thực hiện  option chuột trái
     //      Thực hiện hiển thị chuột trái trên datatable với các option tùy chọn
-    $scope.menuOptions = [
+    trong.menuOptions = [
         {
             text: function ($itemScope) {
                 return '<i class="fa fa-eye"></i> Xem thông tin'
@@ -178,7 +179,7 @@
     // gọi controller add
     trong.dialogAdd = function () {
         /*begin modal*/
-        var modalInstance = $uibModal.open({
+        var modalInstance = uibModal.open({
             templateUrl: folderJs_City + 'add.html',
             controller: 'add',
             backdrop: 'static',
@@ -190,7 +191,7 @@
     // gọi controller add
     trong.dialogAddByImport = function () {
         /*begin modal*/
-        var modalInstance = $uibModal.open({
+        var modalInstance = uibModal.open({
             templateUrl: folderJs_City + 'addImport.html',
             controller: 'addImport',
             backdrop: 'static',
@@ -202,7 +203,7 @@
     // gọi controller view
     trong.dialogView = function (id) {
         /*begin modal*/
-        var modalInstance = $uibModal.open({
+        var modalInstance = uibModal.open({
             templateUrl: folderJs_City + 'view.html',
             controller: 'view',
             backdrop: 'static',
@@ -216,7 +217,7 @@
     };
     trong.dialogEdit = function (id) {
         /*begin modal*/
-        var modalInstance = $uibModal.open({
+        var modalInstance = uibModal.open({
             templateUrl: folderJs_City + 'edit.html',
             controller: 'edit',
             backdrop: 'static',
@@ -301,30 +302,21 @@ app.controller('view', function ($scope, $uibModalInstance, parameter) {
         });
     }
     trong.init();
-    // function close dialog
-    $scope.cancel = function () {
+    // chức năng đóng dialog
+    trong.cancel = function () {
         $uibModalInstance.dismiss('cancel');
     };
 });
 // đây là controller add
-app.controller('add', function ($scope, $uibModalInstance, $rootScope) {
-    //
+app.controller('add', function ($scope, $rootScope, $uibModalInstance) {
     var trong = $scope;
     // khai báo biến validate trên form edit mode
-    $scope.title = "Thêm mới thông tin (Tỉnh / Thành phố).";
-    $scope.model = {
+    trong.title = "Thêm mới thông tin (Tỉnh / Thành phố).";
+    trong.model = {
         Status: 1
     };
-    // function close dialog
-    $scope.ok = function () {
-        $uibModalInstance.close();
-    };
-    // function close dialog
-    $scope.cancel = function () {
-        $uibModalInstance.dismiss('cancel');
-    };
-    $scope.submit = function () {
-        $rootScope.validateForm($scope.model, function (rs) {
+    trong.submit = function () {
+        $rootScope.validateForm(trong.model, function (rs) {
             if (rs) {
                 var parameter = {
                     parameter: trong.model.City
@@ -334,36 +326,35 @@ app.controller('add', function ($scope, $uibModalInstance, $rootScope) {
                     showMessageError(formatString(messageComfirm_City_ImportExists, trong.model.City));
                     return;
                 }
-                var arrayFile = $scope.model.Attach;
+                var arrayFile = trong.model.Attach;
                 trong.onBlockUI(idOfDialog, message_Comfirm_Loading_Insert);
                 var objectData = {
                     files: arrayFile,
-                    item: $scope.model
+                    item: trong.model
                 }
                 httpPost(api_City_Insert, objectData,
                     function (rs) {
                         if (rs != false) {
                             trong.showMessageSuccess(rs.Title);
                             $rootScope.reload();
-                            $scope.cancel();
+                            trong.cancel();
                         }
                         trong.offBlockUI(idOfDialog);
                     });
             }
         }, true);
     }
-});
-// đây là controller addImport
-app.controller('addImport', function ($scope, $uibModalInstance, $rootScope) {
-    //
-    var trong = $scope;
-    // khai báo biến validate trên form edit mode
-    $scope.title = "Thêm mới thông tin (Tỉnh / Thành phố) bằng File.";
-    // function close dialog
-    $scope.cancel = function () {
+    // chức năng đóng dialog
+    trong.cancel = function () {
         $uibModalInstance.dismiss('cancel');
     };
-    $scope.validateForm = function () {
+});
+// đây là controller addImport
+app.controller('addImport', function ($scope, $rootScope, $uibModalInstance) {
+    var trong = $scope;
+    // khai báo biến validate trên form edit mode
+    trong.title = "Thêm mới thông tin (Tỉnh / Thành phố) bằng File.";
+    trong.validateForm = function () {
         trong.onBlockUI(idOfDialog, message_Comfirm_Loading_CheckData);
         var flag = true;
         for (var i = 0; i < trong.model.listNew.length; i++) {
@@ -397,8 +388,8 @@ app.controller('addImport', function ($scope, $uibModalInstance, $rootScope) {
         trong.offBlockUI(idOfDialog);
         return flag;
     }
-    $scope.submit = function () {
-        var validate = $scope.validateForm();
+    trong.submit = function () {
+        var validate = trong.validateForm();
         if (!validate) {
             return;
         }
@@ -409,19 +400,22 @@ app.controller('addImport', function ($scope, $uibModalInstance, $rootScope) {
             if (rs != false) {
                 trong.showMessageSuccess(rs.Title);
                 $rootScope.reload();
-                $scope.cancel();
+                trong.cancel();
             }
             trong.offBlockUI(idOfDialog);
         });
 
     }
-
+    // chức năng đóng dialog
+    trong.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+    };
 });
 // đây là controller edit
-app.controller('edit', function ($scope, $uibModalInstance, $rootScope, parameter) {
+app.controller('edit', function ($scope, $rootScope, $uibModalInstance, parameter) {
     var trong = $scope;
     trong.model = {};
-    $scope.title = "Cập nhật thông tin (Tỉnh / Thành phố).";
+    trong.title = "Cập nhật thông tin (Tỉnh / Thành phố).";
 
     trong.init = function () {
         trong.onBlockUI(idOfDialog, message_Comfirm_Loading_Data);
@@ -436,28 +430,27 @@ app.controller('edit', function ($scope, $uibModalInstance, $rootScope, paramete
     }
     trong.init();
     trong.submit = function () {
-        $rootScope.validateForm($scope.model, function (rs) {
+        $rootScope.validateForm(trong.model, function (rs) {
             if (rs) {
-                var arrayFile = $scope.model.Attach;
+                var arrayFile = trong.model.Attach;
                 trong.onBlockUI(idOfDialog, message_Comfirm_Loading_Update);
                 var objectData = {
                     files: arrayFile,
-                    item: $scope.model
+                    item: trong.model
                 }
                 httpPost(api_City_Update, objectData,
                     function (rs) {
                         if (rs != false) {
                             trong.showMessageSuccess(rs.Title);
                             $rootScope.reload();
-                            $scope.cancel();
+                            trong.cancel();
                         }
                     });
             }
         }, true);
-
     }
-    // function close dialog
-    $scope.cancel = function () {
+    // chức năng đóng dialog
+    trong.cancel = function () {
         $uibModalInstance.dismiss('cancel');
     };
 });
