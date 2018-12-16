@@ -212,6 +212,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\controller-directory\DistrictController.cs" />
     <Compile Include="Controllers\controller-directory\CityController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Login\LoginController.cs" />
@@ -240,6 +241,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Custom-Model\Action-Permission-Before\DataAccess.cs" />
+    <Compile Include="Models\Custom-Model\Entity-Database\Directory_District_Extend.cs" />
     <Compile Include="Models\Custom-Model\Entity-Database\Directory_City_Extend.cs" />
     <Compile Include="Models\Custom-Model\Entity-Message\Message-Count-Item-On-Table.cs" />
     <Compile Include="Models\Custom-Model\Entity-Message\Message.cs" />
@@ -264,6 +266,9 @@
     <Compile Include="Models\Directory_City.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Directory_District.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\function.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
@@ -271,6 +276,15 @@
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\P_viewMenuPermission_Result.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_helpdiagrams_Result.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sysdiagram.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -5680,6 +5694,10 @@
     <Content Include="Content\js-controller\directory-city\edit.html" />
     <Content Include="Content\js-controller\directory-city\index.html" />
     <Content Include="Content\js-controller\directory-city\view.html" />
+    <Content Include="Content\js-controller\js-common-funciton\js-common-variable\js-common-variable-folder-js.js" />
+    <Content Include="Content\js-controller\js-common-funciton\js-common-variable\js-common-variable-api.js" />
+    <Content Include="Content\js-controller\js-common-funciton\js-common-variable\js-common-variable-message.js" />
+    <Content Include="Content\js-controller\js-common-funciton\js-common-variable\js-common-variable-right-click-datatable.js" />
     <Content Include="Content\js-controller\js-common-funciton\variable-common.js" />
     <Content Include="Content\js-controller\manager_function\add.html" />
     <Content Include="Content\js-controller\manager_function\edit.html" />
@@ -6106,6 +6124,7 @@
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\ManagerFunction\Index.cshtml" />
     <Content Include="Views\City\Index.cshtml" />
+    <Content Include="Views\District\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

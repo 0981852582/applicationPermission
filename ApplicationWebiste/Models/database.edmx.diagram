@@ -18,6 +18,9 @@
         <AssociationConnector Association="Db_Permission_Model.FK_contraint_account_group_function_childOfFunction_function" ManuallyRouted="false" />
         <AssociationConnector Association="Db_Permission_Model.FK_contraint_account_group_group" ManuallyRouted="false" />
         <AssociationConnector Association="Db_Permission_Model.FK_contraint_function_childOfFunction_function" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Db_Permission_Model.Directory_District" Width="1.5" PointX="10" PointY="3.625" />
+        <EntityTypeShape EntityType="Db_Permission_Model.sysdiagram" Width="1.5" PointX="8.375" PointY="8.75" />
+        <AssociationConnector Association="Db_Permission_Model.FK_Directory_District_Directory_City" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

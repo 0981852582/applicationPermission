@@ -8,5 +8,6 @@
         public const string manager_permissionOfGroup = "manager_permissionOfGroup";
         public const string manager_permissionOfAccount = "manager_permissionOfAccount";
         public const string manager_function = "manager_function";
+        public const string manager_district = "manager_district";
     }
 }

@@ -101,7 +101,7 @@
             };
             var $this = this;
             trong.onBlockUI(idOfDataTable, message_Comfirm_Loading_Data);
-            httpPost(api_City_DataTable, parameter,
+            httpPost(api_District_DataTable, parameter,
                 function (rs) {
                     if (rs != false) {
                         this.values = [];
@@ -118,7 +118,7 @@
     $rootScope.dataTable.query();
     trong.download = function (id) {
         trong.onBlockUI(idOfDataTable, message_Comfirm_Loading_Download);
-        httpDownload(api_City_Download, id, function (rs) {
+        httpDownload(api_District_Download, id, function (rs) {
             if (rs != false) {
                 window.location.href = api_City_Download + id;
             }
@@ -180,7 +180,7 @@
     trong.dialogAdd = function () {
         /*begin modal*/
         var modalInstance = $uibModal.open({
-            templateUrl: folderJs_City + 'add.html',
+            templateUrl: folderJs_District + 'add.html',
             controller: 'add',
             backdrop: 'static',
             size: '60',
@@ -192,7 +192,7 @@
     trong.dialogAddByImport = function () {
         /*begin modal*/
         var modalInstance = $uibModal.open({
-            templateUrl: folderJs_City + 'addImport.html',
+            templateUrl: folderJs_District + 'addImport.html',
             controller: 'addImport',
             backdrop: 'static',
             size: '60',
@@ -204,7 +204,7 @@
     trong.dialogView = function (id) {
         /*begin modal*/
         var modalInstance = $uibModal.open({
-            templateUrl: folderJs_City + 'view.html',
+            templateUrl: folderJs_District + 'view.html',
             controller: 'view',
             backdrop: 'static',
             size: '60',
@@ -218,7 +218,7 @@
     trong.dialogEdit = function (id) {
         /*begin modal*/
         var modalInstance = $uibModal.open({
-            templateUrl: folderJs_City + 'edit.html',
+            templateUrl: folderJs_District + 'edit.html',
             controller: 'edit',
             backdrop: 'static',
             size: '60',
@@ -239,7 +239,7 @@
                 var parameter = {
                     id: id,
                 }
-                httpPost(api_City_Delete, parameter,
+                httpPost(api_District_Delete, parameter,
                     function (rs) {
                         if (rs != false) {
                             trong.showMessageSuccess(rs.Title);
@@ -270,7 +270,7 @@
                 var parameter = {
                     idArray: idArray,
                 }
-                httpPost(api_City_Deletes, parameter,
+                httpPost(api_District_Deletes, parameter,
                     function (rs) {
                         if (rs != false) {
                             trong.showMessageSuccess(rs.Title);
@@ -296,7 +296,7 @@ app.controller('view', function ($scope, $uibModalInstance, parameter) {
         var parameters = {
             id: parameter
         }
-        httpPost(api_City_GetItem, parameters, function (rs) {
+        httpPost(api_District_GetItem, parameters, function (rs) {
             trong.model = rs;
             trong.offBlockUI(idOfDialog);
         });
@@ -330,7 +330,7 @@ app.controller('add', function ($scope, $uibModalInstance, $rootScope) {
                 var parameter = {
                     parameter: trong.model.City
                 };
-                var existsCity = httpPostAsync(api_City_CountItemByCity, parameter);
+                var existsCity = httpPostAsync(api_District_CountItemByDistrict, parameter);
                 if (existsCity > 0) {
                     showMessageError(formatString(messageComfirm_City_ImportExists, trong.model.City));
                     return;
@@ -341,7 +341,7 @@ app.controller('add', function ($scope, $uibModalInstance, $rootScope) {
                     files: arrayFile,
                     item: $scope.model
                 }
-                httpPost(api_City_Insert, objectData,
+                httpPost(api_District_Insert, objectData,
                     function (rs) {
                         if (rs != false) {
                             trong.showMessageSuccess(rs.Title);
@@ -380,7 +380,7 @@ app.controller('addImport', function ($scope, $uibModalInstance, $rootScope) {
                     var parameter = {
                         parameter: trong.model.listNew[i].City
                     };
-                    var existsCity = httpPostAsync(api_City_CountItemByCity, parameter);
+                    var existsCity = httpPostAsync(api_District_CountItemByCity, parameter);
                     if (existsCity > 0) {
                         trong.model.listNew[i].messageError = formatString(messageComfirm_City_ImportExists, trong.model.listNew[i].City);
                         trong.model.listNew[i].statusError = true;
@@ -406,7 +406,7 @@ app.controller('addImport', function ($scope, $uibModalInstance, $rootScope) {
         var fd = new FormData();
         fd.append('file', JSON.stringify(trong.model.listNew));
         trong.onBlockUI(idOfDialog, message_Comfirm_Loading_Insert);
-        httpPostFormData(api_City_InsertImport, fd, function (rs) {
+        httpPostFormData(api_District_InsertImport, fd, function (rs) {
             if (rs != false) {
                 trong.showMessageSuccess(rs.Title);
                 $rootScope.reload();
@@ -429,7 +429,7 @@ app.controller('edit', function ($scope, $uibModalInstance, $rootScope, paramete
         var objectData = {
             id: parameter
         }
-        httpPost(api_City_GetItem, objectData,
+        httpPost(api_District_GetItem, objectData,
             function (rs) {
                 trong.model = rs;
                 trong.offBlockUI(idOfDialog);
@@ -445,7 +445,7 @@ app.controller('edit', function ($scope, $uibModalInstance, $rootScope, paramete
                     files: arrayFile,
                     item: $scope.model
                 }
-                httpPost(api_City_Update, objectData,
+                httpPost(api_District_Update, objectData,
                     function (rs) {
                         if (rs != false) {
                             trong.showMessageSuccess(rs.Title);

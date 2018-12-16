@@ -138,7 +138,7 @@
     trong.menuOptions = [
         {
             text: function ($itemScope) {
-                return '<i class="fa fa-eye"></i> Xem thông tin'
+                return variable_View_Right_Click_Datatable;
             },
             click: function ($itemScope) {
                 trong.dialogView($itemScope.item.Id);
@@ -151,7 +151,7 @@
             },
         },
         {
-            text: '<i class="fa fa-edit"></i> Cập nhật thông tin',
+            text: variable_Edit_Right_Click_Datatable,
             click: function ($itemScope) {
                 trong.dialogEdit($itemScope.item.Id);
             },
@@ -163,7 +163,7 @@
             },
         },
         {
-            text: '<i class="fa fa-trash-o"></i> Xóa thông tin',
+            text: variable_Delete_Right_Click_Datatable,
             click: function ($itemScope) {
                 trong.delete($itemScope.item.Id);
             },
