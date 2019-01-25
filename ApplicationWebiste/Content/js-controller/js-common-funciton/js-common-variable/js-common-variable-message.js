@@ -35,7 +35,7 @@ const message_Comfirm_Not_Download = 'File Đính kèm không tồn tại';
 
 const message_Error_Validate_Form_Import = 'Dữ liệu khi validate của dòng này không hợp lệ';
 
-const message_Comfirm_Loading_Data = 'Đang tải bản ghi ...';
+const message_Comfirm_Loading_Data = 'Đang tải dữ liệu ...';
 
 const message_Comfirm_Loading_Insert = 'Đang thực hiện thêm mới bản ghi ...';
 

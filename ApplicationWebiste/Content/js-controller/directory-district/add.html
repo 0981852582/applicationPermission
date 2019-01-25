@@ -8,18 +8,27 @@
             <form name="openform" class="form-horizontal  form-bordered" method="post">
                 <div class="form-body">
                     <div class="form-group">
-                        <label class="control-label col-md-2">Mã Quận</label>
-                        <div class="col-md-2">
+                        <label class="control-label col-md-2">Mã Quận <span class="required"> *</span></label>
+                        <div class="col-md-3">
                             <input type="text" name="City" ng-model="model.District" placeholder="Mã (Quận / Huyện)" maxlength="8" class="form-control" />
                         </div>
-                        <label class="control-label col-md-2">Tên Quận</label>
-                        <div class="col-md-6">
+                        <label class="control-label col-md-2">Tên Quận <span class="required"> *</span></label>
+                        <div class="col-md-5">
                             <input type="text" name="Title" ng-model="model.Title" placeholder="Tên (Quận / Huyện)" maxlength="25" class="form-control" />
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="control-label col-md-2">Tỉnh / Thành Phố <span class="required"> *</span></label>
+                        <div class="col-md-3">
+                            <ui-select ng-model="model.City" name="City" style="width: 100%;">
+                                <ui-select-match placeholder="Chọn tỉnh thành phố...">{{$select.selected.LookupTitle}}</ui-select-match>
+                                <ui-select-choices repeat="x.LookupId as x in listSelected | filter:$select.search">
+                                    {{x.LookupTitle}}
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
                         <label class="control-label col-md-2">Mô tả</label>
-                        <div class="col-md-10">
+                        <div class="col-md-5">
                             <textarea type="text" ng-model="model.Description" placeholder="Mô tả (Quận / Huyện)" class="form-control" rows="3"></textarea>
                         </div>
                     </div>
@@ -34,23 +43,20 @@
                                 </strong>
                             </label>
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-md-4">
                             <font ng-repeat="item in model.Attach" class="display-box-radius-warning" title="File này chưa được lưu xuống">
                                 <a href="javascript:;" class="color-black">{{item.fileName}}</a>
                                 <i class="fa fa-close cursor color-black" ng-click="model.Attach.splice($index,1)" title="Xóa file này"></i>
                             </font>
                         </div>
-                    </div>
-                    <div class="form-group">
                         <label class="control-label col-md-2">Trạng thái</label>
-                        <div class="col-md-10">
+                        <div class="col-md-2">
                             <ui-select ng-model="model.Status">
                                 <ui-select-match placeholder="Chọn trạng thái...">{{$select.selected.Title}}</ui-select-match>
                                 <ui-select-choices repeat="x.Id as x in listStatus | filter:$select.search">
                                     {{x.Title}}
                                 </ui-select-choices>
                             </ui-select>
-                            <!--<select type="text" ng-model="model.Status" class="form-control" ng-options="item.Id as item.Title for item in listStatus track by item.Id"></select>-->
                         </div>
                     </div>
                 </div>

@@ -417,15 +417,13 @@ namespace ApplicationWebiste.Controllers.Manager_Permission
                     LookupId = x.City,
                     LookupTitle = x.Title
                 }).ToList();
-                msg.Data = Json(result);
+                return Json(new { Data = result , Error = false}, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
-                msg.Error = true;
-                msg.Data = ex.ToString();
+                return Json(new { Data = ex.ToString(), Error = true }, JsonRequestBehavior.AllowGet);
             }
-
-            return Json(msg, JsonRequestBehavior.AllowGet);
+           
         }
     }
 }

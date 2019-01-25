@@ -316,6 +316,14 @@ app.controller('add', function ($scope, $uibModalInstance, $rootScope) {
     $scope.model = {
         Status: 1
     };
+    trong.onBlockUI(idOfDialog, message_Comfirm_Loading_Data);
+    httpPost("/City/GetLookupItem/", null,
+        function (rs) {
+            if (rs != false) {
+                $scope.listSelected = rs.Data;
+            }
+            trong.offBlockUI(idOfDialog);
+        });
     // function close dialog
     $scope.ok = function () {
         $uibModalInstance.close();

@@ -172,8 +172,6 @@ D:\DEV\ApplicationWebsite\applicationPermission\ApplicationWebiste\ApplicationWe
 D:\DEV\ApplicationWebsite\applicationPermission\ApplicationWebiste\ApplicationWebiste\bin\System.Runtime.CompilerServices.Unsafe.xml
 D:\DEV\ApplicationWebsite\applicationPermission\ApplicationWebiste\ApplicationWebiste\bin\System.Text.Encodings.Web.xml
 D:\DEV\ApplicationWebsite\applicationPermission\ApplicationWebiste\ApplicationWebiste\bin\System.Threading.Tasks.Extensions.xml
-D:\DEV\Application_Website\applicationPermission\ApplicationWebiste\obj\Debug\ApplicationWebiste.dll
-D:\DEV\Application_Website\applicationPermission\ApplicationWebiste\obj\Debug\ApplicationWebiste.pdb
 D:\DEV\Application_Website\applicationPermission\ApplicationWebiste\bin\ApplicationInsights.config
 D:\DEV\Application_Website\applicationPermission\ApplicationWebiste\bin\ApplicationWebiste.dll.config
 D:\DEV\Application_Website\applicationPermission\ApplicationWebiste\bin\ApplicationWebiste.dll
@@ -364,6 +362,8 @@ D:\DEV\Application_Website\applicationPermission\ApplicationWebiste\bin\Microsof
 D:\DEV\Application_Website\applicationPermission\ApplicationWebiste\bin\Microsoft.AI.WindowsServer.xml
 D:\DEV\Application_Website\applicationPermission\ApplicationWebiste\bin\Microsoft.AI.Web.xml
 D:\DEV\Application_Website\applicationPermission\ApplicationWebiste\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-D:\DEV\Application_Website\applicationPermission\ApplicationWebiste\obj\Debug\ApplicationWebiste.csprojAssemblyReference.cache
 D:\DEV\Application_Website\applicationPermission\ApplicationWebiste\obj\Debug\ApplicationWebiste.csproj.CoreCompileInputs.cache
 D:\DEV\Application_Website\applicationPermission\ApplicationWebiste\obj\Debug\ApplicationWebiste.csproj.CopyComplete
+D:\DEV\Application_Website\applicationPermission\ApplicationWebiste\obj\Debug\ApplicationWebiste.dll
+D:\DEV\Application_Website\applicationPermission\ApplicationWebiste\obj\Debug\ApplicationWebiste.pdb
+D:\DEV\Application_Website\applicationPermission\ApplicationWebiste\obj\Debug\ApplicationWebiste.csprojAssemblyReference.cache
