@@ -212,6 +212,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\controller-directory\WardsController.cs" />
     <Compile Include="Controllers\controller-directory\DistrictController.cs" />
     <Compile Include="Controllers\controller-directory\CityController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -241,6 +242,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Custom-Model\Action-Permission-Before\DataAccess.cs" />
+    <Compile Include="Models\Custom-Model\Entity-Database\Directory_Wards_Extend.cs" />
     <Compile Include="Models\Custom-Model\Entity-Database\Directory_District_Extend.cs" />
     <Compile Include="Models\Custom-Model\Entity-Database\Directory_City_Extend.cs" />
     <Compile Include="Models\Custom-Model\Entity-Message\Message-Count-Item-On-Table.cs" />
@@ -267,6 +269,9 @@
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Directory_District.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Directory_Wards.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\function.cs">
@@ -5678,6 +5683,12 @@
     <Content Include="Content\css-input-file\demo.css" />
     <Content Include="Content\css-input-file\normalize.css" />
     <Content Include="Content\image-custom\group-512.png" />
+    <Content Include="Content\js-controller\directory-wards\add.html" />
+    <Content Include="Content\js-controller\directory-wards\addImport.html" />
+    <Content Include="Content\js-controller\directory-wards\controller.js" />
+    <Content Include="Content\js-controller\directory-wards\edit.html" />
+    <Content Include="Content\js-controller\directory-wards\index.html" />
+    <Content Include="Content\js-controller\directory-wards\view.html" />
     <Content Include="Content\js-controller\directory-district\add.html" />
     <Content Include="Content\js-controller\directory-district\addImport.html" />
     <Content Include="Content\js-controller\directory-district\controller.js" />
@@ -6125,6 +6136,7 @@
     <Content Include="Views\ManagerFunction\Index.cshtml" />
     <Content Include="Views\City\Index.cshtml" />
     <Content Include="Views\District\Index.cshtml" />
+    <Content Include="Views\Wards\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

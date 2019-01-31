@@ -1,0 +1,78 @@
+﻿<div id="modal-body">
+    <div class="modal-header ng-scope">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">×</button>
+        <h3 class="modal-title ng-binding" id="modal-title">{{title}}</h3>
+    </div>
+    <div class="modal-body ng-scope">
+        <div class="portlet-body form">
+            <form name="openform" class="form-horizontal  form-bordered" method="post">
+                <div class="form-body">
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Mã (Phường / Xã)<span class="required"> *</span></label>
+                        <div class="col-md-3">
+                            <input type="text" name="Wards" ng-model="model.Wards" placeholder="Mã (Phường / Xã)" maxlength="8" class="form-control" />
+                        </div>
+                        <label class="control-label col-md-2">Tên  (Phường / Xã)<span class="required"> *</span></label>
+                        <div class="col-md-5">
+                            <input type="text" name="Title" ng-model="model.Title" placeholder="Tên (Phường / Xã)" maxlength="50" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Quận / Huyện <span class="required"> *</span></label>
+                        <div class="col-md-3">
+                            <ui-select ng-model="model.District" name="District" style="width: 100%;">
+                                <ui-select-match placeholder="Chọn (Quận / Huyện)">{{$select.selected.LookupTitle }} {{$select.selected.TitleCity == '' ? '': ' - '}} {{$select.selected.TitleCity}}</ui-select-match>
+                                <ui-select-choices repeat="x.LookupId as x in listLookupDistrict | filter:$select.search">
+                                    {{x.LookupTitle}} {{x.TitleCity == '' ? '': ' - '}} {{x.TitleCity}}
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                        <label class="control-label col-md-2">Mô tả</label>
+                        <div class="col-md-5">
+                            <textarea type="text" ng-model="model.Description" placeholder="Mô tả (Phường / Xã)" class="form-control" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Đính kèm</label>
+                        <div class="col-md-2">
+                            <input type="file" id="file-7" class="inputfile inputfile-6 display-hide" filereadsinger="model.Attach" />
+                            <label for="file-7">
+                                <strong>
+                                    Đính kèm
+                                    <i class="fa fa-cloud-upload"></i>
+                                </strong>
+                            </label>
+                        </div>
+                        <div class="col-md-4">
+                            <font ng-repeat="item in model.Attach" class="display-box-radius-warning" title="File này chưa được lưu xuống">
+                                <a href="javascript:;" class="color-black">{{item.fileName}}</a>
+                                <i class="fa fa-close cursor color-black" ng-click="model.Attach.splice($index,1)" title="Xóa file này"></i>
+                            </font>
+                        </div>
+                        <label class="control-label col-md-2">Trạng thái</label>
+                        <div class="col-md-2">
+                            <ui-select ng-model="model.Status">
+                                <ui-select-match placeholder="Chọn trạng thái...">{{$select.selected.Title}}</ui-select-match>
+                                <ui-select-choices repeat="x.Id as x in listStatus | filter:$select.search">
+                                    {{x.Title}}
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="modal-footer ng-scope">
+        <div class="col-md-8" style="text-align: left; padding-left:0px; padding-right:0px">
+        </div>
+        <div class="col-md-4 pull-right" style="padding-left:0px; padding-right:0px">
+            <a class="btn btn-primary" href="javascript:;" ng-click="submit()">
+                <i class="fa fa-calendar-plus-o"></i> Thêm mới
+            </a>
+            <a data-dismiss="modal" class="btn btn-danger" href="javascript:;" ng-click="cancel()">
+                <i class="fa fa-times"></i> Đóng
+            </a>
+        </div>
+    </div>
+</div>

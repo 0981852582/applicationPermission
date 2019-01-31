@@ -18,6 +18,16 @@ const messageComfirm_District_NotExists = 'Vui lòng chọn (Quận / Huyện) t
 //              variable chứa message thông báo comfirm đã tồn tại trong cơ sở dữ liệu
 const messageComfirm_District_ImportExists = 'Mã (Quận / Huyện) là [{0}] đã tồn tại trong cơ sở dữ liệu';
 
+//      Wards
+//              variable chứa message thông báo comfirm xóa danh sách quận huyện 
+const messageComfirm_Wards_Deletes = 'Bạn có thực sự muốn xóa những (Phường / Xã) đã chọn ?';
+//              variable chứa message thông báo comfirm xóa một tỉnh quận huyện
+const messageComfirm_Wards_Delete = 'Bạn có thực sự muốn xóa (Phường / Xã) này ?';
+//              variable chứa message thông báo comfirm chưa chọn quận huyện cần xóa
+const messageComfirm_Wards_NotExists = 'Vui lòng chọn (Phường / Xã) trước khi thực hiện chức năng này';
+//              variable chứa message thông báo comfirm đã tồn tại trong cơ sở dữ liệu
+const messageComfirm_Wards_ImportExists = 'Mã (Phường / Xã) là [{0}] đã tồn tại trong cơ sở dữ liệu';
+
 //      MANAGERFUNCTION
 //              variable chứa message thông báo comfirm xóa danh sách chức năng
 const messageComfirm_ManagerFunction_Deletes = 'Bạn có thực sự muốn xóa những chức năng đã chọn ?';

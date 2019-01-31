@@ -18,6 +18,7 @@ namespace ApplicationWebiste.Models
         public Directory_City()
         {
             this.Directory_District = new HashSet<Directory_District>();
+            this.Directory_Wards = new HashSet<Directory_Wards>();
         }
     
         public int ID { get; set; }
@@ -35,5 +36,7 @@ namespace ApplicationWebiste.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Directory_District> Directory_District { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Directory_Wards> Directory_Wards { get; set; }
     }
 }

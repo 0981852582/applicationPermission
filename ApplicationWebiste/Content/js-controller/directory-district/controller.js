@@ -23,7 +23,7 @@
                 Maxlength: "Mã (Quận / Huyện) không được lớn hơn 8 ký tự.",
                 Special: 'Mã (Quận / Huyện) không được có ký tự đặc biệt.'
             },
-            Place: "col-md-2"
+            Place: "col-md-3"
         },
         {
             Title: 'Title',
@@ -35,7 +35,17 @@
                 Required: "Tên (Quận / Huyện) không được để trống.",
                 Maxlength: "Tên (Quận / Huyện) không được lớn hơn 25 ký tự."
             },
-            Place: "col-md-6"
+            Place: "col-md-5"
+        },
+        {
+            Title: 'City',
+            rule: {
+                Required: true
+            },
+            message: {
+                Required: "(Tỉnh / Thành phố) không được để trống."
+            },
+            Place: "col-md-3"
         }
     ];
     // Khai báo Datatable cho page này
@@ -120,7 +130,7 @@
         trong.onBlockUI(idOfDataTable, message_Comfirm_Loading_Download);
         httpDownload(api_District_Download, id, function (rs) {
             if (rs != false) {
-                window.location.href = api_City_Download + id;
+                window.location.href = api_District_Download + id;
             }
             trong.offBlockUI(idOfDataTable);
         });
@@ -233,7 +243,7 @@
     // Thực hiện xóa các item datatable
     //      Thực hiện xóa cho từng item trên datatable
     trong.delete = function (id) {
-        Comfirm(messageComfirm_City_Delete, function (rs) {
+        Comfirm(messageComfirm_District_Delete, function (rs) {
             if (rs) {
                 trong.onBlockUI(idOfDataTable, message_Comfirm_Loading_Delete);
                 var parameter = {
@@ -252,19 +262,19 @@
     //      Thực hiện xóa nhiều item trên datatable
     trong.deleteArray = function () {
         if (isNotTypeOfArray(trong.dataTable.values)) {
-            trong.showMessageError(messageComfirm_City_NotExists);
+            trong.showMessageError(messageComfirm_District_NotExists);
             return;
         }
         var deleteArray = trong.dataTable.values.filter(function (value) { return value.isChecked == true });
         if (deleteArray.length == 0) {
-            trong.showMessageError(messageComfirm_City_NotExists);
+            trong.showMessageError(messageComfirm_District_NotExists);
             return;
         }
         var idArray = [];
         for (var i = 0; i < deleteArray.length; i++) {
             idArray.push(deleteArray[i].Id);
         }
-        Comfirm(messageComfirm_City_Deletes, function (rs) {
+        Comfirm(messageComfirm_District_Deletes, function (rs) {
             if (rs) {
                 trong.onBlockUI(idOfDataTable, message_Comfirm_Loading_Delete);
                 var parameter = {
@@ -314,13 +324,14 @@ app.controller('add', function ($scope, $uibModalInstance, $rootScope) {
     // khai báo biến validate trên form edit mode
     $scope.title = "Thêm mới thông tin (Quận / Huyện).";
     $scope.model = {
-        Status: 1
+        Status: 1,
+        City: ""
     };
     trong.onBlockUI(idOfDialog, message_Comfirm_Loading_Data);
-    httpPost("/City/GetLookupItem/", null,
+    httpPost(api_City_GetLookupItem, null,
         function (rs) {
             if (rs != false) {
-                $scope.listSelected = rs.Data;
+                $scope.listLookupCity = rs.Data;
             }
             trong.offBlockUI(idOfDialog);
         });
@@ -336,11 +347,11 @@ app.controller('add', function ($scope, $uibModalInstance, $rootScope) {
         $rootScope.validateForm($scope.model, function (rs) {
             if (rs) {
                 var parameter = {
-                    parameter: trong.model.City
+                    parameter: trong.model.District
                 };
-                var existsCity = httpPostAsync(api_District_CountItemByDistrict, parameter);
-                if (existsCity > 0) {
-                    showMessageError(formatString(messageComfirm_City_ImportExists, trong.model.City));
+                var exists = httpPostAsync(api_District_CountItemByDistrict, parameter);
+                if (exists > 0) {
+                    showMessageError(formatString(messageComfirm_District_ImportExists, trong.model.District));
                     return;
                 }
                 var arrayFile = $scope.model.Attach;
@@ -386,11 +397,11 @@ app.controller('addImport', function ($scope, $uibModalInstance, $rootScope) {
                     flag = false;
                 } else {
                     var parameter = {
-                        parameter: trong.model.listNew[i].City
+                        parameter: trong.model.listNew[i].District
                     };
-                    var existsCity = httpPostAsync(api_District_CountItemByCity, parameter);
-                    if (existsCity > 0) {
-                        trong.model.listNew[i].messageError = formatString(messageComfirm_City_ImportExists, trong.model.listNew[i].City);
+                    var exists = httpPostAsync(api_District_CountItemByDistrict, parameter);
+                    if (exists > 0) {
+                        trong.model.listNew[i].messageError = formatString(messageComfirm_District_ImportExists, trong.model.listNew[i].District);
                         trong.model.listNew[i].statusError = true;
                         if (flag) {
                             angular.element('[id="' + trong.model.listNew[i].idDOM + '"]').focus();
@@ -407,12 +418,13 @@ app.controller('addImport', function ($scope, $uibModalInstance, $rootScope) {
         return flag;
     }
     $scope.submit = function () {
+        var listModel = $scope.convertObject();
         var validate = $scope.validateForm();
         if (!validate) {
             return;
         }
         var fd = new FormData();
-        fd.append('file', JSON.stringify(trong.model.listNew));
+        fd.append('file', JSON.stringify(listModel));
         trong.onBlockUI(idOfDialog, message_Comfirm_Loading_Insert);
         httpPostFormData(api_District_InsertImport, fd, function (rs) {
             if (rs != false) {
@@ -422,18 +434,45 @@ app.controller('addImport', function ($scope, $uibModalInstance, $rootScope) {
             }
             trong.offBlockUI(idOfDialog);
         });
-
+    }
+    $scope.convertObject = function () {
+        var array = [];
+        if (isNotNull(trong.model.listNew)) {
+            for (var i = 0; i < $scope.model.listNew.length; i++) {
+                $scope.model.listNew[i].City = $scope.model.listNew[i]['Mã TP'];
+                $scope.model.listNew[i].District = $scope.model.listNew[i]['Mã QH'];
+                $scope.model.listNew[i].Title = $scope.model.listNew[i]['Quận /Huyện'];
+                $scope.model.listNew[i].Status = 1;
+            }
+            for (var i = 0; i < $scope.model.listNew.length; i++) {
+                array.push({
+                    City: $scope.model.listNew[i]['City'],
+                    District: $scope.model.listNew[i]['District'],
+                    Title: $scope.model.listNew[i]['Title'],
+                    Status: $scope.model.listNew[i]['Status']
+                });
+            }
+        }
+        return array;
     }
 
 });
 // đây là controller edit
 app.controller('edit', function ($scope, $uibModalInstance, $rootScope, parameter) {
     var trong = $scope;
-    trong.model = {};
+    trong.model = {
+        City: ""
+    };
     $scope.title = "Cập nhật thông tin (Quận / Huyện).";
-
+    trong.onBlockUI(idOfDialog, message_Comfirm_Loading_Data);
+    httpPost(api_City_GetLookupItem, null,
+        function (rs) {
+            if (rs != false) {
+                $scope.listLookupCity = rs.Data;
+            }
+            trong.init();
+        });
     trong.init = function () {
-        trong.onBlockUI(idOfDialog, message_Comfirm_Loading_Data);
         var objectData = {
             id: parameter
         }
@@ -443,7 +482,6 @@ app.controller('edit', function ($scope, $uibModalInstance, $rootScope, paramete
                 trong.offBlockUI(idOfDialog);
             });
     }
-    trong.init();
     trong.submit = function () {
         $rootScope.validateForm($scope.model, function (rs) {
             if (rs) {

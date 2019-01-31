@@ -281,6 +281,28 @@ License: You must have a valid license purchased only from themeforest(the above
                 location: '0 bản nghi'
 
             };
+            // object thực hiện lựu lại giá trị dùng chung cho page phân trang
+            $rootScope.settingOfPaddingClient = {
+                // mặc định khi khởi tạo thì currentPage = 1 khi người dùng click page khác thì sử lý khác
+                currentPage: 1,
+                // mặc định top lấy ra
+                top: 100,
+                // mặc định skip lấy ra
+                skip : 0,
+                // khi số lượng page phần trang nhiều hơn maxSize thì sẽ hiện ... chứ không show hết số page phân trang
+                maxSize: 5,
+                // số lượng item hiện có của list để thực hiện tính toán phân ra số page
+                totalItem: 0,
+                // số lượng item trên 1 page để thực hiện tính toán phân ra số page
+                numberPage: 100,
+                // xắp xếp theo cột nào
+                orderBy: 'ID',
+                // đang thuộc kiểu xắp xếp nào ASC hay DESC
+                orderType: false,
+                // đang thuộc từ bản ghi thứ tự nào
+                location: '0 bản nghi'
+
+            };
             // call lấy dữ liệu danh mục menu bên trái khi vào admin
             http.post('/Home/viewMenuPermission/').then(function (rs) {
                 $rootScope.L_permission = rs.data;

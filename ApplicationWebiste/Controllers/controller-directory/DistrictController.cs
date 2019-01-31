@@ -81,6 +81,7 @@ namespace ApplicationWebiste.Controllers.Manager_Permission
                 Status = x.Status,
                 District = x.District,
                 City = x.City,
+                TitleCity = x.Directory_City.Title,
                 ModifiedDate = x.ModifiedDate,
                 CreatedDate = x.CreatedDate,
                 ModifiedBy = x.ModifiedBy,
@@ -186,7 +187,7 @@ namespace ApplicationWebiste.Controllers.Manager_Permission
             Message msg = new Message { Error = false };
             try
             {
-                if (getNotExistsDistrictWhenUpdate(item.ID, item.City))
+                if (getNotExistsDistrictWhenUpdate(item.ID, item.District))
                 {
                     if (files == null)
                     {
@@ -424,17 +425,23 @@ namespace ApplicationWebiste.Controllers.Manager_Permission
                 var result = _dbContext.Directory_District.Select(x => new
                 {
                     LookupId = x.District,
-                    LookupTitle = x.Title
+                    LookupTitle = x.Title,
+                    City = x.City,
+                    TitleCity = x.Directory_City.Title
                 }).ToList();
-                msg.Data = Json(result);
+                result.Insert(0, new
+                {
+                    LookupId = "",
+                    LookupTitle = "Chọn (Quận / Huyện)",
+                    City = "",
+                    TitleCity = ""
+                });
+                return Json(new { Data = result, Error = false }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
-                msg.Error = true;
-                msg.Data = ex.ToString();
+                return Json(new { Data = ex.ToString(), Error = true }, JsonRequestBehavior.AllowGet);
             }
-
-            return Json(msg, JsonRequestBehavior.AllowGet);
         }
     }
 }

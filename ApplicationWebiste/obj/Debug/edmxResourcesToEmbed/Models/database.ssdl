@@ -83,6 +83,25 @@
     <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
     <Property Name="ModifiedDate" Type="datetime" />
   </EntityType>
+  <EntityType Name="Directory_Wards">
+    <Key>
+      <PropertyRef Name="Wards" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Wards" Type="varchar" MaxLength="8" Nullable="false" />
+    <Property Name="City" Type="varchar" MaxLength="8" />
+    <Property Name="District" Type="varchar" MaxLength="8" />
+    <Property Name="Title" Type="nvarchar" MaxLength="50" />
+    <Property Name="Description" Type="ntext" />
+    <Property Name="Status" Type="tinyint" />
+    <Property Name="History" Type="ntext" />
+    <Property Name="FileName" Type="ntext" />
+    <Property Name="Attach" Type="varbinary(max)" />
+    <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="ModifiedDate" Type="datetime" />
+  </EntityType>
   <EntityType Name="function">
     <Key>
       <PropertyRef Name="Function" />
@@ -196,6 +215,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Directory_Wards_Directory_City">
+    <End Role="Directory_City" Type="Self.Directory_City" Multiplicity="0..1" />
+    <End Role="Directory_Wards" Type="Self.Directory_Wards" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Directory_City">
+        <PropertyRef Name="City" />
+      </Principal>
+      <Dependent Role="Directory_Wards">
+        <PropertyRef Name="City" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Directory_Wards_Directory_District">
+    <End Role="Directory_District" Type="Self.Directory_District" Multiplicity="0..1" />
+    <End Role="Directory_Wards" Type="Self.Directory_Wards" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Directory_District">
+        <PropertyRef Name="District" />
+      </Principal>
+      <Dependent Role="Directory_Wards">
+        <PropertyRef Name="District" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
   <Function Name="P_viewMenuPermission" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Account" Type="varchar" Mode="In" />
@@ -251,6 +294,7 @@
     <EntitySet Name="contraint_group_function_childOfFunction" EntityType="Self.contraint_group_function_childOfFunction" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Directory_City" EntityType="Self.Directory_City" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Directory_District" EntityType="Self.Directory_District" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Directory_Wards" EntityType="Self.Directory_Wards" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="function" EntityType="Self.function" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="group" EntityType="Self.group" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
@@ -277,6 +321,14 @@
     <AssociationSet Name="FK_Directory_District_Directory_City" Association="Self.FK_Directory_District_Directory_City">
       <End Role="Directory_City" EntitySet="Directory_City" />
       <End Role="Directory_District" EntitySet="Directory_District" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Directory_Wards_Directory_City" Association="Self.FK_Directory_Wards_Directory_City">
+      <End Role="Directory_City" EntitySet="Directory_City" />
+      <End Role="Directory_Wards" EntitySet="Directory_Wards" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Directory_Wards_Directory_District" Association="Self.FK_Directory_Wards_Directory_District">
+      <End Role="Directory_District" EntitySet="Directory_District" />
+      <End Role="Directory_Wards" EntitySet="Directory_Wards" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

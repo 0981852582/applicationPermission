@@ -10,7 +10,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-2">Mã Quận <span class="required"> *</span></label>
                         <div class="col-md-3">
-                            <input type="text" name="City" ng-model="model.District" placeholder="Mã (Quận / Huyện)" maxlength="8" class="form-control" />
+                            <input type="text" name="District" ng-model="model.District" placeholder="Mã (Quận / Huyện)" maxlength="8" class="form-control" />
                         </div>
                         <label class="control-label col-md-2">Tên Quận <span class="required"> *</span></label>
                         <div class="col-md-5">
@@ -21,8 +21,8 @@
                         <label class="control-label col-md-2">Tỉnh / Thành Phố <span class="required"> *</span></label>
                         <div class="col-md-3">
                             <ui-select ng-model="model.City" name="City" style="width: 100%;">
-                                <ui-select-match placeholder="Chọn tỉnh thành phố...">{{$select.selected.LookupTitle}}</ui-select-match>
-                                <ui-select-choices repeat="x.LookupId as x in listSelected | filter:$select.search">
+                                <ui-select-match placeholder="Chọn (Tỉnh / Thành phố)">{{$select.selected.LookupTitle}}</ui-select-match>
+                                <ui-select-choices repeat="x.LookupId as x in listLookupCity | filter:$select.search">
                                     {{x.LookupTitle}}
                                 </ui-select-choices>
                             </ui-select>
@@ -64,9 +64,9 @@
         </div>
     </div>
     <div class="modal-footer ng-scope">
-        <div class="col-md-9" style="text-align: left; padding-left:0px; padding-right:0px">
+        <div class="col-md-8" style="text-align: left; padding-left:0px; padding-right:0px">
         </div>
-        <div class="col-md-3 pull-right" style="padding-left:0px; padding-right:0px">
+        <div class="col-md-4 pull-right" style="padding-left:0px; padding-right:0px">
             <a class="btn btn-primary" href="javascript:;" ng-click="submit()">
                 <i class="fa fa-calendar-plus-o"></i> Thêm mới
             </a>

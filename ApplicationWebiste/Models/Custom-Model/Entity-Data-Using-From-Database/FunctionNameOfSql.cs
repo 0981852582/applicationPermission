@@ -9,5 +9,6 @@
         public const string manager_permissionOfAccount = "manager_permissionOfAccount";
         public const string manager_function = "manager_function";
         public const string manager_district = "manager_district";
+        public const string manager_Wards = "manager_Wards";
     }
 }

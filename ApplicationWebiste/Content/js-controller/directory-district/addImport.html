@@ -24,17 +24,21 @@
                             <div style="width:99.5%;">
                                 <table class="table" style="margin-bottom:0px; width:99%;">
                                     <tr style="background-color:#428bca;color:white;">
-                                        <td style="width:15%;min-width:15%;max-width:15%;">
-                                            Mã tỉnh
-                                        </td>
-                                        <td style="width:27%;min-width:27%;max-width:27%;">
-                                            Tên tỉnh
+                                        <td style="width:5%;min-width:5%;max-width:5%;">
+                                            Mã TP
                                         </td>
                                         <td style="width:30%;min-width:30%;max-width:30%;">
-                                            Mô tả
+                                            Tỉnh / Thành Phố
                                         </td>
-                                        <td style="width:20%;min-width:20%;max-width:20%;">
-                                            Trạng thái
+                                        <td style="width:5%;min-width:5%;max-width:5%;">
+                                            Mã QH
+                                        </td>
+                                        <td style="width:25%;min-width:25%;max-width:25%;">
+                                            Quận / Huyện
+                                        </td>
+
+                                        <td style="width:30%;min-width:30%;max-width:30%;">
+                                            Cấp
                                         </td>
                                         <td style="width:7%;min-width:7%;max-width:7%;"></td>
                                     </tr>
@@ -45,17 +49,20 @@
                                     <table class="table table-bordered">
                                         <tbody>
                                             <tr ng-repeat="item in model.listNew" style="{{item.statusError ?'color : red':''}}">
-                                                <td style="width:15%;min-width:15%;max-width:15%;">
-                                                    {{item.City}}
-                                                </td>
-                                                <td style="width:27%;min-width:27%;max-width:27%;">
-                                                    {{item.Title}}
+                                                <td style="width:5%;min-width:5%;max-width:5%;">
+                                                    {{item['Mã TP']}}
                                                 </td>
                                                 <td style="width:30%;min-width:30%;max-width:30%;">
-                                                    {{item.Description}}
+                                                    {{item['Tỉnh /Thành Phố']}}
                                                 </td>
-                                                <td style="width:20%;min-width:20%;max-width:20%;">
-                                                    {{item.Status == '1' ? 'Sử dụng' : item.Status == '2' ? 'Không sử dụng' : ''}}
+                                                <td style="width:5%;min-width:5%;max-width:5%;">
+                                                    {{item['Mã QH']}}
+                                                </td>
+                                                <td style="width:25%;min-width:25%;max-width:25%;">
+                                                    {{item['Quận /Huyện']}}
+                                                </td>
+                                                <td style="width:30%;min-width:30%;max-width:30%;">
+                                                    {{item['Cấp']}}
                                                 </td>
                                                 <td style="width:7%;min-width:7%;max-width:7%;">
                                                     <a id="{{item.idDOM}}" title="{{item.messageError}}" class="btn btn-circle btn-icon-only btn-default button-icon-small" href="javascript:;">
@@ -74,9 +81,9 @@
         </div>
     </div>
     <div class="modal-footer ng-scope">
-        <div class="col-md-9" style="text-align: left; padding-left:0px; padding-right:0px">
+        <div class="col-md-8" style="text-align: left; padding-left:0px; padding-right:0px">
         </div>
-        <div class="col-md-3 pull-right" style="padding-left:0px; padding-right:0px">
+        <div class="col-md-4 pull-right" style="padding-left:0px; padding-right:0px">
             <a class="btn btn-primary" href="javascript:;" ng-click="submit()">
                 <i class="fa fa-calendar-plus-o"></i> Thêm mới
             </a>

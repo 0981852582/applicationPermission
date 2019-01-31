@@ -14,6 +14,12 @@ namespace ApplicationWebiste.Models
     
     public partial class Directory_District
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Directory_District()
+        {
+            this.Directory_Wards = new HashSet<Directory_Wards>();
+        }
+    
         public int ID { get; set; }
         public string District { get; set; }
         public string City { get; set; }
@@ -29,5 +35,7 @@ namespace ApplicationWebiste.Models
         public Nullable<System.DateTime> ModifiedDate { get; set; }
     
         public virtual Directory_City Directory_City { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Directory_Wards> Directory_Wards { get; set; }
     }
 }

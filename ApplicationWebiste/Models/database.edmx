@@ -88,6 +88,25 @@
           <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
+        <EntityType Name="Directory_Wards">
+          <Key>
+            <PropertyRef Name="Wards" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Wards" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="City" Type="varchar" MaxLength="8" />
+          <Property Name="District" Type="varchar" MaxLength="8" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="ntext" />
+          <Property Name="Status" Type="tinyint" />
+          <Property Name="History" Type="ntext" />
+          <Property Name="FileName" Type="ntext" />
+          <Property Name="Attach" Type="varbinary(max)" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="function">
           <Key>
             <PropertyRef Name="Function" />
@@ -201,6 +220,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Directory_Wards_Directory_City">
+          <End Role="Directory_City" Type="Self.Directory_City" Multiplicity="0..1" />
+          <End Role="Directory_Wards" Type="Self.Directory_Wards" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Directory_City">
+              <PropertyRef Name="City" />
+            </Principal>
+            <Dependent Role="Directory_Wards">
+              <PropertyRef Name="City" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Directory_Wards_Directory_District">
+          <End Role="Directory_District" Type="Self.Directory_District" Multiplicity="0..1" />
+          <End Role="Directory_Wards" Type="Self.Directory_Wards" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Directory_District">
+              <PropertyRef Name="District" />
+            </Principal>
+            <Dependent Role="Directory_Wards">
+              <PropertyRef Name="District" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <Function Name="P_viewMenuPermission" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Account" Type="varchar" Mode="In" />
@@ -256,6 +299,7 @@
           <EntitySet Name="contraint_group_function_childOfFunction" EntityType="Self.contraint_group_function_childOfFunction" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Directory_City" EntityType="Self.Directory_City" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Directory_District" EntityType="Self.Directory_District" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Directory_Wards" EntityType="Self.Directory_Wards" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="function" EntityType="Self.function" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="group" EntityType="Self.group" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
@@ -282,6 +326,14 @@
           <AssociationSet Name="FK_Directory_District_Directory_City" Association="Self.FK_Directory_District_Directory_City">
             <End Role="Directory_City" EntitySet="Directory_City" />
             <End Role="Directory_District" EntitySet="Directory_District" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Directory_Wards_Directory_City" Association="Self.FK_Directory_Wards_Directory_City">
+            <End Role="Directory_City" EntitySet="Directory_City" />
+            <End Role="Directory_Wards" EntitySet="Directory_Wards" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Directory_Wards_Directory_District" Association="Self.FK_Directory_Wards_Directory_District">
+            <End Role="Directory_District" EntitySet="Directory_District" />
+            <End Role="Directory_Wards" EntitySet="Directory_Wards" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -360,6 +412,7 @@
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Directory_District" Relationship="Db_Permission_Model.FK_Directory_District_Directory_City" FromRole="Directory_City" ToRole="Directory_District" />
+          <NavigationProperty Name="Directory_Wards" Relationship="Db_Permission_Model.FK_Directory_Wards_Directory_City" FromRole="Directory_City" ToRole="Directory_Wards" />
         </EntityType>
         <EntityType Name="function">
           <Key>
@@ -527,6 +580,15 @@
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
+          <EntitySet Name="Directory_Wards" EntityType="Db_Permission_Model.Directory_Wards" />
+          <AssociationSet Name="FK_Directory_Wards_Directory_City" Association="Db_Permission_Model.FK_Directory_Wards_Directory_City">
+            <End Role="Directory_City" EntitySet="Directory_City" />
+            <End Role="Directory_Wards" EntitySet="Directory_Wards" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Directory_Wards_Directory_District" Association="Db_Permission_Model.FK_Directory_Wards_Directory_District">
+            <End Role="Directory_District" EntitySet="Directory_District" />
+            <End Role="Directory_Wards" EntitySet="Directory_Wards" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="P_viewMenuPermission_Result">
           <Property Type="String" Name="Function" Nullable="false" MaxLength="50" />
@@ -552,6 +614,7 @@
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Directory_City" Relationship="Db_Permission_Model.FK_Directory_District_Directory_City" FromRole="Directory_District" ToRole="Directory_City" />
+          <NavigationProperty Name="Directory_Wards" Relationship="Db_Permission_Model.FK_Directory_Wards_Directory_District" FromRole="Directory_District" ToRole="Directory_Wards" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -586,6 +649,51 @@
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
+        <EntityType Name="Directory_Wards">
+          <Key>
+            <PropertyRef Name="Wards" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Wards" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="District" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Byte" />
+          <Property Name="History" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FileName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Attach" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Directory_City" Relationship="Db_Permission_Model.FK_Directory_Wards_Directory_City" FromRole="Directory_Wards" ToRole="Directory_City" />
+          <NavigationProperty Name="Directory_District" Relationship="Db_Permission_Model.FK_Directory_Wards_Directory_District" FromRole="Directory_Wards" ToRole="Directory_District" />
+        </EntityType>
+        <Association Name="FK_Directory_Wards_Directory_City">
+          <End Type="Db_Permission_Model.Directory_City" Role="Directory_City" Multiplicity="0..1" />
+          <End Type="Db_Permission_Model.Directory_Wards" Role="Directory_Wards" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Directory_City">
+              <PropertyRef Name="City" />
+            </Principal>
+            <Dependent Role="Directory_Wards">
+              <PropertyRef Name="City" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Directory_Wards_Directory_District">
+          <End Type="Db_Permission_Model.Directory_District" Role="Directory_District" Multiplicity="0..1" />
+          <End Type="Db_Permission_Model.Directory_Wards" Role="Directory_Wards" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Directory_District">
+              <PropertyRef Name="District" />
+            </Principal>
+            <Dependent Role="Directory_Wards">
+              <PropertyRef Name="District" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -756,6 +864,26 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="Db_Permission_Model.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="Db_Permission_Model.Store.sp_upgraddiagrams" />
+          <EntitySetMapping Name="Directory_Wards">
+            <EntityTypeMapping TypeName="Db_Permission_Model.Directory_Wards">
+              <MappingFragment StoreEntitySet="Directory_Wards">
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Attach" ColumnName="Attach" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="History" ColumnName="History" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="District" ColumnName="District" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Wards" ColumnName="Wards" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

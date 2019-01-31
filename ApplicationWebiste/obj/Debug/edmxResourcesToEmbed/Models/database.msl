@@ -165,5 +165,25 @@
     </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="Db_Permission_Model.Store.sp_renamediagram" />
     <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="Db_Permission_Model.Store.sp_upgraddiagrams" />
+    <EntitySetMapping Name="Directory_Wards">
+      <EntityTypeMapping TypeName="Db_Permission_Model.Directory_Wards">
+        <MappingFragment StoreEntitySet="Directory_Wards">
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="Attach" ColumnName="Attach" />
+          <ScalarProperty Name="FileName" ColumnName="FileName" />
+          <ScalarProperty Name="History" ColumnName="History" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="District" ColumnName="District" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Wards" ColumnName="Wards" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

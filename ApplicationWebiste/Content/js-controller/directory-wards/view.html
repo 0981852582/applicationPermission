@@ -1,0 +1,71 @@
+﻿<div id="modal-body">
+    <div class="modal-header ng-scope">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">×</button>
+        <h3 class="modal-title ng-binding" id="modal-title">{{title}}</h3>
+    </div>
+    <div class="modal-body ng-scope">
+        <div class="portlet-body form">
+            <form name="openform" class="form-horizontal  form-bordered" method="post">
+                <div class="form-body">
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Mã (Phường / Xã)<span class="required"> *</span></label>
+                        <div class="col-md-3">
+                            <div class="textview">
+                                {{model.Wards}}
+                            </div>
+                        </div>
+                        <label class="control-label col-md-2">Tên  (Phường / Xã)<span class="required"> *</span></label>
+                        <div class="col-md-5">
+                            <div class="textview">
+                                {{model.Title}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Quận / Huyện <span class="required"> *</span></label>
+                        <div class="col-md-3">
+                            <div class="textview">
+                                {{model.TitleDistrict}} - {{model.TitleCity}}
+                            </div>
+                        </div>
+                        <label class="control-label col-md-2">Mô tả</label>
+                        <div class="col-md-5">
+                            <div class="textview">
+                                {{model.Description}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Đính kèm</label>
+                        <div class="col-md-6">
+                            <div class="textview">
+                                <font ng-if="model.FileName != undefired" class="display-box-radius-success" title="File này đã được lưu xuống">
+                                    <a href="javascript:;" class="color-black">{{model.FileName}}</a>
+                                </font>
+                            </div>
+                        </div>
+                        <label class="control-label col-md-2">Trạng thái</label>
+                        <div class="col-md-2">
+                            <ui-select ng-model="model.Status">
+                                <ui-select-match placeholder="Chọn trạng thái...">{{$select.selected.Title}}</ui-select-match>
+                                <ui-select-choices repeat="x.Id as x in listStatus | filter:$select.search">
+                                    {{x.Title}}
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="modal-footer ng-scope">
+        <div class="col-md-8" style="text-align: left; padding-left:0px; padding-right:0px">
+            <div display-history="model"></div>
+        </div>
+        <div class="col-md-4 pull-right" style="padding-left:0px; padding-right:0px">
+            <a data-dismiss="modal" class="btn btn-danger" href="javascript:;" ng-click="cancel()">
+                <i class="fa fa-times"></i> Đóng
+            </a>
+        </div>
+    </div>
+</div>

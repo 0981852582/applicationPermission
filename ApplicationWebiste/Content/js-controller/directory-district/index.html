@@ -11,7 +11,7 @@
                         <i class="fa fa-plus"></i>
                     </a>
                     <a class="btn btn-circle btn-icon-only btn-default" ng-click="dialogAddByImport()" ng-if="global_permission.add" title="Thêm mới bằng file import dữ liệu" href="javascript:;">
-                        <i class="fa fa-calendar-plus-o"></i>
+                        <i class="fa fa-cloud-upload"></i>
                     </a>
                     <a ng-if="global_permission.delete" ng-click="dataTable.reload()" class="btn btn-circle btn-icon-only btn-default" title="Làm mới dữ liệu" href="javascript:;">
                         <i class="glyphicon glyphicon-refresh"></i>
@@ -30,7 +30,7 @@
                 <table class="table table-striped table-bordered table-hover table-checkable order-column dataTable no-footer" role="grid" aria-describedby="sample_1_info">
                     <thead>
                         <tr role="row">
-                            <th class="align-center" style="width:30px;min-width:30px;max-width:30px;">
+                            <th class="align-center" style="width:40px;min-width:40px;max-width:40px;">
                                 <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
                                     <input ng-click="checkAll()" ng-model="isCheckAll" type="checkbox" class="group-checkable" data-set="#sample_4 .checkboxes">
                                     <span></span>
@@ -40,7 +40,7 @@
                             <th class="align-center sorting" style="width:75px;min-width:75px;max-width:75px;" ng-click="dataTable.eventOrderBy('District')"> Mã Huyện</th>
                             <th class="align-center sorting" ng-click="dataTable.eventOrderBy('Title')"> Tên Huyện</th>
                             <th class="align-center sorting" style="width:130px;min-width:130px;max-width:130px;" ng-click="dataTable.eventOrderBy('CityTitle')">(Tỉnh / Thành phố)</th>
-                            <th class="align-center" style="width:130px;min-width:130px;max-width:130px;"> Tùy chọn </th>
+                            <th class="align-center" style="width:110px;min-width:110px;max-width:110px;"> Tùy chọn </th>
                         </tr>
                     </thead>
                     <tbody>

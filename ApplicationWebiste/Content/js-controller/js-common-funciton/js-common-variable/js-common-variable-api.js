@@ -42,6 +42,33 @@ const api_District_DataTable = "/" + controller_Server_District + "/DataTable/";
 const api_District_Download = "/" + controller_Server_District + "/Download/";
 //          api Download
 const api_District_CountItemByDistrict = "/" + controller_Server_District + "/CountItemByDistrict/";
+//          api GetLookupItem
+const api_District_GetLookupItem = "/" + controller_Server_District + "/GetLookupItem/";
+
+//      WARDS
+const controller_Server_Wards = 'Wards';
+//          api getItem
+const api_Wards_GetItem = "/" + controller_Server_Wards + "/GetItem/";
+//          api Update
+const api_Wards_Update = "/" + controller_Server_Wards + "/Update/";
+//          api Insert
+const api_Wards_Insert = "/" + controller_Server_Wards + "/Insert/";
+//          api Insert Import
+const api_Wards_InsertImport = "/" + controller_Server_Wards + "/InsertImport/";
+//          api Delete
+const api_Wards_Delete = "/" + controller_Server_Wards + "/Delete/";
+//          api DeleteArray
+const api_Wards_Deletes = "/" + controller_Server_Wards + "/DeleteArray/";
+//          api DataTable
+const api_Wards_DataTable = "/" + controller_Server_Wards + "/DataTable/";
+//          api Download
+const api_Wards_Download = "/" + controller_Server_Wards + "/Download/";
+//          api count item
+const api_Wards_CountItemByWards = "/" + controller_Server_Wards + "/CountItemByWards/";
+//          api count item
+const api_Wards_CountItemByWardsByArray = "/" + controller_Server_Wards + "/CountItemByWardsByArray/";
+//          api GetLookupItem
+const api_Wards_GetLookupItem = "/" + controller_Server_Wards + "/GetLookupItem/";
 
 //      MANAGERFUNCTION
 const controller_Server_ManagerFunction = 'ManagerFunction';

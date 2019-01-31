@@ -48,10 +48,10 @@ const httpPostFormData = function
     }).then(function (rs) {
         var result = rs.data;
         if (isNull(result)) {
-            trong.showMessageError(message_Comfirm_Not_Permission);
+            showMessageError(message_Comfirm_Not_Permission);
             return callBack(false);
         } else if (result.Error) {
-            trong.showMessageError(result.Title);
+            showMessageError(result.Title);
             return callBack(false);
         }
         return callBack(rs.data);

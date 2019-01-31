@@ -8,22 +8,28 @@
             <form name="openform" class="form-horizontal  form-bordered" method="post">
                 <div class="form-body">
                     <div class="form-group">
-                        <label class="control-label col-md-2">Mã Tỉnh</label>
-                        <div class="col-md-2">
+                        <label class="control-label col-md-2">Mã Quận <span class="required"> *</span></label>
+                        <div class="col-md-3">
                             <div class="textview">
-                                {{model.City}}
+                                {{model.District}}
                             </div>
                         </div>
-                        <label class="control-label col-md-2">Tên Tỉnh</label>
-                        <div class="col-md-6">
+                        <label class="control-label col-md-2">Tên Quận <span class="required"> *</span></label>
+                        <div class="col-md-5">
                             <div class="textview">
                                 {{model.Title}}
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="control-label col-md-2">Tỉnh / Thành Phố <span class="required"> *</span></label>
+                        <div class="col-md-3">
+                            <div class="textview" title="Mã Tỉnh : {{model.City}} , Tên Tỉnh : {{model.TitleCity}}">
+                                {{model.TitleCity}}
+                            </div>
+                        </div>
                         <label class="control-label col-md-2">Mô tả</label>
-                        <div class="col-md-10">
+                        <div class="col-md-5">
                             <div class="textview">
                                 {{model.Description}}
                             </div>
@@ -31,17 +37,15 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-2">Đính kèm</label>
-                        <div class="col-md-10">
+                        <div class="col-md-6">
                             <div class="textview">
-                                <font  ng-if="model.FileName != undefired" class="display-box-radius-success" title="File này đã được lưu xuống">
+                                <font ng-if="model.FileName != undefired" class="display-box-radius-success" title="File này đã được lưu xuống">
                                     <a href="javascript:;" class="color-black">{{model.FileName}}</a>
                                 </font>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group">
                         <label class="control-label col-md-2">Trạng thái</label>
-                        <div class="col-md-10">
+                        <div class="col-md-2">
                             <div class="textview">
                                 {{model.StatusTitle}}
                             </div>

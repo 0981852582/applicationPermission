@@ -1,0 +1,119 @@
+﻿<div id="modal-body">
+    <div class="modal-header ng-scope">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">×</button>
+        <h3 class="modal-title ng-binding" id="modal-title">{{title}}</h3>
+    </div>
+    <div class="modal-body ng-scope">
+        <div class="portlet-body form">
+            <form name="openform" class="form-horizontal  form-bordered" method="post">
+                <div class="form-body">
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Đính kèm</label>
+                        <div class="col-md-10">
+                            <input type="file" id="file-7" class="inputfile inputfile-6 display-hide" filereadqueryimport="model.listNew" />
+                            <label for="file-7">
+                                <strong>
+                                    Đính kèm
+                                    <i class="fa fa-cloud-upload"></i>
+                                </strong>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <div style="width:99.5%;">
+                                <table class="table" style="margin-bottom:0px; width:99%;">
+                                    <tr style="background-color:#428bca;color:white;">
+                                        <td class="align-center" style="width:30px;min-width:30px;max-width:30px;">
+                                            TT
+                                        </td>
+                                        <td style="width:50px;min-width:50px;max-width:50px;">
+                                            Mã TP
+                                        </td>
+                                        <td style="width:150px;min-width:150px;max-width:150px;">
+                                            Tỉnh / Thành Phố
+                                        </td>
+                                        <td style="width:50px;min-width:50px;max-width:50px;">
+                                            Mã QH
+                                        </td>
+                                        <td style="width:150px;min-width:150px;max-width:150px;">
+                                            Quận Huyện
+                                        </td>
+                                        <td style="width:50px;min-width:50px;max-width:50px;">
+                                            Mã PX
+                                        </td>
+                                        <td style="width:150px;min-width:150px;max-width:150px;">
+                                            Phường Xã
+                                        </td>
+                                        <td style="width:20px;min-width:20px;max-width:20px;"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div style="position: relative; overflow: auto; width: 100%; height: 300px;">
+                                <div style="width:99%;max-width:99%;">
+                                    <table class="table table-bordered">
+                                        <tbody>
+                                            <tr ng-repeat="item in dataTableClient.values.slice(dataTableClient.skip, dataTableClient.top)" style="{{item.statusError ?'color : red':''}}">
+                                                <td class="align-center" style="width:30px;min-width:30px;max-width:30px;white-space:nowrap;">
+                                                    {{((dataTableClient.currentPage - 1) * dataTableClient.numberPage) + $index + 1}}
+                                                </td>
+                                                <td style="width:50px;min-width:50px;max-width:50px;">
+                                                    {{item['Mã TP']}}
+                                                </td>
+                                                <td style="width:150px;min-width:150px;max-width:150px;">
+                                                    {{item['Tỉnh Thành Phố']}}
+                                                </td>
+                                                <td style="width:50px;min-width:50px;max-width:50px;">
+                                                    {{item['Mã QH']}}
+                                                </td>
+                                                <td style="width:150px;min-width:150px;max-width:150px;">
+                                                    {{item['Quận Huyện']}}
+                                                </td>
+                                                <td style="width:50px;min-width:50px;max-width:50px;">
+                                                    {{item['Mã PX']}}
+                                                </td>
+                                                <td style="width:150px;min-width:150px;max-width:150px;">
+                                                    {{item['Phường Xã']}}
+                                                </td>
+                                                <td style="width:20px;min-width:20px;max-width:20px;">
+                                                    <a id="{{item.idDOM}}" title="{{item.messageError}}" class="btn btn-circle btn-icon-only btn-default button-icon-small" href="javascript:;">
+                                                        <i class="fa fa-commenting"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 align-left css-location-table">
+                            {{dataTableClient.location}}
+                        </div>
+                        <div class="col-md-8 align-right">
+                            <uib-pagination ng-model="dataTableClient.currentPage"
+                                            ng-change="dataTableClient.query()"
+                                            items-per-page="dataTableClient.numberPage"
+                                            total-items="dataTableClient.totalItem"
+                                            max-size="dataTableClient.maxSize"
+                                            boundary-links="true"></uib-pagination>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="modal-footer ng-scope">
+        <div class="col-md-8" style="text-align: left; padding-left:0px; padding-right:0px">
+        </div>
+        <div class="col-md-4 pull-right" style="padding-left:0px; padding-right:0px">
+            <a class="btn btn-primary" href="javascript:;" ng-click="submit()">
+                <i class="fa fa-calendar-plus-o"></i> Thêm mới
+            </a>
+            <a data-dismiss="modal" class="btn btn-danger" href="javascript:;" ng-click="cancel()">
+                <i class="fa fa-times"></i> Đóng
+            </a>
+        </div>
+    </div>
+</div>
