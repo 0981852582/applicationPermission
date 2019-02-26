@@ -37,10 +37,10 @@
                                 </label>
                             </th>
                             <th class="align-center" style="width:30px;min-width:30px;max-width:30px;"> STT </th>
-                            <th class="align-center sorting" style="width:85px;min-width:85px;max-width:85px;" ng-click="dataTable.eventOrderBy('Wards')"> Mã Phường</th>
-                            <th class="align-center sorting" ng-click="dataTable.eventOrderBy('Title')"> (Tên Phường / Xã)</th>
-                            <th class="align-center sorting" style="width:130px;min-width:130px;max-width:130px;" ng-click="dataTable.eventOrderBy('CityTitle')">(Tỉnh / Thành phố)</th>
-                            <th class="align-center sorting" style="width:130px;min-width:130px;max-width:130px;" ng-click="dataTable.eventOrderBy('DistrictTitle')">(Quận / Huyện)</th>
+                            <th class="align-left sorting" style="width:130px;min-width:130px;max-width:130px;" ng-click="dataTable.eventOrderBy('CityTitle')">Tỉnh / Thành phố</th>
+                            <th class="align-left sorting" style="width:130px;min-width:130px;max-width:130px;" ng-click="dataTable.eventOrderBy('DistrictTitle')">Quận / Huyện</th>
+                            <th class="align-left sorting" style="width:85px;min-width:85px;max-width:85px;" ng-click="dataTable.eventOrderBy('Wards')"> Mã Phường</th>
+                            <th class="align-left sorting" ng-click="dataTable.eventOrderBy('Title')"> Tên Phường / Xã</th>
                             <th class="align-center" style="width:110px;min-width:110px;max-width:110px;"> Tùy chọn </th>
                         </tr>
                     </thead>
@@ -53,17 +53,17 @@
                                 </label>
                             </td>
                             <td class="align-center"> {{((dataTable.currentPage - 1) * dataTable.numberPage) + $index + 1}} </td>
+                            <td class="align-left" style="font-size:15px;">
+                                <b>{{item.CityTitle}}</b>
+                            </td>
+                            <td class="align-left">
+                                <b>{{item.DistrictTitle}}</b>
+                            </td>
                             <td class="align-left">
                                 {{item.Wards}}
                             </td>
                             <td class="align-left">
                                 <a href="javascript:;" ng-click="dialogView(item.Id)">{{item.Title}}</a>
-                            </td>
-                            <td class="align-left">
-                                {{item.CityTitle}}
-                            </td>
-                            <td class="align-left">
-                                {{item.DistrictTitle}}
                             </td>
                             <td class="align-right">
                                 <div class="row">

@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace ApplicationWebiste.Controllers.Manager_Permission
 {
-    //[ExistsLogin]
+    [ExistsLogin]
     public class WardsController : Controller
     {
         dbContext _dbContext = new dbContext();
@@ -243,13 +243,13 @@ namespace ApplicationWebiste.Controllers.Manager_Permission
                 }
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
         }
         [HttpPost]
-        //[DataAccess(Function = FunctionNameOfSql.manager_Wards, childOfFunction = ChildOfFunctionNameOfSql.import)]
+        [DataAccess(Function = FunctionNameOfSql.manager_Wards, childOfFunction = ChildOfFunctionNameOfSql.import)]
         public object InsertImport(List<Directory_Wards_Extend> file)
         {
             Message msg = new Message { Error = false };
@@ -531,31 +531,19 @@ namespace ApplicationWebiste.Controllers.Manager_Permission
         /// <param name="parameter"></param>
         /// <returns>true false</returns>
         [HttpPost]
-        public object CountItemByWardsByArray(List<string> parameter)
+        public int CountItemByWardsByArray(string parameter)
         {
             List<string> result = new List<string>();
             if (parameter != null)
             {
-                if(parameter[0] != null)
+                if(parameter != null)
                 {
-                    result = JsonConvert.DeserializeObject<List<string>>(parameter[0]);
+                    result = JsonConvert.DeserializeObject<List<string>>(parameter);
                 }
             }
-            
-            List<string> resultExists = new List<string>();
-            for (int i = 0; i < result.Count; i++)
-            {
-                if (result[i] != null)
-                {
-                    var strings = result[i];
-                    var exists = _dbContext.Directory_Wards.Count(x => x.Wards == strings);
-                    if (exists > 0)
-                    {
-                        resultExists.Add(result[i]);
-                    }
-                }
-            }
-            return Json(new { data = resultExists}, JsonRequestBehavior.AllowGet);
+            var exists = _dbContext.Directory_Wards.Count(x => result.Contains(x.Wards));
+
+            return exists;
 
         }
         /// <summary>
@@ -602,7 +590,6 @@ namespace ApplicationWebiste.Controllers.Manager_Permission
             {
                 return Json(new { Data = ex.ToString(), Error = true }, JsonRequestBehavior.AllowGet);
             }
-
             return Json(msg, JsonRequestBehavior.AllowGet);
         }
     }

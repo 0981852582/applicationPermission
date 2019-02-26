@@ -15,6 +15,7 @@
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="ChildOfFunction" Type="varchar" MaxLength="25" Nullable="false" />
     <Property Name="Title" Type="nvarchar" MaxLength="30" />
+    <Property Name="RemoveFunction" Type="varchar(max)" />
     <Property Name="Order" Type="tinyint" />
   </EntityType>
   <EntityType Name="contraint_account_function_childOfFunction">
@@ -108,7 +109,8 @@
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Function" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="Parent" Type="varchar" MaxLength="25" />
+    <Property Name="functionCategories" Type="varchar" MaxLength="8" />
+    <Property Name="functionCategoriesTitle" Type="nvarchar" MaxLength="30" />
     <Property Name="Url" Type="varchar(max)" />
     <Property Name="Title" Type="nvarchar" MaxLength="50" />
     <Property Name="Description" Type="ntext" />
@@ -116,6 +118,20 @@
     <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
     <Property Name="CreatedDate" Type="datetime" />
     <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="ModifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="functionCategories">
+    <Key>
+      <PropertyRef Name="functionCategories" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="functionCategories" Type="varchar" MaxLength="8" Nullable="false" />
+    <Property Name="functionCategoriesTitle" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="Description" Type="ntext" />
+    <Property Name="OrderBy" Type="tinyint" />
+    <Property Name="CreatedBy" Type="nvarchar" MaxLength="25" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="25" />
     <Property Name="ModifiedDate" Type="datetime" />
   </EntityType>
   <EntityType Name="group">
@@ -239,6 +255,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_function_functionCategories">
+    <End Role="functionCategories" Type="Self.functionCategories" Multiplicity="0..1" />
+    <End Role="function" Type="Self.function" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="functionCategories">
+        <PropertyRef Name="functionCategories" />
+      </Principal>
+      <Dependent Role="function">
+        <PropertyRef Name="functionCategories" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
   <Function Name="P_viewMenuPermission" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Account" Type="varchar" Mode="In" />
@@ -296,6 +324,7 @@
     <EntitySet Name="Directory_District" EntityType="Self.Directory_District" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Directory_Wards" EntityType="Self.Directory_Wards" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="function" EntityType="Self.function" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="functionCategories" EntityType="Self.functionCategories" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="group" EntityType="Self.group" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_contraint_account_function_childOfFunction_childOfFunction" Association="Self.FK_contraint_account_function_childOfFunction_childOfFunction">
@@ -329,6 +358,10 @@
     <AssociationSet Name="FK_Directory_Wards_Directory_District" Association="Self.FK_Directory_Wards_Directory_District">
       <End Role="Directory_District" EntitySet="Directory_District" />
       <End Role="Directory_Wards" EntitySet="Directory_Wards" />
+    </AssociationSet>
+    <AssociationSet Name="FK_function_functionCategories" Association="Self.FK_function_functionCategories">
+      <End Role="functionCategories" EntitySet="functionCategories" />
+      <End Role="function" EntitySet="function" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

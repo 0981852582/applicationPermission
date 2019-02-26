@@ -84,3 +84,29 @@ const api_ManagerFunction_Delete = "/" + controller_Server_ManagerFunction + "/D
 const api_ManagerFunction_Deletes = "/" + controller_Server_ManagerFunction + "/DeleteArray/";
 //          api DataTable
 const api_ManagerFunction_DataTable = "/" + controller_Server_ManagerFunction + "/DataTable/";
+//          api GetLookupItem
+const api_ManagerFunction_GetLookupItem = "/" + controller_Server_ManagerFunction + "/GetLookupItem/";
+
+//      ChildOfFunction
+const controller_Server_ChildOfFunction = 'ChildOfFunction';
+//          api getItem
+const api_ChildOfFunction_GetItem = "/" + controller_Server_ChildOfFunction + "/GetItem/";
+//          api Update
+const api_ChildOfFunction_Update = "/" + controller_Server_ChildOfFunction + "/Update/";
+//          api Insert
+const api_ChildOfFunction_Insert = "/" + controller_Server_ChildOfFunction + "/Insert/";
+//          api GetLookupItem
+const api_ChildOfFunction_GetLookupItem = "/" + controller_Server_ChildOfFunction + "/GetLookupItem/";
+
+//      functionCategories
+const controller_Server_FunctionCategories = 'FunctionCategories';
+//          api getItem
+const api_FunctionCategories_GetItem = "/" + controller_Server_FunctionCategories + "/GetItem/";
+//          api Update
+const api_FunctionCategories_Update = "/" + controller_Server_FunctionCategories + "/Update/";
+//          api Insert
+const api_FunctionCategories_Insert = "/" + controller_Server_FunctionCategories + "/Insert/";
+//          api GetLookupItem
+const api_FunctionCategories_GetLookupItem = "/" + controller_Server_FunctionCategories + "/GetLookupItem/";
+
+

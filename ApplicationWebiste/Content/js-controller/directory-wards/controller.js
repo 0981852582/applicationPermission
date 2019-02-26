@@ -29,7 +29,7 @@
             Title: 'Title',
             rule: {
                 Required: true,
-                Maxlength: 25
+                Maxlength: 50
             },
             message: {
                 Required: "Tên (Phường / Xã) không được để trống.",
@@ -457,10 +457,8 @@ app.controller('addImport', function ($scope, $uibModalInstance, $rootScope) {
             trong.dataTableClient.location = (trong.dataTableClient.skip + 1) + " tới " + (trong.dataTableClient.top) + " trong tổng " + trong.dataTableClient.totalItem + " bản ghi.";
         }
     }, true);
-    $scope.validateForm = function () {
+    $scope.validateForm = function (callback) {
         trong.onBlockUI(idOfDialog, message_Comfirm_Loading_CheckData);
-        var flag = true;
-        var limitRequest = 0;
         listWards = [];
         for (var i = 0; i < trong.model.listNew.length; i++) {
             listWards.push(trong.model.listNew[i].Wards);
@@ -469,48 +467,69 @@ app.controller('addImport', function ($scope, $uibModalInstance, $rootScope) {
         for (var i = 0; i < trong.model.listNew.length; i++) {
             $rootScope.validateForm(trong.model.listNew[i], function (rs) {
                 if (!rs) {
-                    trong.model.listNew[i].messageError = message_Error_Validate_Form_Import;
-                    trong.model.listNew[i].statusError = true;
-                    if (flag) {
-                        angular.element('[id="' + trong.model.listNew[i].idDOM + '"]').focus();
-                    }
                     flagValidate = false;
-                    flag = false;
                 }
             }, true);
+            break;
+        }
+        for (var i = 0; i < trong.model.listNew.length; i++) {
+            var regex = /^[a-zA-Z0-9]*$/
+            var cursor = trong.model.listNew[i];
+            if (isNull(cursor.Wards)) {
+                flagValidate = false;
+                break;
+            } else if (cursor.Wards.length > 8) {
+                flagValidate = false;
+            } else if (!regex.test(cursor.Wards)) {
+                flagValidate = false;
+                break;
+            }
+            if (isNull(cursor.Title)) {
+                flagValidate = false;
+                break;
+            } else if (cursor.Title.length > 50) {
+                flagValidate = false;
+                break;
+            }
+            if (isNull(cursor.District)) {
+                flagValidate = false;
+                break;
+            }
+        }
+        if (!flagValidate) {
+            trong.showMessageSuccess(messageComfirm_Wards_ValidateFormImport);
         }
         if (flagValidate) {
             var fd = new FormData();
             fd.append('parameter', JSON.stringify(listWards));
-            trong.onBlockUI(idOfDialog, message_Comfirm_Loading_Insert);
+            trong.onBlockUI(idOfDialog, message_Comfirm_Loading_CheckData);
             httpPostFormData(api_Wards_CountItemByWardsByArray, fd, function (rs) {
-                if (rs != false) {
-                    trong.showMessageSuccess(rs.Title);
-                    $rootScope.reload();
-                    $scope.cancel();
-                }
                 trong.offBlockUI(idOfDialog);
+                if (parseInt(rs) == 0) {
+                    return callback(true);
+                } else {
+                    trong.showMessageError(messageComfirm_Wards_ImportExistsFile);
+                    return callback(false);
+                }
             });
         }
-        trong.offBlockUI(idOfDialog);
-        return flag;
     }
     $scope.submit = function () {
         var listModel = $scope.convertObject();
-        var validate = $scope.validateForm();
-        if (!validate) {
-            return;
-        }
-        var fd = new FormData();
-        fd.append('file', JSON.stringify(listModel));
-        trong.onBlockUI(idOfDialog, message_Comfirm_Loading_Insert);
-        httpPostFormData(api_Wards_InsertImport, fd, function (rs) {
-            if (rs != false) {
-                trong.showMessageSuccess(rs.Title);
-                $rootScope.reload();
-                $scope.cancel();
+        $scope.validateForm(function (rs) {
+            if (rs) {
+                var fd = new FormData();
+                fd.append('file', JSON.stringify(listModel));
+                trong.onBlockUI(idOfDialog, message_Comfirm_Loading_Insert);
+                httpPostFormData(api_Wards_InsertImport, fd, function (rs) {
+                    if (rs != false) {
+                        trong.showMessageSuccess(rs.Title);
+                        $rootScope.reload();
+                        $scope.cancel();
+                    }
+                    trong.offBlockUI(idOfDialog);
+                });
             }
-            trong.offBlockUI(idOfDialog);
         });
     }
     $scope.convertObject = function () {

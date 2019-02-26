@@ -58,6 +58,7 @@ namespace ApplicationWebiste.Controllers
             public C_treeOfFunctionSelected state { get; set; }
             public string Url { get; set; }
             public byte? Order { get; set; }
+            public string removeFunction { get; set; }
         }
         public class C_treeOfFunctionSelected
         {
@@ -77,6 +78,14 @@ namespace ApplicationWebiste.Controllers
             public string Group { get; set; }
             public string Function { get; set; }
             public string ChildOfFunction { get; set; }
+        }
+        public string convertNullToString(string data)
+        {
+            if(data == null)
+            {
+                return string.Empty;
+            }
+            return data;
         }
         [HttpPost]
         [DataAccess(Function = FunctionNameOfSql.manager_permissionOfGroup, childOfFunction = ChildOfFunctionNameOfSql.edit)]
@@ -132,7 +141,6 @@ namespace ApplicationWebiste.Controllers
                 name = x.Function1,
                 text = x.Title,
                 id = x.Function1,
-                parent_id = x.Parent,
                 Url = x.Url,
                 isRootTree = true,
                 arrayChildren = _dbContext.contraint_group_function_childOfFunction.Where(child => child.Function == x.Function1 && child.Group == parameter.Group).Select(child => new C_treeOfFunctionFillStringArray
@@ -148,7 +156,8 @@ namespace ApplicationWebiste.Controllers
                 id = "isNull",
                 parent_id = "isNull",
                 isRootTree = false,
-                Order = x.Order
+                Order = x.Order,
+                removeFunction = x.RemoveFunction
             }).OrderBy(x => x.Order).ToList();
             foreach (var item in data)
             {
@@ -158,19 +167,22 @@ namespace ApplicationWebiste.Controllers
                 }
                 foreach (var child in a_getallChildOfFunction)
                 {
-                    var existsItem = item.arrayChildren.Find(x => x.name == child.name);
-                    item.children.Add(new C_treeOfFunctionPermission
+                    if (convertNullToString(child.removeFunction).IndexOf("#" + item.name + "#") == -1)
                     {
-                        name = child.name,
-                        text = child.text,
-                        id = autoNumber.ToString(),
-                        parent_id = item.id,
-                        isRootTree = false,
-                        state = new C_treeOfFunctionSelected
+                        var existsItem = item.arrayChildren.Find(x => x.name == child.name);
+                        item.children.Add(new C_treeOfFunctionPermission
                         {
-                            selected = (existsItem != null ? true : false),
-                        }
-                    });
+                            name = child.name,
+                            text = child.text,
+                            id = autoNumber.ToString(),
+                            parent_id = item.id,
+                            isRootTree = false,
+                            state = new C_treeOfFunctionSelected
+                            {
+                                selected = (existsItem != null ? true : false),
+                            }
+                        });
+                    }
                     autoNumber++;
                 }
             }

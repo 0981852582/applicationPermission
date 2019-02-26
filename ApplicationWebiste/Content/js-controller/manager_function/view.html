@@ -8,19 +8,71 @@
         <form name="openform" class="form-horizontal  form-bordered" method="post">
             <div class="form-body">
                 <div class="form-group">
-                    <label class="control-label col-md-2">Tên vùng kinh tế</label>
-                    <div class="col-md-10">
-                        <div class="textview">Đông Bắc Bộ</div>
+                    <label class="control-label col-md-2">
+                        Mã chức năng
+                        <span class="required"> *</span>
+                    </label>
+                    <div class="col-md-4">
+                        <div class="textview">
+                            {{model.Function1}}
+                        </div>
+                    </div>
+                    <label class="control-label col-md-2">
+                        Tên chức năng
+                        <span class="required"> *</span>
+                    </label>
+                    <div class="col-md-4">
+                        <div class="textview">
+                            {{model.Title}}
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-md-2">Thứ tự</label>
+                    <label class="control-label col-md-2">
+                        URL Link chức năng
+                        <span class="required"> *</span>
+                    </label>
                     <div class="col-md-4">
-                        <div class="textview">0</div>
+                        <div class="textview">
+                            {{model.Url}}
+                        </div>
                     </div>
-                    <label class="control-label col-md-2">Trạng thái</label>
+                    <label class="control-label col-md-2">
+                        Danh mục chức năng
+                        <span class="required"> *</span>
+                    </label>
                     <div class="col-md-4">
-                        <div class="textview">Sử dụng</div>
+                        <div class="textview">
+                            {{model.functionCategoriesTitle}}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2">Mô tả</label>
+                    <div class="col-md-4">
+                        <div class="textview">
+                            {{model.Description}}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <table class="table table-bordered">
+                            <tr>
+                                <th colspan="10">Phân quyền chức năng</th>
+                            </tr>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="col-md-3" style="border:1px solid #ddd;padding : 5px;margin : 2px; cursor:default;{{item.isChecked ? 'background-color : #f0f2f5' : undefined}}" ng-repeat="item in listLookupChildOfFunction">
+                                            <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                                <input disabled type="checkbox" ng-model="item.isChecked" class="group-checkable ng-pristine ng-untouched ng-valid ng-empty" data-set="#sample_4 .checkboxes">
+                                                <span></span>
+                                            </label>
+                                            {{item.LookupTitle}}
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -28,23 +80,10 @@
     </div>
 </div>
 <div class="modal-footer ng-scope">
-    <div class="col-md-9" style="text-align: left; padding-left:0px; padding-right:0px">
-        <ul class="list-inline pull-left">
-            <li title="Người tạo" class="fontsmall ng-binding">
-                <i class="fa fa-user"></i>Ngươi tạo: dungdq
-            </li>
-            <li title="Ngày tạo" class="fontsmall ng-binding">
-                <i class="fa fa-calendar"></i>Ngày tạo: 20/11/2017 02:30
-            </li>
-            <li title="Người sửa" class="fontsmall ng-binding">
-                <i class="fa fa-user"></i>Người sửa: tiecqt@gmail.com
-            </li>
-            <li title="Ngày sửa" class="fontsmall ng-binding">
-                <i class="fa fa-calendar"></i>Ngày sửa: 06/04/2018 10:30
-            </li>
-        </ul>
+    <div class="col-md-8" style="text-align: left; padding-left:0px; padding-right:0px">
+        <div display-history="model"></div>
     </div>
-    <div class="col-md-3 pull-right" style="padding-left:0px; padding-right:0px">
+    <div class="col-md-4 pull-right" style="padding-left:0px; padding-right:0px">
         <a data-dismiss="modal" class="btn btn-default" href="javascript:;" ng-click="cancel()">
             <i class="fa fa-times"></i> Đóng
         </a>

@@ -33,11 +33,12 @@ namespace ApplicationWebiste.Models
         public virtual DbSet<contraint_account_group> contraint_account_group { get; set; }
         public virtual DbSet<contraint_group_function_childOfFunction> contraint_group_function_childOfFunction { get; set; }
         public virtual DbSet<Directory_City> Directory_City { get; set; }
-        public virtual DbSet<function> functions { get; set; }
-        public virtual DbSet<group> groups { get; set; }
         public virtual DbSet<Directory_District> Directory_District { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<Directory_Wards> Directory_Wards { get; set; }
+        public virtual DbSet<function> functions { get; set; }
+        public virtual DbSet<functionCategory> functionCategories { get; set; }
+        public virtual DbSet<group> groups { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
     
         public virtual ObjectResult<P_viewMenuPermission_Result> P_viewMenuPermission(string account)
         {

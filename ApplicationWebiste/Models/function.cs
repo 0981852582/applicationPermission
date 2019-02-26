@@ -23,7 +23,8 @@ namespace ApplicationWebiste.Models
     
         public int ID { get; set; }
         public string Function1 { get; set; }
-        public string Parent { get; set; }
+        public string functionCategories { get; set; }
+        public string functionCategoriesTitle { get; set; }
         public string Url { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
@@ -37,5 +38,6 @@ namespace ApplicationWebiste.Models
         public virtual ICollection<contraint_account_function_childOfFunction> contraint_account_function_childOfFunction { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<contraint_group_function_childOfFunction> contraint_group_function_childOfFunction { get; set; }
+        public virtual functionCategory functionCategory { get; set; }
     }
 }

@@ -141,6 +141,22 @@ License: You must have a valid license purchased only from themeforest(the above
         .underline-text {
             text-decoration: underline;
         }
+
+        .color-red {
+            /*color: #e73d4a;*/
+        }
+        .border-red {
+            /*border: 1px solid red;*/
+        }
+        .color-message-red {
+            color: #e73d4a;
+        }
+        .color-message-red input {
+            border: 1px solid #e73d4a;
+        }
+        .color-message-red .ui-select-toggle {
+            border: 1px solid #e73d4a;
+        }
     </style>
     <!-- END THEME LAYOUT STYLES -->
     <link rel="shortcut icon" href="favicon.ico" />
@@ -288,7 +304,7 @@ License: You must have a valid license purchased only from themeforest(the above
                 // mặc định top lấy ra
                 top: 100,
                 // mặc định skip lấy ra
-                skip : 0,
+                skip: 0,
                 // khi số lượng page phần trang nhiều hơn maxSize thì sẽ hiện ... chứ không show hết số page phân trang
                 maxSize: 5,
                 // số lượng item hiện có của list để thực hiện tính toán phân ra số page
@@ -306,6 +322,13 @@ License: You must have a valid license purchased only from themeforest(the above
             // call lấy dữ liệu danh mục menu bên trái khi vào admin
             http.post('/Home/viewMenuPermission/').then(function (rs) {
                 $rootScope.L_permission = rs.data;
+                for (var i = 0; i < $rootScope.L_permission.length; i++) {
+                    for (var j = 0; j < $rootScope.L_permission[i].List_P_viewMenuPermission.length; j++) {
+                        if ($rootScope.L_permission[i].List_P_viewMenuPermission[j].Url == $rootScope.urlPageCurrent) {
+                            $rootScope.L_permission[i].active = true;
+                        }
+                    }
+                }
             });
 
             // những hàm dùng chung cho tất cả các controller
@@ -757,12 +780,20 @@ License: You must have a valid license purchased only from themeforest(the above
                         <!-- END RESPONSIVE QUICK SEARCH FORM -->
                     </li>
                     @*active open*@
-                    <li class="nav-item {{object.Url === urlPageCurrent ? 'active' : undefined}}" ng-repeat="object in L_permission">
-                        <a style="white-space:nowrap;" href="{{object.Url == '' ? 'javascript:;' : object.Url}}" class="nav-link nav-toggle">
+                    <li class="nav-item {{object.active ? 'active' : undefined}}" ng-repeat="object in L_permission">
+                        <a style="white-space:nowrap;" href="javascript:;" class="nav-link nav-toggle">
                             <i class="fa fa-gear"></i>
-                            <span class="title">{{object.Title}}</span>
-                            @*<span class="selected"></span>
-                                <span class="arrow open"></span>*@
+                            <span class="title" style="text-transform:uppercase;">{{object.functionCategoriesTitle}}</span>
+                            <span class="selected"></span>
+                            <span class="arrow {{object.active ? 'open' : undefined}}"></span>
+                            <ul class="sub-menu">
+                                <li class="nav-item {{child.Url === urlPageCurrent ? 'active' : undefined}}" ng-repeat="child in object.List_P_viewMenuPermission">
+                                    <a href="{{child.Url == '' ? 'javascript:;' : child.Url}}" class="nav-link">
+                                        <span class="title">{{$index + 1}} . {{child.Title}}</span>
+                                    </a>
+                                </li>
+                            </ul>
+
                         </a>
                     </li>
                 </ul>

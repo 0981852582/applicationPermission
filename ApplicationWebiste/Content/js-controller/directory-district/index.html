@@ -37,9 +37,9 @@
                                 </label>
                             </th>
                             <th class="align-center" style="width:30px;min-width:30px;max-width:30px;"> STT </th>
-                            <th class="align-center sorting" style="width:75px;min-width:75px;max-width:75px;" ng-click="dataTable.eventOrderBy('District')"> Mã Huyện</th>
-                            <th class="align-center sorting" ng-click="dataTable.eventOrderBy('Title')"> Tên Huyện</th>
-                            <th class="align-center sorting" style="width:130px;min-width:130px;max-width:130px;" ng-click="dataTable.eventOrderBy('CityTitle')">(Tỉnh / Thành phố)</th>
+                            <th class="align-left sorting" style="width:130px;min-width:130px;max-width:130px;" ng-click="dataTable.eventOrderBy('CityTitle')">Tỉnh / Thành phố</th>
+                            <th class="align-left sorting" style="width:75px;min-width:75px;max-width:75px;" ng-click="dataTable.eventOrderBy('District')"> Mã Huyện</th>
+                            <th class="align-left sorting" ng-click="dataTable.eventOrderBy('Title')"> Tên Huyện</th>
                             <th class="align-center" style="width:110px;min-width:110px;max-width:110px;"> Tùy chọn </th>
                         </tr>
                     </thead>
@@ -53,13 +53,13 @@
                             </td>
                             <td class="align-center"> {{((dataTable.currentPage - 1) * dataTable.numberPage) + $index + 1}} </td>
                             <td class="align-left">
+                                <b>{{item.CityTitle}}</b>
+                            </td>
+                            <td class="align-left">
                                 {{item.District}}
                             </td>
                             <td class="align-left">
                                 <a href="javascript:;" ng-click="dialogView(item.Id)">{{item.Title}}</a>
-                            </td>
-                            <td class="align-left">
-                                {{item.CityTitle}}
                             </td>
                             <td class="align-right">
                                 <div class="row">
@@ -68,7 +68,7 @@
                                             <i class="fa fa-eye"></i>
                                         </a>
                                     </div>
-                                    <div class="col-md-2"style="margin-right:3px;">
+                                    <div class="col-md-2" style="margin-right:3px;">
                                         <a ng-if="global_permission.edit" ng-click="dialogEdit(item.Id)" class="btn btn-circle btn-icon-only btn-default button-icon-small" title="Cập nhật" href="javascript:;">
                                             <i class="fa fa-edit"></i>
                                         </a>
@@ -78,7 +78,7 @@
                                             <i class="fa fa-trash-o"></i>
                                         </a>
                                     </div>
-                                    <div class="col-md-2"style="margin-right:3px;">
+                                    <div class="col-md-2" style="margin-right:3px;">
                                         <a ng-click="download(item.Id)" ng-if="global_permission.export" class="btn btn-circle btn-icon-only btn-default button-icon-small" title="Tải FILE đính kèm" href="javascript:;">
                                             <i class="fa fa-download"></i>
                                         </a>

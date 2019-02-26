@@ -138,7 +138,6 @@ namespace ApplicationWebiste.Controllers
                 name = x.Function1,
                 text = x.Title,
                 id = x.Function1,
-                parent_id = x.Parent,
                 Url = x.Url,
                 isRootTree = true,
                 arrayChildren = _dbContext.contraint_group_function_childOfFunction.Where(child => child.Function == x.Function1 && child.Group == Group).Select(child => new C_treeOfFunctionFillStringArray

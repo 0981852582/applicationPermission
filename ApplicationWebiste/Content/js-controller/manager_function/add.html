@@ -8,19 +8,78 @@
         <form name="openform" class="form-horizontal  form-bordered" method="post">
             <div class="form-body">
                 <div class="form-group">
-                    <label class="control-label col-md-2">Tên vùng kinh tế</label>
-                    <div class="col-md-10">
-                        <div class="textview">Đông Bắc Bộ</div>
+                    <label class="control-label col-md-2" ng-class="model.error.Function1 != undefined ? 'color-message-red' : undefined">
+                        Mã chức năng
+                        <span class="required"> *</span>
+                    </label>
+                    <div class="col-md-4" ng-class="model.error.Function1 != undefined ? 'color-message-red' : undefined">
+                        <input type="text" name="Function1" ng-model="model.Function1" placeholder="Mã chức năng" maxlength="8" class="form-control" />
+                        <span>
+                            {{model.error.Function1}}
+                        </span>
+                    </div>
+                    <label class="control-label col-md-2" ng-class="model.error.Title != undefined ? 'color-message-red' : undefined">
+                        Tên chức năng
+                        <span class="required"> *</span>
+                    </label>
+                    <div class="col-md-4" ng-class="model.error.Title != undefined ? 'color-message-red' : undefined">
+                        <input type="text" name="Title" ng-model="model.Title" placeholder="Tên chức năng" maxlength="30" class="form-control" />
+                        <span>
+                            {{model.error.Title}}
+                        </span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-md-2">Thứ tự</label>
-                    <div class="col-md-4">
-                        <div class="textview">0</div>
+                    <label class="control-label col-md-2" ng-class="model.error.Url != undefined ? 'color-message-red' : undefined">
+                        URL Link chức năng
+                        <span class="required"> *</span>
+                    </label>
+                    <div class="col-md-4" ng-class="model.error.Url != undefined ? 'color-message-red' : undefined">
+                        <input type="text" name="Url" ng-model="model.Url" placeholder="URL Link chức năng" maxlength="30" class="form-control" />
+                        <span>
+                            {{model.error.Url}}
+                        </span>
                     </div>
-                    <label class="control-label col-md-2">Trạng thái</label>
+                    <label class="control-label col-md-2" ng-class="model.error.functionCategories != undefined ? 'color-message-red' : undefined">
+                        Danh mục chức năng
+                        <span class="required"> *</span>
+                    </label>
+                    <div class="col-md-4" ng-class="model.error.functionCategories != undefined ? 'color-message-red' : undefined">
+                        <ui-select ng-model="model.functionCategories" name="functionCategories" style="width: 100%;">
+                            <ui-select-match placeholder="Danh mục chức năng">{{$select.selected.LookupTitle}}</ui-select-match>
+                            <ui-select-choices repeat="x.LookupId as x in listLookupFunctionCategories | filter:$select.search">
+                                {{x.LookupTitle}}
+                            </ui-select-choices>
+                        </ui-select>
+                        <span>
+                            {{model.error.functionCategories}}
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2">Mô tả</label>
                     <div class="col-md-4">
-                        <div class="textview">Sử dụng</div>
+                        <textarea type="text" ng-model="model.Description" placeholder="Mô tả chức năng" class="form-control" rows="5"></textarea>
+                    </div>
+                    <div class="col-md-6">
+                        <table class="table table-bordered">
+                            <tr>
+                                <th colspan="10">Phân quyền chức năng</th>
+                            </tr>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="col-md-3" ng-click="item.isChecked == undefined ? item.isChecked = true : item.isChecked = !item.isChecked" style="border:solid 1px silver;padding : 5px;margin : 2px; cursor:default;{{item.isChecked ? 'background-color : #f0f2f5' : undefined}}" ng-repeat="item in listLookupChildOfFunction">
+                                            <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                                <input type="checkbox" ng-model="item.isChecked" class="group-checkable ng-pristine ng-untouched ng-valid ng-empty" data-set="#sample_4 .checkboxes">
+                                                <span></span>
+                                            </label>
+                                            {{item.LookupTitle}}
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -28,23 +87,12 @@
     </div>
 </div>
 <div class="modal-footer ng-scope">
-    <div class="col-md-9" style="text-align: left; padding-left:0px; padding-right:0px">
-        <ul class="list-inline pull-left">
-            <li title="Người tạo" class="fontsmall ng-binding">
-                <i class="fa fa-user"></i>Ngươi tạo: dungdq
-            </li>
-            <li title="Ngày tạo" class="fontsmall ng-binding">
-                <i class="fa fa-calendar"></i>Ngày tạo: 20/11/2017 02:30
-            </li>
-            <li title="Người sửa" class="fontsmall ng-binding">
-                <i class="fa fa-user"></i>Người sửa: tiecqt@gmail.com
-            </li>
-            <li title="Ngày sửa" class="fontsmall ng-binding">
-                <i class="fa fa-calendar"></i>Ngày sửa: 06/04/2018 10:30
-            </li>
-        </ul>
+    <div class="col-md-8" style="text-align: left; padding-left:0px; padding-right:0px">
     </div>
-    <div class="col-md-3 pull-right" style="padding-left:0px; padding-right:0px">
+    <div class="col-md-4 pull-right" style="padding-left:0px; padding-right:0px">
+        <a class="btn btn-primary" href="javascript:;" ng-click="submit()">
+            <i class="fa fa-calendar-plus-o"></i> Thêm mới
+        </a>
         <a data-dismiss="modal" class="btn btn-default" href="javascript:;" ng-click="cancel()">
             <i class="fa fa-times"></i> Đóng
         </a>

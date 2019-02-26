@@ -14,7 +14,8 @@ namespace ApplicationWebiste.Models
     public partial class P_viewMenuPermission_Result
     {
         public string Function { get; set; }
-        public string Parent { get; set; }
+        public string functionCategories { get; set; }
+        public string functionCategoriesTitle { get; set; }
         public string Title { get; set; }
         public string Url { get; set; }
     }

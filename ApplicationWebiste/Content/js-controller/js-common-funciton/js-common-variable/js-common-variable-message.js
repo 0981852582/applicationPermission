@@ -27,6 +27,10 @@ const messageComfirm_Wards_Delete = 'Bạn có thực sự muốn xóa (Phườn
 const messageComfirm_Wards_NotExists = 'Vui lòng chọn (Phường / Xã) trước khi thực hiện chức năng này';
 //              variable chứa message thông báo comfirm đã tồn tại trong cơ sở dữ liệu
 const messageComfirm_Wards_ImportExists = 'Mã (Phường / Xã) là [{0}] đã tồn tại trong cơ sở dữ liệu';
+//              variable chứa message thông báo comfirm không valid khi validate form khi import data
+const messageComfirm_Wards_ValidateFormImport = 'Dữ liệu đầu vào không hợp lệ , vui lòng kiểm tra lại dữ liệu của File';
+//              variable chứa message thông báo comfirm đã tồn tại trong cơ sở dữ liệu khi import bằng file
+const messageComfirm_Wards_ImportExistsFile = 'Đã tồn tại Mã (Phường / Xã) trong cơ sở dữ liệu';
 
 //      MANAGERFUNCTION
 //              variable chứa message thông báo comfirm xóa danh sách chức năng

@@ -46,12 +46,9 @@
                         </div>
                         <label class="control-label col-md-2">Trạng thái</label>
                         <div class="col-md-2">
-                            <ui-select ng-model="model.Status">
-                                <ui-select-match placeholder="Chọn trạng thái...">{{$select.selected.Title}}</ui-select-match>
-                                <ui-select-choices repeat="x.Id as x in listStatus | filter:$select.search">
-                                    {{x.Title}}
-                                </ui-select-choices>
-                            </ui-select>
+                            <div class="textview">
+                                {{model.StatusTitle}}
+                            </div>
                         </div>
                     </div>
                 </div>

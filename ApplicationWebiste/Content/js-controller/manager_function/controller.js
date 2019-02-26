@@ -1,11 +1,47 @@
-﻿app.controller('managerFunction', function ($scope, $rootScope, $http, $timeout, $interval, $uibModal) {
+﻿app.controller('managerFunction', function ($scope, $rootScope, $timeout, $interval, $uibModal) {
     //
     var trong = $scope;
     // gọi hàm khởi tạo chứa những thông số validate ...
     //    Bắt buộc gọi nếu muốn thực hiện những hành động như validateForm ...
     initValidateForm($rootScope);
+    // Hàm thực hiện việc reload lại Datatable bên ngoài index
+    $rootScope.reload = function () {
+        $rootScope.dataTable.query();
+    }
+    // function dùng để validate form
+    $rootScope.validateForm = function (newvalue) {
+        var flag = true;
+        var regex = /^[a-zA-Z0-9_]*$/
+        newvalue.error = {};
+        if (isNull(newvalue.Function1)) {
+            newvalue.error.Function1 = "Mã chức năng không được để trống";
+            flag = false;
+        } else if (!regex.test(newvalue.Function1)) {
+            newvalue.error.Function1 = "Mã chức năng không được có ký tự đặc biệt";
+            flag = false;
+        } else if (newvalue.Function1.length > 50) {
+            newvalue.error.Function1 = "Mã chức năng không được nhiều hơn 50 ký tự";
+            flag = false;
+        }
+        if (isNull(newvalue.Title)) {
+            newvalue.error.Title = "Tên chức năng không được để trống";
+            flag = false;
+        } else if (newvalue.Title.length > 30) {
+            newvalue.error.Title = "Tên chức năng không được nhiều hơn 30 ký tự";
+            flag = false;
+        }
+        if (isNull(newvalue.Url)) {
+            newvalue.error.Url = "URL Link chức năng không được để trống";
+            flag = false;
+        }
+        if (isNull(newvalue.functionCategories)) {
+            newvalue.error.functionCategories = "Danh mục chức năng không được để trống";
+            flag = false;
+        }
+        return flag;
+    }
     // Khai báo Datatable cho page này
-    trong.dataTable = {
+    $rootScope.dataTable = {
         // Page hiện tại của dataTable
         currentPage: trong.settingOfPadding.currentPage,
         // Tính toán xem pagging cần bao nhiêu page vì vậy cần khai báo số lượng item trên 1 page
@@ -112,7 +148,6 @@
             });
         });
     }
-
     $scope.menuOptions = [
         //api : html
         //api : text
@@ -157,6 +192,18 @@
         }
     ];
     // phần này để đổi sang các controller khác
+    // gọi controller add
+    trong.dialogAdd = function () {
+        /*begin modal*/
+        var modalInstance = $uibModal.open({
+            templateUrl: folderJs_ManagerFunction + 'add.html',
+            controller: 'add',
+            backdrop: 'static',
+            size: '60',
+            resolve: {
+            }
+        });
+    };
     // gọi controller view
     trong.dialogView = function (id) {
         /*begin modal*/
@@ -189,8 +236,33 @@
 });
 
 // đây là controller view
-app.controller('view', function ($scope, $http, $uibModalInstance, $rootScope, parameter, toaster) {
-    $scope.title = "Xem thông tin chức năng.";
+app.controller('view', function ($scope, $uibModalInstance, $rootScope, parameter, toaster) {
+    var trong = $scope;
+    $scope.title = "Xem chức năng";
+    httpPost(api_ChildOfFunction_GetLookupItem, null,
+        function (rs) {
+            if (rs != false) {
+                $scope.listLookupChildOfFunction = rs.Data;
+                trong.init();
+            }
+        });
+    trong.init = function () {
+        var objectData = {
+            id: parameter
+        }
+        httpPost(api_ManagerFunction_GetItem, objectData,
+            function (rs) {
+                trong.model = rs;
+                for (var i = 0; i < $scope.listLookupChildOfFunction.length; i++) {
+                    var cursor = $scope.listLookupChildOfFunction[i];
+                    var checkExists = $scope.model.ArrayFunction.find(x => x == cursor.LookupId);
+                    if (checkExists == null) {
+                        cursor.isChecked = true;
+                    }
+                }
+                trong.offBlockUI(idOfDialog);
+            });
+    }
     // function close dialog
     $scope.ok = function () {
         $uibModalInstance.close();
@@ -200,10 +272,146 @@ app.controller('view', function ($scope, $http, $uibModalInstance, $rootScope, p
         $uibModalInstance.dismiss('cancel');
     };
 });
-app.controller('edit', function ($scope, $http, $uibModalInstance, $rootScope, parameter, toaster) {
+app.controller('add', function ($scope, $uibModalInstance, $rootScope, toaster) {
     var trong = $scope;
-    $scope.title = "Cập nhật thông tin chức năng.";
-    trong.title = undefined;
+    trong.model = {};
+    trong.title = "Thêm mới chức năng";
+    // function close dialog
+    trong.ok = function () {
+        $uibModalInstance.close();
+    };
+    trong.triggerValidate = function () {
+        trong.$watch("model", function (newvalue, oldvalue) {
+            if (newvalue != undefined) {
+                $rootScope.validateForm(newvalue);
+            }
+        }, true);
+    }
+    trong.onBlockUI(idOfDialog, message_Comfirm_Loading_Data);
+    httpPost(api_ChildOfFunction_GetLookupItem, null,
+        function (rs) {
+            if (rs != false) {
+                $scope.listLookupChildOfFunction = rs.Data;
+            }
+            trong.offBlockUI(idOfDialog);
+        });
+    httpPost(api_FunctionCategories_GetLookupItem, null,
+        function (rs) {
+            if (rs != false) {
+                $scope.listLookupFunctionCategories = rs.Data;
+            }
+            trong.offBlockUI(idOfDialog);
+        });
+    // function close dialog
+    trong.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+    };
+    var indexSubmit = true;
+    trong.submit = function () {
+        if (indexSubmit) {
+            trong.triggerValidate();
+            indexSubmit = false;
+        }
+        if ($rootScope.validateForm(trong.model)) {
+            $scope.model.ArrayFunction = [];
+            for (var index = 0; index < $scope.listLookupChildOfFunction.length; index++) {
+                var cursorItem = $scope.listLookupChildOfFunction[index];
+                if (cursorItem.isChecked) {
+                    $scope.model.ArrayFunction.push(cursorItem.LookupId);
+                }
+            }
+            var arrayFile = null;
+            trong.onBlockUI(idOfDialog, message_Comfirm_Loading_Insert);
+            var objectData = {
+                files: arrayFile,
+                item: trong.model,
+                itemExtend: trong.model
+            }
+            httpPost(api_ManagerFunction_Insert, objectData,
+                function (rs) {
+                    if (rs != false) {
+                        trong.showMessageSuccess(rs.Title);
+                        $rootScope.reload();
+                        trong.cancel();
+                    }
+                    trong.offBlockUI(idOfDialog);
+                });
+        }
+    }
+});
+app.controller('edit', function ($scope, $uibModalInstance, $rootScope, parameter, toaster) {
+    var trong = $scope;
+    trong.title = "Cập nhật chức năng";
+    trong.onBlockUI(idOfDialog, message_Comfirm_Loading_Data);
+    httpPost(api_FunctionCategories_GetLookupItem, null,
+        function (rs) {
+            if (rs != false) {
+                $scope.listLookupFunctionCategories = rs.Data;
+                httpPost(api_ChildOfFunction_GetLookupItem, null,
+                    function (rs) {
+                        if (rs != false) {
+                            $scope.listLookupChildOfFunction = rs.Data;
+                            trong.init();
+                        }
+                    });
+            }
+        });
+    trong.init = function () {
+        var objectData = {
+            id: parameter
+        }
+        httpPost(api_ManagerFunction_GetItem, objectData,
+            function (rs) {
+                trong.model = rs;
+                for (var i = 0; i < $scope.listLookupChildOfFunction.length; i++) {
+                    var cursor = $scope.listLookupChildOfFunction[i];
+                    var checkExists = $scope.model.ArrayFunction.find(x => x == cursor.LookupId);
+                    if (checkExists == null) {
+                        cursor.isChecked = true;
+                    }
+                }
+                trong.offBlockUI(idOfDialog);
+            });
+    }
+    trong.triggerValidate = function () {
+        trong.$watch("model", function (newvalue, oldvalue) {
+            if (newvalue != undefined) {
+                $rootScope.validateForm(newvalue);
+            }
+        }, true);
+    }
+    var indexSubmit = true;
+    trong.submit = function () {
+        if (indexSubmit) {
+            trong.triggerValidate();
+            indexSubmit = false;
+        }
+        if ($rootScope.validateForm(trong.model)) {
+            $scope.model.ArrayFunction = [];
+            for (var index = 0; index < $scope.listLookupChildOfFunction.length; index++) {
+                var cursorItem = $scope.listLookupChildOfFunction[index];
+                if (cursorItem.isChecked) {
+                    $scope.model.ArrayFunction.push(cursorItem.LookupId);
+                }
+            }
+            var arrayFile = null;
+            trong.onBlockUI(idOfDialog, message_Comfirm_Loading_Insert);
+            var objectData = {
+                files: arrayFile,
+                item: trong.model,
+                itemExtend: trong.model
+            }
+            httpPost(api_ManagerFunction_Update, objectData,
+                function (rs) {
+                    if (rs != false) {
+                        trong.showMessageSuccess(rs.Title);
+                        $rootScope.reload();
+                        trong.cancel();
+                    }
+                    trong.offBlockUI(idOfDialog);
+                });
+        }
+    }
     // function close dialog
     $scope.ok = function () {
         $uibModalInstance.close();

@@ -258,7 +258,7 @@ namespace ApplicationWebiste.Controllers.Manager_Permission
             }
             catch (Exception ex)
             {
-                msg.Title = City_Message_DeleteSuccess;
+                msg.Title = City_Message_DeleteError;
                 msg.Error = true;
                 msg.Data = ex.ToString();
             }

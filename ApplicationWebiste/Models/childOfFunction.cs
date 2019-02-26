@@ -24,6 +24,7 @@ namespace ApplicationWebiste.Models
         public string ChildOfFunction1 { get; set; }
         public string Title { get; set; }
         public Nullable<byte> Order { get; set; }
+        public string RemoveFunction { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<contraint_account_function_childOfFunction> contraint_account_function_childOfFunction { get; set; }
